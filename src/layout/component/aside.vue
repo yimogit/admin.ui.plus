@@ -39,7 +39,7 @@ const state = reactive<AsideState>({
 const setCollapseStyle = computed(() => {
   const { layout, isCollapse, menuBar } = themeConfig.value
   const asideBrTheme = ['#FFFFFF', '#FFF', '#fff', '#ffffff']
-  const asideBrColor = asideBrTheme.includes(menuBar) ? 'layout-el-aside-br-color' : ''
+  const asideBrColor = !isCollapse && asideBrTheme.includes(menuBar) ? 'layout-el-aside-br-color' : ''
   // 判断是否是手机端
   if (state.clientWidth <= 1000) {
     if (isCollapse) {
@@ -57,8 +57,8 @@ const setCollapseStyle = computed(() => {
     }
   } else {
     if (layout === 'columns') {
-      // 分栏布局，菜单收起时宽度给 1px
-      if (isCollapse) return [asideBrColor, 'layout-aside-pc-1']
+      // 分栏布局，菜单收起时宽度给 0px
+      if (isCollapse) return [asideBrColor, 'layout-aside-pc-0']
       else return [asideBrColor, 'layout-aside-pc-220']
     } else {
       // 其它布局给 64px

@@ -128,6 +128,9 @@ body,
   }
   .layout-el-aside-br-color {
     border-right: 1px solid var(--el-border-color-light, #ebeef5);
+    .el-scrollbar {
+      border-left: 1px solid var(--el-border-color-light, #ebeef5);
+    }
   }
   // pc端左侧导航样式
   .layout-aside-pc-220 {
@@ -140,6 +143,10 @@ body,
   }
   .layout-aside-pc-1 {
     width: 1px !important;
+    transition: width 0.3s ease;
+  }
+  .layout-aside-pc-0 {
+    width: 0px !important;
     transition: width 0.3s ease;
   }
   // 手机端左侧导航样式

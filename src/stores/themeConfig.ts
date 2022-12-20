@@ -53,6 +53,8 @@ export const useThemeConfig = defineStore('themeConfig', {
       columnsMenuBar: '#282c34',
       // 默认分栏菜单字体颜色
       columnsMenuBarColor: '#e6e6e6',
+      // 默认分栏菜单高亮字体颜色
+      columnsMenuBarActiveColor: '#ffffff',
       // 是否开启分栏菜单背景颜色渐变
       isColumnsMenuBarColorGradual: false,
       // 是否开启分栏菜单鼠标悬停预加载(预览菜单)

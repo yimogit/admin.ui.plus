@@ -52,6 +52,7 @@ declare interface ThemeConfigState {
     isMenuBarColorGradual: boolean
     columnsMenuBar: string
     columnsMenuBarColor: string
+    columnsMenuBarActiveColor: string
     isColumnsMenuBarColorGradual: boolean
     isColumnsMenuHoverPreload: boolean
     isCollapse: boolean

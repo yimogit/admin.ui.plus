@@ -30,7 +30,12 @@
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoTopBar') }}</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="getThemeConfig.topBar" :predefine="predefineBgColors" size="default" @change="onBgColorPickerChange('topBar')">
+            <el-color-picker
+              v-model="getThemeConfig.topBar"
+              :predefine="predefineTopBarBgColors"
+              size="default"
+              @change="onBgColorPickerChange('topBar')"
+            >
             </el-color-picker>
           </div>
         </div>
@@ -60,7 +65,7 @@
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-color-picker
               v-model="getThemeConfig.menuBar"
-              :predefine="predefineBgColors"
+              :predefine="predefineMenuBarBgColors"
               size="default"
               @change="onBgColorPickerChange('menuBar')"
             >
@@ -107,7 +112,7 @@
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-color-picker
               v-model="getThemeConfig.columnsMenuBar"
-              :predefine="predefineBgColors"
+              :predefine="predefineColumnsMenuBarBgColors"
               size="default"
               @change="onBgColorPickerChange('columnsMenuBar')"
               :disabled="getThemeConfig.layout !== 'columns'"
@@ -315,9 +320,9 @@
           <div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fiveTagsStyle') }}</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-select v-model="getThemeConfig.tagsStyle" placeholder="请选择" size="default" style="width: 90px" @change="setLocalThemeConfig">
-              <el-option label="风格1" value="tags-style-one"></el-option>
-              <el-option label="风格4" value="tags-style-four"></el-option>
-              <el-option label="风格5" value="tags-style-five"></el-option>
+              <el-option label="卡片" value="tags-style-one"></el-option>
+              <el-option label="简约" value="tags-style-four"></el-option>
+              <el-option label="圆滑" value="tags-style-five"></el-option>
             </el-select>
           </div>
         </div>
@@ -332,9 +337,9 @@
               style="width: 90px"
               @change="setLocalThemeConfig"
             >
-              <el-option label="slide-right" value="slide-right"></el-option>
-              <el-option label="slide-left" value="slide-left"></el-option>
-              <el-option label="opacitys" value="opacitys"></el-option>
+              <el-option label="右滑动" value="slide-right"></el-option>
+              <el-option label="左滑动" value="slide-left"></el-option>
+              <el-option label="淡入淡出" value="opacitys"></el-option>
             </el-select>
           </div>
         </div>
@@ -481,23 +486,28 @@ const predefinePrimaryColors = ref([
   '#6954f0', //紫色
   '#41b584', //绿色
 ])
-// 预定义背景颜色
-const predefineBgColors = ref([
+// 预定义顶栏背景颜色
+const predefineTopBarBgColors = ref([
   '#ffffff', //白色
-  '#282c34', //黑色
+  '#323233', //黑色
 ])
-// 预定义高亮背景颜色
-const predefineActiveBgColors = ref([
-  'rgba(0, 0, 0, 0.2)', //灰黑色
-  'rgba(253, 237, 235, 1)', //浅红色
-  'rgba(235, 245, 255, 1)', //浅蓝色
-  'rgba(240, 237, 253, 1)', //浅紫色
-  'rgba(236, 247, 242, 1)', //浅绿色
+// 预定义菜单背景颜色
+const predefineMenuBarBgColors = ref([
+  '#ffffff', //白色
+  '#252526', //黑色
 ])
+// 预定义分栏背景颜色
+const predefineColumnsMenuBarBgColors = ref([
+  '#ffffff', //白色
+  '#333333', //黑色
+])
+
+const grayWhiteColor = '#eaeaea' //灰白色
+const grayBlackColor = '#606266' //灰黑色
 // 预定义字体颜色
 const predefineFontColors = ref([
-  '#eaeaea', //灰白色
-  '#606266', //灰黑色
+  grayWhiteColor, //灰白色
+  grayBlackColor, //灰黑色
 ])
 
 const { locale } = useI18n()
@@ -508,6 +518,16 @@ const { getLightColor, getDarkColor } = useChangeColor()
 const state = reactive({
   isMobile: false,
 })
+
+const GrayWhiteBgColor = 'rgba(0, 0, 0, 0.2)' //浅灰黑色
+// 预定义高亮背景颜色
+const predefineActiveBgColors = ref([
+  GrayWhiteBgColor, //浅灰黑色
+  getLightColor(predefinePrimaryColors.value[0], 9 / 10), //浅红色
+  getLightColor(predefinePrimaryColors.value[1], 9 / 10), //浅蓝色
+  getLightColor(predefinePrimaryColors.value[2], 9 / 10), //浅紫色
+  getLightColor(predefinePrimaryColors.value[3], 9 / 10), //浅绿色
+])
 
 // 获取布局配置信息
 const getThemeConfig = computed(() => {
@@ -524,10 +544,13 @@ const onColorPickerChange = () => {
     document.documentElement.style.setProperty(`--el-color-primary-light-${i}`, `${getLightColor(getThemeConfig.value.primary, i / 10)}`)
   }
   setDispatchThemeConfig()
+
+  onBgColorPickerChange('menuBar')
 }
 // 2、菜单 / 顶栏
 const onBgColorPickerChange = (bg: string) => {
-  document.documentElement.style.setProperty(`--next-bg-${bg}`, themeConfig.value[bg])
+  const bgColor = themeConfig.value[bg]
+  document.documentElement.style.setProperty(`--next-bg-${bg}`, bgColor)
   if (bg === 'menuBar') {
     document.documentElement.style.setProperty(`--next-bg-menuBar-light-1`, getLightColor(getThemeConfig.value.menuBar, 0.05))
   }
@@ -535,6 +558,31 @@ const onBgColorPickerChange = (bg: string) => {
   onMenuBarGradualChange()
   onColumnsMenuBarGradualChange()
   setDispatchThemeConfig()
+
+  if (bg === 'topBar' || bg === 'menuBar' || bg === 'columnsMenuBar') {
+    const whiteTheme = ['#FFFFFF', '#FFF', '#fff', '#ffffff']
+    const colorName = bg + 'Color'
+    if (whiteTheme.includes(bgColor)) {
+      if (bg === 'menuBar') {
+        const activeColorName = bg + 'ActiveColor'
+        getThemeConfig.value[activeColorName] = getLightColor(getThemeConfig.value.primary, 9 / 10)
+        onBgColorPickerChange(activeColorName)
+      }
+      getThemeConfig.value[colorName] = grayBlackColor
+    } else {
+      if (bg === 'menuBar') {
+        const activeColorName = bg + 'ActiveColor'
+        getThemeConfig.value[activeColorName] = GrayWhiteBgColor
+        onBgColorPickerChange(activeColorName)
+      }
+      getThemeConfig.value[colorName] = grayWhiteColor
+    }
+    onBgColorPickerChange(colorName)
+  }
+}
+// 设置激活颜色
+const onActiveColorPickerChange = (name: string) => {
+  document.documentElement.style.setProperty(`--next-color-${name}`, themeConfig.value[name])
 }
 // 2、菜单 / 顶栏 --> 顶栏背景渐变
 const onTopBarGradualChange = () => {
@@ -574,7 +622,7 @@ const onIsFixedHeaderChange = () => {
 }
 // 3、界面设置 --> 经典布局分割菜单
 const onClassicSplitMenuChange = () => {
-  getThemeConfig.value.isBreadcrumb = false
+  // getThemeConfig.value.isBreadcrumb = false
   setLocalThemeConfig()
   mittBus.emit('getBreadcrumbIndexSetFilterRoutes')
 }
@@ -649,6 +697,7 @@ const initLayoutChangeFun = () => {
   onBgColorPickerChange('topBarColor')
   onBgColorPickerChange('columnsMenuBar')
   onBgColorPickerChange('columnsMenuBarColor')
+  onActiveColorPickerChange('columnsMenuBarActiveColor')
 }
 // 关闭弹窗时，初始化变量。变量用于处理 layoutScrollbarRef.value.update() 更新滚动条高度
 const onDrawerClose = () => {

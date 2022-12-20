@@ -209,7 +209,7 @@ watch(
   ul {
     position: relative;
     .layout-columns-active {
-      color: var(--next-bg-columnsMenuBarColor) !important;
+      color: var(--next-color-columnsMenuBarActiveColor) !important;
       transition: 0.3s ease-in-out;
     }
     .layout-columns-hover {
@@ -285,6 +285,7 @@ watch(
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: rgb(0 21 41 / 2%) 0px 1px 4px;
   &-medium-img {
     width: 20px;
   }

@@ -135,8 +135,8 @@ const onIconChange = (type: string) => {
 // 获取当前点击的 icon 图标
 const onColClick = (v: string) => {
   state.fontIconPrefix = v
-  emits('get', state.fontIconPrefix)
-  emits('update:modelValue', state.fontIconPrefix)
+  // emits('get', state.fontIconPrefix)
+  // emits('update:modelValue', state.fontIconPrefix)
 }
 
 // 页面加载时
