@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-navbars-breadcrumb-index">
+  <div class="layout-navbars-breadcrumb-index" :class="setBreadcrumbStyle">
     <Logo v-if="setIsShowLogo" />
     <Breadcrumb />
     <Horizontal :menuList="state.menuList" v-if="isLayoutTransverse" />
@@ -29,6 +29,12 @@ const { routesList } = storeToRefs(stores)
 const route = useRoute()
 const state = reactive({
   menuList: [] as RouteItems,
+})
+
+const setBreadcrumbStyle = computed(() => {
+  const { topBar } = themeConfig.value
+  const bgTheme = ['#FFFFFF', '#FFF', '#fff', '#ffffff']
+  return [bgTheme.includes(topBar) ? '' : 'layout-navbars-breadcrumb-index-no-bb']
 })
 
 // 设置 logo 显示/隐藏
@@ -103,5 +109,8 @@ onUnmounted(() => {
   align-items: center;
   background: var(--next-bg-topBar);
   border-bottom: 1px solid var(--next-border-color-light);
+}
+.layout-navbars-breadcrumb-index-no-bb {
+  border-bottom-width: 0px;
 }
 </style>
