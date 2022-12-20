@@ -9,7 +9,7 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
-              <el-dropdown style="margin-left: 12px">
+              <el-dropdown v-auth="'api:admin:role:add'" style="margin-left: 12px">
                 <el-button type="primary"
                   >新增<el-icon class="el-icon--right"><ele-ArrowDown /></el-icon
                 ></el-button>
@@ -41,18 +41,22 @@
             <el-table-column label="操作" width="100" fixed="right" header-align="center" align="right">
               <template #default="{ row }">
                 <el-button v-if="row.type === 1" icon="ele-Plus" size="small" text type="primary" @click="onAdd(2, row)"></el-button>
-                <my-dropdown-more icon-only>
+                <my-dropdown-more icon-only v-auths="['api:admin:permission:assign', 'api:admin:role:update', 'api:admin:role:delete']">
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item v-if="row.type === 2" @click="onSetRoleMenu(row)">菜单权限</el-dropdown-item>
+                      <el-dropdown-item v-if="row.type === 2 && auth('api:admin:permission:assign')" @click="onSetRoleMenu(row)"
+                        >菜单权限</el-dropdown-item
+                      >
                       <el-dropdown-item v-if="row.type === 2" @click="onSetRoleDataScope(row)">数据权限</el-dropdown-item>
-                      <el-dropdown-item @click="onEdit(row)">编辑{{ row.type === 1 ? '分组' : '角色' }}</el-dropdown-item>
-                      <el-dropdown-item @click="onDelete(row)">删除{{ row.type === 1 ? '分组' : '角色' }}</el-dropdown-item>
+                      <el-dropdown-item v-if="auth('api:admin:role:update')" @click="onEdit(row)"
+                        >编辑{{ row.type === 1 ? '分组' : '角色' }}</el-dropdown-item
+                      >
+                      <el-dropdown-item v-if="auth('api:admin:role:delete')" @click="onDelete(row)"
+                        >删除{{ row.type === 1 ? '分组' : '角色' }}</el-dropdown-item
+                      >
                     </el-dropdown-menu>
                   </template>
                 </my-dropdown-more>
-                <!-- <el-button icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
-                <el-button icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button> -->
               </template>
             </el-table-column>
           </el-table>
@@ -105,6 +109,7 @@ import { listToTree } from '/@/utils/tree'
 import { ElTable } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
+import { auth } from '/@/utils/authFunction'
 
 // 引入组件
 const RoleForm = defineAsyncComponent(() => import('./components/role-form.vue'))

@@ -14,7 +14,7 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
-              <el-button type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
+              <el-button v-auth="'api:admin:user:add'" type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -33,13 +33,15 @@
             </el-table-column>
             <el-table-column label="操作" width="160" fixed="right" header-align="center" align="center">
               <template #default="{ row }">
-                <el-button icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
-                <my-dropdown-more>
+                <el-button v-auth="'api:admin:user:update'" icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
+                <my-dropdown-more v-auths="['api:admin:user:set-manager', 'api:admin:user:reset-password', 'api:admin:user:delete']">
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item @click="onSetManager(row)">{{ row.isManager ? '取消' : '设置' }}主管</el-dropdown-item>
-                      <el-dropdown-item @click="onResetPwd(row)">重置密码</el-dropdown-item>
-                      <el-dropdown-item @click="onDelete(row)">删除用户</el-dropdown-item>
+                      <el-dropdown-item v-if="auth('api:admin:user:set-manager')" @click="onSetManager(row)"
+                        >{{ row.isManager ? '取消' : '设置' }}主管</el-dropdown-item
+                      >
+                      <el-dropdown-item v-if="auth('api:admin:user:reset-password')" @click="onResetPwd(row)">重置密码</el-dropdown-item>
+                      <el-dropdown-item v-if="auth('api:admin:user:delete')" @click="onDelete(row)">删除用户</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </my-dropdown-more>
@@ -72,6 +74,7 @@ import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncC
 import { UserGetPageOutput, PageInputUserGetPageDto, OrgListOutput, UserSetManagerInput, UserResetPasswordInput } from '/@/api/admin/data-contracts'
 import { User as UserApi } from '/@/api/admin/User'
 import eventBus from '/@/utils/mitt'
+import { auth } from '/@/utils/authFunction'
 
 // 引入组件
 const UserForm = defineAsyncComponent(() => import('./components/user-form.vue'))

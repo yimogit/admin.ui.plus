@@ -32,12 +32,20 @@
         <el-table-column prop="lastRunTime" label="最后运行时间" :formatter="formatterTime" width="120" />
         <el-table-column label="操作" width="180" fixed="right" header-align="center" align="center">
           <template #default="{ row }">
-            <el-button icon="ele-Tickets" size="small" text type="primary" @click="onShowLogs(row)">日志</el-button>
-            <el-button v-if="row.status === 1 || row.status === 'Paused'" icon="ele-VideoPause" size="small" text type="primary" @click="onPause(row)"
+            <el-button v-auth="" icon="ele-Tickets" size="small" text type="primary" @click="onShowLogs(row)">日志</el-button>
+            <el-button
+              v-if="row.status === 1 || row.status === 'Paused'"
+              v-auth="'api:admin:task:pause'"
+              icon="ele-VideoPause"
+              size="small"
+              text
+              type="primary"
+              @click="onPause(row)"
               >暂停</el-button
             >
             <el-button
               v-if="row.status === 0 || row.status === 'Running'"
+              v-auth="'api:admin:task:resume'"
               icon="ele-CaretRight"
               size="small"
               text
@@ -45,8 +53,8 @@
               @click="onStart(row)"
               >启动</el-button
             >
-            <el-button icon="ele-Promotion" size="small" text type="primary" @click="onRun(row)">执行</el-button>
-            <el-button icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button>
+            <el-button v-auth="'api:admin:task:run'" icon="ele-Promotion" size="small" text type="primary" @click="onRun(row)">执行</el-button>
+            <el-button v-auth="'api:admin:task:delete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>

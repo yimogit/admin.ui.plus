@@ -9,15 +9,18 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
-              <el-dropdown style="margin-left: 12px">
+              <el-dropdown
+                v-auths="['api:admin:permission:addgroup', 'api:admin:permission:addmenu', 'api:admin:permission:adddot']"
+                style="margin-left: 12px"
+              >
                 <el-button type="primary"
                   >新增<el-icon class="el-icon--right"><ele-ArrowDown /></el-icon
                 ></el-button>
                 <template #dropdown>
                   <el-dropdown-menu>
-                    <el-dropdown-item @click="onAdd(1)">新增分组</el-dropdown-item>
-                    <el-dropdown-item @click="onAdd(2)">新增菜单</el-dropdown-item>
-                    <el-dropdown-item @click="onAdd(3)">新增权限点</el-dropdown-item>
+                    <el-dropdown-item v-if="auth('api:admin:permission:addgroup')" @click="onAdd(1)">新增分组</el-dropdown-item>
+                    <el-dropdown-item v-if="auth('api:admin:permission:addmenu')" @click="onAdd(2)">新增菜单</el-dropdown-item>
+                    <el-dropdown-item v-if="auth('api:admin:permission:adddot')" @click="onAdd(3)">新增权限点</el-dropdown-item>
                   </el-dropdown-menu>
                 </template>
               </el-dropdown>
@@ -64,8 +67,22 @@
             </el-table-column>
             <el-table-column label="操作" width="160" fixed="right" header-align="center" align="center">
               <template #default="{ row }">
-                <el-button icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
-                <el-button icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button>
+                <el-button
+                  v-if="
+                    (row.type === 1 && auth('api:admin:permission:updategroup')) ||
+                    (row.type === 2 && auth('api:admin:permission:updatemenu')) ||
+                    (row.type === 3 && auth('api:admin:permission:updatedot'))
+                  "
+                  icon="ele-EditPen"
+                  size="small"
+                  text
+                  type="primary"
+                  @click="onEdit(row)"
+                  >编辑</el-button
+                >
+                <el-button v-auth="'api:admin:permission:softdelete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)"
+                  >删除</el-button
+                >
               </template>
             </el-table-column>
           </el-table>
@@ -100,6 +117,7 @@ import { Permission as PermissionPermission } from '/@/api/admin/Permission'
 import { listToTree } from '/@/utils/tree'
 import { cloneDeep } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
+import { auth } from '/@/utils/authFunction'
 
 // 引入组件
 const PermissionGroupForm = defineAsyncComponent(() => import('./components/permission-group-form.vue'))

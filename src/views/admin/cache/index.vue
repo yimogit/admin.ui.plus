@@ -8,7 +8,7 @@
         <el-table-column prop="value" label="键值" />
         <el-table-column label="操作" width="180" fixed="right" header-align="center" align="center">
           <template #default="{ row }">
-            <el-button icon="ele-Brush" size="small" text type="danger" @click="onClear(row)">清除</el-button>
+            <el-button v-auth="'api:admin:cache:clear'" icon="ele-Brush" size="small" text type="danger" @click="onClear(row)">清除</el-button>
           </template>
         </el-table-column>
       </el-table>

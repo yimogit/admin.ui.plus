@@ -7,7 +7,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
-          <el-button type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
+          <el-button v-auth="'api:admin:tenant:add'" type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -21,12 +21,12 @@
         <el-table-column prop="email" label="邮箱" min-width="120" show-overflow-tooltip />
         <el-table-column label="操作" width="160" fixed="right" header-align="center" align="center">
           <template #default="{ row }">
-            <el-button icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
+            <el-button v-auth="'api:admin:tenant:update'" icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
             <my-dropdown-more>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item @click="onSetTenantMenu(row)">菜单权限</el-dropdown-item>
-                  <el-dropdown-item @click="onDelete(row)">删除租户</el-dropdown-item>
+                  <el-dropdown-item v-if="auth('api:admin:permission:assign')" @click="onSetTenantMenu(row)">菜单权限</el-dropdown-item>
+                  <el-dropdown-item v-if="auth('api:admin:tenant:delete')" @click="onDelete(row)">删除租户</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </my-dropdown-more>
@@ -58,10 +58,11 @@ import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncC
 import { TenantListOutput, PageInputTenantGetPageDto } from '/@/api/admin/data-contracts'
 import { Tenant as TenantApi } from '/@/api/admin/Tenant'
 import eventBus from '/@/utils/mitt'
+import { auth } from '/@/utils/authFunction'
 
 // 引入组件
 const TenantForm = defineAsyncComponent(() => import('./components/tenant-form.vue'))
-const MyDropdownMore = defineAsyncComponent(() => import('./components/tenant-form.vue'))
+const MyDropdownMore = defineAsyncComponent(() => import('/@/components/my-dropdown-more/index.vue'))
 const SetTenantMenu = defineAsyncComponent(() => import('./components/set-tenant-menu.vue'))
 
 const { proxy } = getCurrentInstance() as any

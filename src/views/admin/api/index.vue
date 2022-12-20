@@ -9,7 +9,7 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
-              <el-button type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
+              <el-button v-auth="'api:admin:api:add'" type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -33,8 +33,10 @@
             </el-table-column>
             <el-table-column label="操作" width="160" fixed="right" header-align="center" align="center">
               <template #default="{ row }">
-                <el-button icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
-                <el-button icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button>
+                <el-button v-auth="'api:admin:api:update'" icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
+                <el-button v-auth="'api:admin:api:softdelete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)"
+                  >删除</el-button
+                >
               </template>
             </el-table-column>
           </el-table>
