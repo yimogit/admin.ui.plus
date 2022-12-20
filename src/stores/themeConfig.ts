@@ -28,9 +28,9 @@ export const useThemeConfig = defineStore('themeConfig', {
        * 顶栏设置
        */
       // 默认顶栏导航背景颜色
-      topBar: '#ffffff',
+      topBar: '#323233',
       // 默认顶栏导航字体颜色
-      topBarColor: '#606266',
+      topBarColor: '#eaeaea',
       // 是否开启顶栏背景颜色渐变
       isTopBarColorGradual: false,
 
@@ -38,7 +38,7 @@ export const useThemeConfig = defineStore('themeConfig', {
        * 菜单设置
        */
       // 默认菜单导航背景颜色
-      menuBar: '#282c34',
+      menuBar: '#252526',
       // 默认菜单导航字体颜色
       menuBarColor: '#eaeaea',
       // 默认菜单高亮背景色
@@ -50,9 +50,9 @@ export const useThemeConfig = defineStore('themeConfig', {
        * 分栏设置
        */
       // 默认分栏菜单背景颜色
-      columnsMenuBar: '#282c34',
+      columnsMenuBar: '#333333',
       // 默认分栏菜单字体颜色
-      columnsMenuBarColor: '#e6e6e6',
+      columnsMenuBarColor: '#eaeaea',
       // 默认分栏菜单高亮字体颜色
       columnsMenuBarActiveColor: '#ffffff',
       // 是否开启分栏菜单背景颜色渐变
@@ -129,7 +129,7 @@ export const useThemeConfig = defineStore('themeConfig', {
        * 中的 `initSetLayoutChange(设置布局切换，重置主题样式)` 方法
        */
       // 布局切换：可选值"<默认 defaults | 经典 classic | 横向 transverse | 分栏 columns>"，默认 defaults
-      layout: 'defaults',
+      layout: 'columns',
 
       /**
        * 后端控制路由
