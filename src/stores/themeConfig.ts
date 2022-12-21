@@ -68,7 +68,7 @@ export const useThemeConfig = defineStore('themeConfig', {
       // 是否开启菜单手风琴效果
       isUniqueOpened: true,
       // 是否开启固定 Header
-      isFixedHeader: false,
+      isFixedHeader: true,
       // 初始化变量，用于更新菜单 el-scrollbar 的高度，请勿删除
       isFixedHeaderChange: false,
       // 是否开启经典布局分割菜单（仅经典布局生效）
@@ -94,7 +94,7 @@ export const useThemeConfig = defineStore('themeConfig', {
       // 是否开启 Tagsview 图标
       isTagsviewIcon: false,
       // 是否开启 TagsView 缓存
-      isCacheTagsView: false,
+      isCacheTagsView: true,
       // 是否开启 TagsView 拖拽
       isSortableTagsView: true,
       // 是否开启 TagsView 共用
