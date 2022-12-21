@@ -103,7 +103,9 @@ const onSure = async () => {
   state.sureLoading = true
   const permissionIds = permissionTreeRef.value?.getCheckedKeys(true)
   const input = { roleId: state.roleId, permissionIds: permissionIds } as PermissionAssignInput
-  const res = await new PermissionApi().assign(input, { showSuccessMessage: true })
+  const res = await new PermissionApi().assign(input, { showSuccessMessage: true }).catch(() => {
+    state.sureLoading = false
+  })
   state.sureLoading = false
 
   if (res?.success) {

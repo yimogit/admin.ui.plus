@@ -103,7 +103,9 @@ const onSure = async () => {
   state.sureLoading = true
   const permissionIds = permissionTreeRef.value?.getCheckedKeys(true)
   const input = { tenantId: state.id, permissionIds: permissionIds } as PermissionSaveTenantPermissionsInput
-  const res = await new PermissionApi().saveTenantPermissions(input, { showSuccessMessage: true })
+  const res = await new PermissionApi().saveTenantPermissions(input, { showSuccessMessage: true }).catch(() => {
+    state.sureLoading = false
+  })
   state.sureLoading = false
 
   if (res?.success) {

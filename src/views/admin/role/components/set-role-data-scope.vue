@@ -99,7 +99,9 @@ const onCancel = () => {
 // 确定
 const onSure = async () => {
   state.sureLoading = true
-  const res = await new RoleApi().setDataScope(state.form, { showSuccessMessage: true })
+  const res = await new RoleApi().setDataScope(state.form, { showSuccessMessage: true }).catch(() => {
+    state.sureLoading = false
+  })
   state.sureLoading = false
 
   if (res?.success) {
