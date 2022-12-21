@@ -246,7 +246,9 @@ const onUpdateBasic = async () => {
     if (!valid) return
 
     state.updateLoading = true
-    const res = await new UserApi().updateBasic(state.personalForm, { showSuccessMessage: true })
+    const res = await new UserApi().updateBasic(state.personalForm, { showSuccessMessage: true }).catch(() => {
+      state.updateLoading = false
+    })
     state.updateLoading = false
 
     if (res?.success) {
