@@ -355,11 +355,16 @@ export class User<SecurityDataType = unknown> extends HttpClient<SecurityDataTyp
       Name?: string
       FileName?: string
     },
+    query?: {
+      /** @default false */
+      autoUpdate?: boolean
+    },
     params: RequestParams = {}
   ) =>
     this.request<ResultOutputString, any>({
       path: `/api/admin/user/avatar-upload`,
       method: 'POST',
+      query: query,
       body: data,
       secure: true,
       type: ContentType.FormData,

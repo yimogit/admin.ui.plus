@@ -3049,10 +3049,6 @@ export interface UserAddInput {
   managerUserId?: number | null
   /** 直属主管姓名 */
   managerUserName?: string | null
-  /** 昵称 */
-  nickName?: string | null
-  /** 头像 */
-  avatar?: string | null
   /** 员工添加 */
   staff?: StaffAddInput
   /**
@@ -3077,10 +3073,6 @@ export interface UserAddMemberInput {
   mobile?: string | null
   /** 邮箱 */
   email?: string | null
-  /** 昵称 */
-  nickName?: string | null
-  /** 头像 */
-  avatar?: string | null
   /**
    * 密码
    * @minLength 1
@@ -3092,11 +3084,6 @@ export interface UserAddMemberInput {
 
 /** 修改密码 */
 export interface UserChangePasswordInput {
-  /**
-   * 主键Id
-   * @format int64
-   */
-  id?: number
   /**
    * 旧密码
    * @minLength 1
@@ -3246,10 +3233,6 @@ export interface UserGetOutput {
   managerUserId?: number | null
   /** 直属主管姓名 */
   managerUserName?: string | null
-  /** 昵称 */
-  nickName?: string | null
-  /** 头像 */
-  avatar?: string | null
   /** 员工添加 */
   staff?: StaffAddInput
   /**
@@ -3426,11 +3409,6 @@ export type UserType = 0 | 1 | 10 | 100
 /** 更新基本信息 */
 export interface UserUpdateBasicInput {
   /**
-   * 主键Id
-   * @format int64
-   */
-  id?: number
-  /**
    * 姓名
    * @minLength 1
    */
@@ -3471,10 +3449,6 @@ export interface UserUpdateInput {
   managerUserId?: number | null
   /** 直属主管姓名 */
   managerUserName?: string | null
-  /** 昵称 */
-  nickName?: string | null
-  /** 头像 */
-  avatar?: string | null
   /** 员工添加 */
   staff?: StaffAddInput
   /**
@@ -3497,10 +3471,6 @@ export interface UserUpdateMemberInput {
   mobile?: string | null
   /** 邮箱 */
   email?: string | null
-  /** 昵称 */
-  nickName?: string | null
-  /** 头像 */
-  avatar?: string | null
   /**
    * 主键Id
    * @format int64
