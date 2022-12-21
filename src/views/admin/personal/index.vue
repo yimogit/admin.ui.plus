@@ -190,14 +190,14 @@ const avatarHeaders = computed(() => {
 // 头像地址
 const avatar = computed(() => {
   return (
-    (userInfos.value.photo && `${import.meta.env.VITE_API_URL}upload/admin/avatar/${userInfos.value.photo}`) ||
+    (userInfos.value.photo && `${import.meta.env.VITE_API_URL}/upload/admin/avatar/${userInfos.value.photo}`) ||
     'https://img2.baidu.com/it/u=1978192862,2048448374&fm=253&fmt=auto&app=138&f=JPEG?w=504&h=500'
   )
 })
 
 // 上传头像请求url
 const avatarAction = computed(() => {
-  return import.meta.env.VITE_API_URL + 'api/admin/user/avatar-upload'
+  return import.meta.env.VITE_API_URL + '/api/admin/user/avatar-upload'
 })
 
 onMounted(() => {

@@ -95,7 +95,7 @@ export class HttpClient<SecurityDataType = unknown> {
   private format?: ResponseType
 
   constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
-    this.instance = axios.create({ ...axiosConfig, timeout: 60000, baseURL: axiosConfig.baseURL || 'http://localhost:8000' })
+    this.instance = axios.create({ ...axiosConfig, timeout: 60000, baseURL: axiosConfig.baseURL || import.meta.env.VITE_API_URL })
     this.secure = secure
     this.format = format
     this.securityWorker = securityWorker
