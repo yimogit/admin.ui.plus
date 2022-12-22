@@ -111,6 +111,7 @@ defineExpose({
       left: 50%;
       transform: translateX(-50%);
       top: -53vh;
+      width: 100%;
     }
   }
   :deep(.el-autocomplete) {

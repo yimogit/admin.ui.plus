@@ -287,7 +287,7 @@ watch(
   justify-content: center;
   box-shadow: rgb(0 21 41 / 2%) 0px 1px 4px;
   &-medium-img {
-    width: 20px;
+    width: 30px;
   }
 }
 </style>
