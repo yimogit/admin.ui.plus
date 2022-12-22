@@ -12,6 +12,7 @@ import { staticRoutes, notFoundAndNoPower } from '/@/router/route'
 import { initFrontEndControlRoutes } from '/@/router/frontEnd'
 import { initBackEndControlRoutes } from '/@/router/backEnd'
 import { adminTokenKey } from '/@/api/admin/http-client'
+import { ElMessage } from 'element-plus'
 
 /**
  * 1、前端控制路由时：isRequestRoutes 为 false，需要写 roles，需要走 setFilterRoute 方法。
@@ -107,7 +108,7 @@ router.beforeEach(async (to, from, next) => {
       Session.clear()
       NProgress.done()
     } else if (token && to.path === '/login') {
-      next('/platform/workbench')
+      next('/')
       NProgress.done()
     } else {
       const storesRoute = useRoute(pinia)
@@ -117,7 +118,12 @@ router.beforeEach(async (to, from, next) => {
       if (routesList.value.length === 0) {
         if (isRequestRoutes) {
           // 后端控制路由：路由数据初始化，防止刷新时丢失
-          await initBackEndControlRoutes()
+          const isNoPower = await initBackEndControlRoutes()
+          if (isNoPower) {
+            ElMessage.warning('抱歉，您没有分配权限，请联系管理员')
+            Local.remove(adminTokenKey)
+            Session.clear()
+          }
           // 解决刷新时，一直跳 404 页面问题，关联问题 No match found for location with path 'xxx'
           // to.query 防止页面刷新时，普通路由带参数时，参数丢失。动态路由（xxx/:id/:name"）isDynamic 无需处理
           next({ path: to.path, query: to.query })
