@@ -39,7 +39,13 @@ const getVersion = computed(() => {
   let isVersion = false
   if (route.path !== '/login') {
     // @ts-ignore
-    if ((Local.get('version') && Local.get('version') !== __VERSION__) || !Local.get('version')) isVersion = true
+    const currentVersion = __VERSION__
+    const lastVersion = Local.get('version')
+    if (!lastVersion) {
+      Local.set('version', currentVersion)
+    } else if (lastVersion !== currentVersion) {
+      isVersion = true
+    }
   }
   return isVersion
 })
