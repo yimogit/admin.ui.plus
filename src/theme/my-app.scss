@@ -16,6 +16,18 @@
   margin-bottom: 0px !important;
 }
 
+.el-form .el-col.mb20 {
+  margin-bottom: 20px !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .el-form .el-col .el-form-item .el-form-item__label {
+    height: unset;
+    line-height: unset;
+    margin-bottom: 5px;
+  }
+}
+
 /* 文字省略
 ------------------------------- */
 @for $i from 1 through 5 {

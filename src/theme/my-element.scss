@@ -3,9 +3,8 @@
 /* Form 表单
 ------------------------------- */
 .el-form {
-  // 用于修改弹窗时表单内容间隔太大问题，如系统设置的新增菜单弹窗里的表单内容
-  .el-form-item:last-of-type {
-    margin-bottom: 18px !important;
+  .el-col {
+    margin-bottom: 20px !important;
   }
 }
 
