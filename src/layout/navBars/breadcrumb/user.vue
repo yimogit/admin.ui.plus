@@ -56,7 +56,7 @@
     <el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
       <span class="layout-navbars-breadcrumb-user-link">
         <img :src="avatar" class="layout-navbars-breadcrumb-user-link-photo mr5" />
-        {{ userInfos.userName === '' ? 'common' : userInfos.userName }}
+        <span class="layout-navbars-breadcrumb-user-link-name">{{ userInfos.userName ? userInfos.userName : '' }}</span>
         <el-icon class="el-icon--right">
           <ele-ArrowDown />
         </el-icon>

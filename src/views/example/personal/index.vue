@@ -240,7 +240,7 @@ const currentTime = computed(() => {
       padding: 0 15px;
       .personal-title {
         font-size: 18px;
-        @include text-ellipsis(1);
+        @include text-ellipsis(2);
       }
       .personal-item {
         display: flex;

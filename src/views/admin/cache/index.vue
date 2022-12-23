@@ -46,7 +46,7 @@ const onQuery = async () => {
 
 const onClear = (row: any) => {
   proxy.$modal
-    .confirmDelete(`确定要清除【${row.description}缓存?`, { icon: 'ele-Brush' })
+    .confirmDelete(`确定要清除【${row.description}】缓存?`, { icon: 'ele-Brush' })
     .then(async () => {
       await new CacheApi().clear({ cacheKey: row.value }, { loading: true, showSuccessMessage: true })
       onQuery()

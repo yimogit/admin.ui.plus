@@ -189,6 +189,18 @@ body,
   }
 }
 
+.layout-container {
+  .layout-aside {
+    .el-scrollbar__view {
+      overflow: unset;
+    }
+  }
+}
+
+.error.layout-padding {
+  position: relative;
+}
+
 /* element plus 全局样式
 ------------------------------- */
 .layout-breadcrumb-seting {
@@ -327,5 +339,32 @@ body,
   }
   .pl#{$i} {
     padding-left: #{$i}px !important;
+  }
+
+  .el-form .mb#{$i} .el-form-item:last-of-type {
+    margin-bottom: 0px !important;
+  }
+
+  .el-form .el-col.mb#{$i} {
+    margin-bottom: #{$i}px !important;
+  }
+}
+
+/* 文字省略
+------------------------------- */
+@for $i from 1 through 5 {
+  .my-line-#{$i} {
+    @if $i == '1' {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    } @else {
+      display: -webkit-box !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
+      -webkit-line-clamp: $i;
+      -webkit-box-orient: vertical !important;
+    }
   }
 }

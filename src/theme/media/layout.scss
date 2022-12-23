@@ -7,6 +7,12 @@
   .el-message-box {
     width: 80% !important;
   }
+
+  .layout-navbars-breadcrumb-user-link-name {
+    // display: none;
+    max-width: 42px;
+    @include text-ellipsis(1);
+  }
 }
 
 /* 页面宽度小于768px
