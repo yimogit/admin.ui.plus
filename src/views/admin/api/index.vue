@@ -10,6 +10,11 @@
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
               <el-button v-auth="'api:admin:api:add'" type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
+              <el-popconfirm title="确定要同步接口" hide-icon width="180" hide-after="0" @confirm="onSync">
+                <template #reference>
+                  <el-button v-auth="'api:admin:api:sync'" :loading="state.syncLoading" type="primary" icon="ele-Refresh"> 同步 </el-button>
+                </template>
+              </el-popconfirm>
             </el-form-item>
           </el-form>
         </el-card>
@@ -52,8 +57,9 @@
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { ApiListOutput } from '/@/api/admin/data-contracts'
 import { Api as ApiApi } from '/@/api/admin/Api'
+import { Api as ApiExtApi } from '/@/api/admin/Api.extend'
 import { listToTree } from '/@/utils/tree'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, isArray } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
 
 // 引入组件
@@ -65,6 +71,7 @@ const apiFormRef = ref()
 
 const state = reactive({
   loading: false,
+  syncLoading: false,
   apiFormTitle: '',
   filterModel: {
     name: '',
@@ -109,12 +116,73 @@ const onEdit = (row: ApiListOutput) => {
 
 const onDelete = (row: ApiListOutput) => {
   proxy.$modal
-    .confirmDelete(`确定要删除接口【${row.label}】?`)
+    .confirmDelete(`确定要删除接口【${row.label}】?`, { type: 'info' })
     .then(async () => {
       await new ApiApi().delete({ id: row.id }, { loading: true })
       onQuery()
     })
     .catch(() => {})
+}
+
+const syncApi = async (url: string) => {
+  const res = await new ApiExtApi().getSwaggerJson(url, { showErrorMessage: false })
+  if (!res) {
+    return
+  }
+
+  const tags = res.tags
+  const paths = res.paths
+
+  const apis = []
+  // tags
+  if (tags && tags.length > 0) {
+    tags.forEach((t: any) => {
+      apis[apis.length] = {
+        label: t.description,
+        path: t.name,
+      }
+    })
+  }
+  // paths
+  if (paths) {
+    for (const [key, value] of Object.entries(paths)) {
+      const keys = Object.keys(value as any)
+      const values = Object.values(value as any)
+      const v = values && values.length > 0 ? values[0] : ({} as any)
+      const parentPath = v.tags && v.tags.length > 0 ? v.tags[0] : ''
+      apis[apis.length] = {
+        label: v.summary,
+        path: key,
+        parentPath,
+        httpMethods: keys.join(','),
+      }
+    }
+  }
+
+  return await new ApiApi().sync({ apis })
+}
+
+const onSync = async () => {
+  state.syncLoading = true
+  const resSwaggerResources = await new ApiExtApi().getSwaggerResources({ showErrorMessage: false }).catch(() => {
+    state.syncLoading = false
+  })
+  if (isArray(resSwaggerResources) && (resSwaggerResources?.length as number) > 0) {
+    for (let index = 0, len = resSwaggerResources.length, last = len - 1; index < len; index++) {
+      const swaggerResource = resSwaggerResources[index]
+      const resSyncApi = await syncApi(swaggerResource.url)
+      if (index === last) {
+        state.syncLoading = false
+        if (resSyncApi?.success) {
+          proxy.$modal.msgSuccess('同步成功')
+        } else {
+          proxy.$modal.msgError('同步失败')
+        }
+      }
+    }
+  } else {
+    state.syncLoading = false
+  }
 }
 </script>
 

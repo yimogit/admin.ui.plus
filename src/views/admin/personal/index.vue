@@ -79,7 +79,7 @@
               </el-col>
               <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                 <el-form-item>
-                  <el-popconfirm title="确定要更新个人信息吗？" hide-icon width="180" @confirm="onUpdateBasic">
+                  <el-popconfirm title="确定要更新个人信息吗？" hide-icon hide-after="0" width="180" @confirm="onUpdateBasic">
                     <template #reference>
                       <el-button :loading="state.updateLoading" type="primary">
                         <el-icon>

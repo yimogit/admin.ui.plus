@@ -32,7 +32,9 @@
         <el-table-column prop="lastRunTime" label="最后运行时间" :formatter="formatterTime" width="120" />
         <el-table-column label="操作" width="180" fixed="right" header-align="center" align="center">
           <template #default="{ row }">
-            <el-button v-auth="" icon="ele-Tickets" size="small" text type="primary" @click="onShowLogs(row)">日志</el-button>
+            <el-button v-auth="'api:admin:task-log:get-page'" icon="ele-Tickets" size="small" text type="primary" @click="onShowLogs(row)"
+              >日志</el-button
+            >
             <el-button
               v-if="row.status === 1 || row.status === 'Paused'"
               v-auth="'api:admin:task:pause'"

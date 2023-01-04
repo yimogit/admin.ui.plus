@@ -666,6 +666,31 @@ export type DynamicFilterLogic = 0 | 1
  */
 export type DynamicFilterOperator = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18
 
+export interface FileGetPageDto {
+  /** 文件名 */
+  fileName?: string | null
+}
+
+export interface FileGetPageOutput {
+  /** Invalid=0,Minio=1,Aliyun=2,QCloud=3,Qiniu=4,HuaweiCloud=5 */
+  provider?: OSSProvider
+  /** 存储桶名称 */
+  bucketName?: string | null
+  /**
+   * 文件Guid
+   * @format uuid
+   */
+  fileGuid?: string
+  /** 文件名 */
+  fileName?: string | null
+  /** 文件扩展名 */
+  extension?: string | null
+  /** 文件大小格式化 */
+  sizeFormat?: string | null
+  /** 链接地址 */
+  linkUrl?: string | null
+}
+
 export interface LogGetPageDto {
   /** 创建者 */
   createdUserName?: string | null
@@ -743,6 +768,12 @@ export interface LoginLogListOutput {
    */
   createdTime?: string | null
 }
+
+/**
+ * Invalid=0,Minio=1,Aliyun=2,QCloud=3,Qiniu=4,HuaweiCloud=5
+ * @format int32
+ */
+export type OSSProvider = 0 | 1 | 2 | 3 | 4 | 5
 
 /** 添加 */
 export interface OprationLogAddInput {
@@ -1061,6 +1092,22 @@ export interface PageInputDictionaryTypeGetPageDto {
 }
 
 /** 分页信息输入 */
+export interface PageInputFileGetPageDto {
+  /**
+   * 当前页标
+   * @format int32
+   */
+  currentPage?: number
+  /**
+   * 每页大小
+   * @format int32
+   */
+  pageSize?: number
+  dynamicFilter?: DynamicFilterInfo
+  filter?: FileGetPageDto
+}
+
+/** 分页信息输入 */
 export interface PageInputLogGetPageDto {
   /**
    * 当前页标
@@ -1188,6 +1235,17 @@ export interface PageOutputDictionaryTypeListOutput {
   total?: number
   /** 数据 */
   list?: DictionaryTypeListOutput[] | null
+}
+
+/** 分页信息输出 */
+export interface PageOutputFileGetPageOutput {
+  /**
+   * 数据总数
+   * @format int64
+   */
+  total?: number
+  /** 数据 */
+  list?: FileGetPageOutput[] | null
 }
 
 /** 分页信息输出 */
@@ -2175,6 +2233,18 @@ export interface ResultOutputPageOutputDictionaryTypeListOutput {
 }
 
 /** 结果输出 */
+export interface ResultOutputPageOutputFileGetPageOutput {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  /** 分页信息输出 */
+  data?: PageOutputFileGetPageOutput
+}
+
+/** 结果输出 */
 export interface ResultOutputPageOutputLoginLogListOutput {
   /** 是否成功标记 */
   success?: boolean
@@ -2391,7 +2461,7 @@ export interface RoleAddInput {
   name?: string | null
   /** 编码 */
   code?: string | null
-  /** 角色类型:Group=1,Menu=2 */
+  /** 角色类型:Group=1,Role=2 */
   type?: RoleType
   /** 数据范围:All=1,DeptWithChild=2,Dept=3,Self=4,Custom=5 */
   dataScope?: DataScope
@@ -2474,7 +2544,7 @@ export interface RoleEntity {
   name?: string | null
   /** 编码 */
   code?: string | null
-  /** 角色类型:Group=1,Menu=2 */
+  /** 角色类型:Group=1,Role=2 */
   type?: RoleType
   /** 数据范围:All=1,DeptWithChild=2,Dept=3,Self=4,Custom=5 */
   dataScope?: DataScope
@@ -2510,7 +2580,7 @@ export interface RoleGetListOutput {
   name?: string | null
   /** 编码 */
   code?: string | null
-  /** 角色类型:Group=1,Menu=2 */
+  /** 角色类型:Group=1,Role=2 */
   type?: RoleType
   /**
    * 排序
@@ -2531,7 +2601,7 @@ export interface RoleGetOutput {
   name?: string | null
   /** 编码 */
   code?: string | null
-  /** 角色类型:Group=1,Menu=2 */
+  /** 角色类型:Group=1,Role=2 */
   type?: RoleType
   /** 数据范围:All=1,DeptWithChild=2,Dept=3,Self=4,Custom=5 */
   dataScope?: DataScope
@@ -2593,7 +2663,7 @@ export interface RoleSetDataScopeInput {
 }
 
 /**
- * 角色类型:Group=1,Menu=2
+ * 角色类型:Group=1,Role=2
  * @format int32
  */
 export type RoleType = 1 | 2
@@ -2609,7 +2679,7 @@ export interface RoleUpdateInput {
   name?: string | null
   /** 编码 */
   code?: string | null
-  /** 角色类型:Group=1,Menu=2 */
+  /** 角色类型:Group=1,Role=2 */
   type?: RoleType
   /** 数据范围:All=1,DeptWithChild=2,Dept=3,Self=4,Custom=5 */
   dataScope?: DataScope
