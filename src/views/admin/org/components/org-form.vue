@@ -64,7 +64,7 @@
 <script lang="ts" setup>
 import { reactive, toRefs, ref, PropType } from 'vue'
 import { OrgListOutput, OrgUpdateInput } from '/@/api/admin/data-contracts'
-import { Org as OrgApi } from '/@/api/admin/Org'
+import { OrgApi } from '/@/api/admin/Org'
 import eventBus from '/@/utils/mitt'
 
 defineProps({

@@ -104,7 +104,7 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, nextTick, defineAsyncComponent } from 'vue'
 import { RoleGetListOutput, UserGetRoleUserListOutput, UserGetPageOutput, RoleAddRoleUserListInput, RoleType } from '/@/api/admin/data-contracts'
-import { Role as RoleApi } from '/@/api/admin/Role'
+import { RoleApi } from '/@/api/admin/Role'
 import { listToTree } from '/@/utils/tree'
 import { ElTable } from 'element-plus'
 import { cloneDeep } from 'lodash-es'

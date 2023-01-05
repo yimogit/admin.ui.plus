@@ -47,7 +47,7 @@
 <script lang="ts" setup>
 import { reactive, toRefs, ref } from 'vue'
 import { UserChangePasswordInput } from '/@/api/admin/data-contracts'
-import { User as UserApi } from '/@/api/admin/User'
+import { UserApi } from '/@/api/admin/User'
 
 defineProps({
   title: {

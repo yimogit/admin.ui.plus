@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, watch, nextTick } from 'vue'
 import { OrgListOutput } from '/@/api/admin/data-contracts'
-import { Org as OrgApi } from '/@/api/admin/Org'
+import { OrgApi } from '/@/api/admin/Org'
 import { listToTree } from '/@/utils/tree'
 import { ElTree } from 'element-plus'
 

@@ -53,7 +53,7 @@
 <script lang="ts" setup>
 import { reactive, onMounted } from 'vue'
 import { OprationLogListOutput, PageInputLogGetPageDto } from '/@/api/admin/data-contracts'
-import { OprationLog as OprationLogApi } from '/@/api/admin/OprationLog'
+import { OprationLogApi } from '/@/api/admin/OprationLog'
 import dayjs from 'dayjs'
 
 const state = reactive({

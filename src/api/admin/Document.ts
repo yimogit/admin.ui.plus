@@ -28,7 +28,7 @@ import {
 } from './data-contracts'
 import { ContentType, HttpClient, RequestParams } from './http-client'
 
-export class Document<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
+export class DocumentApi<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
    * No description
    *

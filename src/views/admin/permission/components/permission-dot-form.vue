@@ -36,6 +36,7 @@
                 collapse-tags-tooltip
                 :filter-node-method="onApiFilterNode"
                 class="w100"
+                @current-change="onApiCurrentChange"
               >
                 <template #default="{ data }">
                   <span class="my-flex my-flex-between">
@@ -88,10 +89,11 @@
 <script lang="ts" setup>
 import { reactive, toRefs, getCurrentInstance, ref, PropType } from 'vue'
 import { PermissionListOutput, PermissionUpdateDotInput, ApiListOutput } from '/@/api/admin/data-contracts'
-import { Permission as PermissionApi } from '/@/api/admin/Permission'
-import { Api as ApiApi } from '/@/api/admin/Api'
+import { PermissionApi } from '/@/api/admin/Permission'
+import { ApiApi } from '/@/api/admin/Api'
 import { listToTree } from '/@/utils/tree'
 import eventBus from '/@/utils/mitt'
+import { trimStart, replace } from 'lodash-es'
 
 defineProps({
   title: {
@@ -150,6 +152,17 @@ const open = async (row: any = {}) => {
 const onApiFilterNode = (value: string, data: ApiListOutput) => {
   if (!value) return true
   return data.label?.indexOf(value) !== -1 || data.path?.indexOf(value) !== -1
+}
+
+const onApiCurrentChange = (data: ApiListOutput) => {
+  if (data) {
+    if (!state.form.label) {
+      state.form.label = data.label
+    }
+    if (!state.form.code) {
+      state.form.code = trimStart(replace(data.path || '', /\//g, ':'), ':')
+    }
+  }
 }
 
 // 取消

@@ -12,7 +12,7 @@
 import { LoginLogAddInput, PageInputLogGetPageDto, ResultOutputInt64, ResultOutputPageOutputLoginLogListOutput } from './data-contracts'
 import { ContentType, HttpClient, RequestParams } from './http-client'
 
-export class LoginLog<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
+export class LoginLogApi<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
    * No description
    *

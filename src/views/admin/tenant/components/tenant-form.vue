@@ -55,7 +55,7 @@
 <script lang="ts" setup>
 import { reactive, toRefs, getCurrentInstance, ref } from 'vue'
 import { TenantAddInput, TenantUpdateInput } from '/@/api/admin/data-contracts'
-import { Tenant as TenantApi } from '/@/api/admin/Tenant'
+import { TenantApi } from '/@/api/admin/Tenant'
 import { testMobile, testEmail } from '/@/utils/test'
 import eventBus from '/@/utils/mitt'
 

@@ -33,7 +33,7 @@
 <script lang="ts" setup>
 import { ref, toRefs, reactive, computed, defineAsyncComponent } from 'vue'
 import { RoleGetListOutput, RoleSetDataScopeInput } from '/@/api/admin/data-contracts'
-import { Role as RoleApi } from '/@/api/admin/Role'
+import { RoleApi } from '/@/api/admin/Role'
 
 const OrgMenu = defineAsyncComponent(() => import('/@/views/admin/org/components/org-menu.vue'))
 

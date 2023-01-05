@@ -12,7 +12,7 @@
 import { OprationLogAddInput, PageInputLogGetPageDto, ResultOutputInt64, ResultOutputPageOutputOprationLogListOutput } from './data-contracts'
 import { ContentType, HttpClient, RequestParams } from './http-client'
 
-export class OprationLog<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
+export class OprationLogApi<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
    * No description
    *

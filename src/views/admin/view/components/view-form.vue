@@ -68,7 +68,7 @@
 <script lang="ts" setup>
 import { reactive, toRefs, ref, PropType } from 'vue'
 import { ViewListOutput, ViewUpdateInput } from '/@/api/admin/data-contracts'
-import { View as ViewView } from '/@/api/admin/View'
+import { ViewApi } from '/@/api/admin/View'
 import eventBus from '/@/utils/mitt'
 
 defineProps({
@@ -96,7 +96,7 @@ const { form } = toRefs(state)
 // 打开对话框
 const open = async (row: any = {}) => {
   if (row.id > 0) {
-    const res = await new ViewView().get({ id: row.id }, { loading: true })
+    const res = await new ViewApi().get({ id: row.id }, { loading: true })
 
     if (res?.success) {
       let formData = res.data as ViewUpdateInput
@@ -126,9 +126,9 @@ const onSure = () => {
     let res = {} as any
     state.form.parentId = state.form.parentId && state.form.parentId > 0 ? state.form.parentId : undefined
     if (state.form.id != undefined && state.form.id > 0) {
-      res = await new ViewView().update(state.form, { showSuccessMessage: true })
+      res = await new ViewApi().update(state.form, { showSuccessMessage: true })
     } else {
-      res = await new ViewView().add(state.form, { showSuccessMessage: true })
+      res = await new ViewApi().add(state.form, { showSuccessMessage: true })
     }
 
     state.sureLoading = false

@@ -138,7 +138,7 @@
 <script setup lang="ts" name="personal">
 import { reactive, computed, onMounted, toRefs, ref, getCurrentInstance, defineAsyncComponent } from 'vue'
 import { formatAxis } from '/@/utils/formatTime'
-import { User as UserApi } from '/@/api/admin/User'
+import { UserApi } from '/@/api/admin/User'
 import { UserGetBasicOutput } from '/@/api/admin/data-contracts'
 import { useUserInfo } from '/@/stores/userInfo'
 import pinia from '/@/stores/index'

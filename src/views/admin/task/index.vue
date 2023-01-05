@@ -82,7 +82,7 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, getCurrentInstance, defineAsyncComponent } from 'vue'
 import { TaskListOutput, PageInputTaskGetPageDto } from '/@/api/admin/data-contracts'
-import { Task as TaskApi } from '/@/api/admin/Task'
+import { TaskApi } from '/@/api/admin/Task'
 import dayjs from 'dayjs'
 
 // 引入组件

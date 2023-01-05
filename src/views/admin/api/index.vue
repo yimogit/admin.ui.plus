@@ -56,8 +56,8 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { ApiListOutput } from '/@/api/admin/data-contracts'
-import { Api as ApiApi } from '/@/api/admin/Api'
-import { Api as ApiExtApi } from '/@/api/admin/Api.extend'
+import { ApiApi } from '/@/api/admin/Api'
+import { ApiApi as ApiExtApi } from '/@/api/admin.extend/Api'
 import { listToTree } from '/@/utils/tree'
 import { cloneDeep, isArray } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
@@ -175,6 +175,7 @@ const onSync = async () => {
         state.syncLoading = false
         if (resSyncApi?.success) {
           proxy.$modal.msgSuccess('同步成功')
+          onQuery()
         } else {
           proxy.$modal.msgError('同步失败')
         }

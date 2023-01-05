@@ -64,7 +64,7 @@
 <script lang="ts" setup>
 import { reactive, toRefs, ref, PropType } from 'vue'
 import { ApiListOutput, ApiUpdateInput } from '/@/api/admin/data-contracts'
-import { Api as ApiApi } from '/@/api/admin/Api'
+import { ApiApi } from '/@/api/admin/Api'
 import eventBus from '/@/utils/mitt'
 
 defineProps({

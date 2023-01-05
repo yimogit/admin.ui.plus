@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 //import Cookies from 'js-cookie'
 import { Session } from '/@/utils/storage'
-import { Auth as AuthApi } from '/@/api/admin/Auth'
+import { AuthApi } from '/@/api/admin/Auth'
 import { clearToken } from '/@/api/admin/http-client'
 
 /**

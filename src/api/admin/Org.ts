@@ -13,7 +13,7 @@ import { AxiosResponse } from 'axios'
 import { OrgAddInput, OrgUpdateInput, ResultOutputInt64, ResultOutputListOrgListOutput, ResultOutputOrgGetOutput } from './data-contracts'
 import { ContentType, HttpClient, RequestParams } from './http-client'
 
-export class Org<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
+export class OrgApi<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
    * No description
    *

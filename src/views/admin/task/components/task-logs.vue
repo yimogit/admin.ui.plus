@@ -40,7 +40,7 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
 import { ResultOutputPageOutputTaskLog, PageInputTaskLogGetPageDto, TaskListOutput } from '/@/api/admin/data-contracts'
-import { TaskLog as TaskLogApi } from '/@/api/admin/TaskLog'
+import { TaskLogApi } from '/@/api/admin/TaskLog'
 import dayjs from 'dayjs'
 
 defineProps({

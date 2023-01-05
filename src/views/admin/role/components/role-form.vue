@@ -54,7 +54,7 @@
 <script lang="ts" setup>
 import { reactive, toRefs, ref, PropType } from 'vue'
 import { RoleGetListOutput, RoleUpdateInput } from '/@/api/admin/data-contracts'
-import { Role as RoleApi } from '/@/api/admin/Role'
+import { RoleApi } from '/@/api/admin/Role'
 import { cloneDeep } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
 

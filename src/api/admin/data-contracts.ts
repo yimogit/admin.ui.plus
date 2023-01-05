@@ -666,6 +666,73 @@ export type DynamicFilterLogic = 0 | 1
  */
 export type DynamicFilterOperator = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18
 
+/** 文件 */
+export interface FileEntity {
+  /**
+   * 主键Id
+   * @format int64
+   */
+  id?: number
+  /**
+   * 创建者Id
+   * @format int64
+   */
+  createdUserId?: number | null
+  /**
+   * 创建者
+   * @maxLength 50
+   */
+  createdUserName?: string | null
+  /**
+   * 创建时间
+   * @format date-time
+   */
+  createdTime?: string | null
+  /**
+   * 修改者Id
+   * @format int64
+   */
+  modifiedUserId?: number | null
+  /**
+   * 修改者
+   * @maxLength 50
+   */
+  modifiedUserName?: string | null
+  /**
+   * 修改时间
+   * @format date-time
+   */
+  modifiedTime?: string | null
+  /** 是否删除 */
+  isDeleted?: boolean
+  /** Invalid=0,Minio=1,Aliyun=2,QCloud=3,Qiniu=4,HuaweiCloud=5 */
+  provider?: OSSProvider
+  /** 存储桶名称 */
+  bucketName?: string | null
+  /** 文件目录 */
+  fileDirectory?: string | null
+  /**
+   * 文件Guid
+   * @format uuid
+   */
+  fileGuid?: string
+  /** 文件名 */
+  fileName?: string | null
+  /** 文件扩展名 */
+  extension?: string | null
+  /**
+   * 文件字节长度
+   * @format int64
+   */
+  size?: number
+  /** 文件大小格式化 */
+  sizeFormat?: string | null
+  /** 链接地址 */
+  linkUrl?: string | null
+  /** md5码，防止上传重复文件 */
+  md5?: string | null
+}
+
 export interface FileGetPageDto {
   /** 文件名 */
   fileName?: string | null
@@ -689,6 +756,20 @@ export interface FileGetPageOutput {
   sizeFormat?: string | null
   /** 链接地址 */
   linkUrl?: string | null
+  /** 创建者 */
+  createdUserName?: string | null
+  /**
+   * 创建时间
+   * @format date-time
+   */
+  createdTime?: string | null
+  /** 修改者 */
+  modifiedUserName?: string | null
+  /**
+   * 修改时间
+   * @format date-time
+   */
+  modifiedTime?: string | null
 }
 
 export interface LogGetPageDto {
@@ -2015,6 +2096,18 @@ export interface ResultOutputDocumentGetMenuOutput {
 }
 
 /** 结果输出 */
+export interface ResultOutputFileEntity {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  /** 文件 */
+  data?: FileEntity
+}
+
+/** 结果输出 */
 export interface ResultOutputIEnumerableObject {
   /** 是否成功标记 */
   success?: boolean
@@ -2075,6 +2168,18 @@ export interface ResultOutputListDocumentListOutput {
   msg?: string | null
   /** 数据 */
   data?: DocumentListOutput[] | null
+}
+
+/** 结果输出 */
+export interface ResultOutputListFileEntity {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  /** 数据 */
+  data?: FileEntity[] | null
 }
 
 /** 结果输出 */

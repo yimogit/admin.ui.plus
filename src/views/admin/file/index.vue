@@ -7,14 +7,19 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
+          <el-button type="primary" icon="ele-Upload" @click="onUpload"> 上传 </el-button>
         </el-form-item>
       </el-form>
     </el-card>
 
     <el-card shadow="never" style="margin-top: 8px">
       <el-table v-loading="state.loading" :data="state.fileListData" row-key="id" style="width: 100%">
-        <el-table-column prop="fileName" label="文件名" min-width="120" show-overflow-tooltip />
-        <el-table-column prop="createdTime" label="更新时间" :formatter="formatterTime" width="120" />
+        <el-table-column prop="fileName" label="文件名" :formatter="formatterFileName" min-width="120" show-overflow-tooltip />
+        <el-table-column prop="sizeFormat" label="大小" width="120" />
+        <el-table-column prop="providerName" label="供应商" width="80" />
+        <el-table-column prop="bucketName" label="存储桶" width="80" />
+        <el-table-column prop="createdUserName" label="上传者" width="80" />
+        <el-table-column prop="createdTime" label="更新时间" :formatter="formatterTime" width="100" />
         <el-table-column label="操作" width="180" fixed="right" header-align="center" align="center">
           <!-- <template #default="{ row }">
             
@@ -35,14 +40,21 @@
         />
       </div>
     </el-card>
+
+    <file-upload ref="fileUploadRef" title="上传文件"></file-upload>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, defineAsyncComponent } from 'vue'
 import { PageInputFileGetPageDto, FileGetPageOutput } from '/@/api/admin/data-contracts'
-import { File as FileApi } from '/@/api/admin/File'
+import { FileApi } from '/@/api/admin/File'
 import dayjs from 'dayjs'
+import eventBus from '/@/utils/mitt'
+
+const FileUpload = defineAsyncComponent(() => import('./components/file-upload.vue'))
+
+const fileUploadRef = ref()
 
 const state = reactive({
   loading: false,
@@ -61,9 +73,20 @@ const state = reactive({
 
 onMounted(() => {
   onQuery()
+  eventBus.on('refreshFile', async () => {
+    onQuery()
+  })
 })
 
-const formatterTime = (row: any, column: any, cellValue: any) => {
+onUnmounted(() => {
+  eventBus.off('refreshFile')
+})
+
+const formatterFileName = (row: FileGetPageOutput, column: any, cellValue: any) => {
+  return (row.fileName || '') + (row.extension || '')
+}
+
+const formatterTime = (row: FileGetPageOutput, column: any, cellValue: any) => {
   return dayjs(cellValue).format('YYYY-MM-DD HH:mm:ss')
 }
 
@@ -84,6 +107,10 @@ const onSizeChange = (val: number) => {
 const onCurrentChange = (val: number) => {
   state.pageInput.currentPage = val
   onQuery()
+}
+
+const onUpload = () => {
+  fileUploadRef.value.open()
 }
 </script>
 

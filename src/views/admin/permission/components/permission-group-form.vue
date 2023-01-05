@@ -104,8 +104,8 @@
 <script lang="ts" setup>
 import { reactive, toRefs, getCurrentInstance, ref, PropType, defineAsyncComponent } from 'vue'
 import { PermissionListOutput, PermissionUpdateGroupInput, ViewListOutput } from '/@/api/admin/data-contracts'
-import { Permission as PermissionApi } from '/@/api/admin/Permission'
-import { View as ViewApi } from '/@/api/admin/View'
+import { PermissionApi } from '/@/api/admin/Permission'
+import { ViewApi } from '/@/api/admin/View'
 import { listToTree } from '/@/utils/tree'
 import eventBus from '/@/utils/mitt'
 

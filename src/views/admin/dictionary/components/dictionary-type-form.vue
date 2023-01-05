@@ -38,7 +38,7 @@
 <script lang="ts" setup>
 import { reactive, toRefs, getCurrentInstance, ref } from 'vue'
 import { DictionaryTypeAddInput, DictionaryTypeUpdateInput } from '/@/api/admin/data-contracts'
-import { DictionaryType as DictionaryTypeApi } from '/@/api/admin/DictionaryType'
+import { DictionaryTypeApi } from '/@/api/admin/DictionaryType'
 import eventBus from '/@/utils/mitt'
 
 defineProps({

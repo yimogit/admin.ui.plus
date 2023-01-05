@@ -20,7 +20,7 @@ import {
 } from './data-contracts'
 import { ContentType, HttpClient, RequestParams } from './http-client'
 
-export class Dictionary<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
+export class DictionaryApi<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
    * No description
    *

@@ -43,6 +43,7 @@ declare type MittType<T = any> = {
   refreshTenant?: T
   refreshUser?: T
   refreshView?: T
+  refreshFile?: T
 }
 
 // mitt 参数类型定义

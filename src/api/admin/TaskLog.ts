@@ -12,7 +12,7 @@
 import { PageInputTaskLogGetPageDto, ResultOutputPageOutputTaskLog } from './data-contracts'
 import { ContentType, HttpClient, RequestParams } from './http-client'
 
-export class TaskLog<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
+export class TaskLogApi<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
    * No description
    *

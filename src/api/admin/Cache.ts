@@ -13,7 +13,7 @@ import { AxiosResponse } from 'axios'
 import { ResultOutputListObject } from './data-contracts'
 import { HttpClient, RequestParams } from './http-client'
 
-export class Cache<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
+export class CacheApi<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
    * No description
    *

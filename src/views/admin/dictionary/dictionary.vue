@@ -52,7 +52,7 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { DictionaryListOutput, PageInputDictionaryGetPageDto, DictionaryTypeListOutput } from '/@/api/admin/data-contracts'
-import { Dictionary as DictionaryApi } from '/@/api/admin/Dictionary'
+import { DictionaryApi } from '/@/api/admin/Dictionary'
 import eventBus from '/@/utils/mitt'
 
 // 引入组件

@@ -102,9 +102,9 @@
 <script lang="ts" setup>
 import { reactive, toRefs, getCurrentInstance, ref, watch, defineAsyncComponent } from 'vue'
 import { UserAddInput, UserUpdateInput, OrgListOutput, RoleGetListOutput } from '/@/api/admin/data-contracts'
-import { User as UserApi } from '/@/api/admin/User'
-import { Org as OrgApi } from '/@/api/admin/Org'
-import { Role as roleApi } from '/@/api/admin/Role'
+import { UserApi } from '/@/api/admin/User'
+import { OrgApi } from '/@/api/admin/Org'
+import { RoleApi } from '/@/api/admin/Role'
 import { listToTree, treeToList } from '/@/utils/tree'
 import { cloneDeep } from 'lodash-es'
 import { testMobile, testEmail } from '/@/utils/test'
@@ -181,7 +181,7 @@ const getOrgs = async () => {
 }
 
 const getRoles = async () => {
-  const res = await new roleApi().getList()
+  const res = await new RoleApi().getList()
   if (res?.success && res.data && res.data.length > 0) {
     state.roleTreeData = listToTree(res.data)
   } else {

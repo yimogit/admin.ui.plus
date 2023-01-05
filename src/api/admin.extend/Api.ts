@@ -10,9 +10,9 @@
  */
 
 import { AxiosResponse } from 'axios'
-import { HttpClient, RequestParams } from './http-client'
+import { HttpClient, RequestParams } from '../admin/http-client'
 
-export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
+export class ApiApi<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
    * No description
    *

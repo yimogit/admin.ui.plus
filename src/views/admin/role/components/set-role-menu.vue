@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import { ref, reactive, getCurrentInstance, computed } from 'vue'
 import { RoleGetListOutput, PermissionAssignInput } from '/@/api/admin/data-contracts'
-import { Permission as PermissionApi } from '/@/api/admin/Permission'
+import { PermissionApi } from '/@/api/admin/Permission'
 import { ElTree } from 'element-plus'
 import { listToTree } from '/@/utils/tree'
 import { cloneDeep } from 'lodash-es'

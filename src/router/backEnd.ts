@@ -10,7 +10,7 @@ import { formatTwoStageRoutes, formatFlatteningRoutes, router } from '/@/router/
 import { useRoutesList } from '/@/stores/routesList'
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes'
 // import { useMenuApi } from '/@/api/menu/index'
-import { Auth as AuthApi } from '/@/api/admin/Auth'
+import { AuthApi } from '/@/api/admin/Auth'
 import { listToTree } from '/@/utils/tree'
 
 // 后端控制路由

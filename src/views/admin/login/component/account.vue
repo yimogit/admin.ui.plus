@@ -68,7 +68,7 @@ import { initBackEndControlRoutes } from '/@/router/backEnd'
 import { Local, Session } from '/@/utils/storage'
 import { formatAxis } from '/@/utils/formatTime'
 import { NextLoading } from '/@/utils/loading'
-import { Auth as AuthApi } from '/@/api/admin/Auth'
+import { AuthApi } from '/@/api/admin/Auth'
 import { AuthLoginInput } from '/@/api/admin/data-contracts'
 import { adminTokenKey } from '/@/api/admin/http-client'
 

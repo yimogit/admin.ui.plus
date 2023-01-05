@@ -56,7 +56,7 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { TenantListOutput, PageInputTenantGetPageDto } from '/@/api/admin/data-contracts'
-import { Tenant as TenantApi } from '/@/api/admin/Tenant'
+import { TenantApi } from '/@/api/admin/Tenant'
 import eventBus from '/@/utils/mitt'
 import { auth } from '/@/utils/authFunction'
 

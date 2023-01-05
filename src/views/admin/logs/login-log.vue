@@ -48,7 +48,7 @@
 <script lang="ts" setup>
 import { reactive, onMounted } from 'vue'
 import { LoginLogListOutput, PageInputLogGetPageDto } from '/@/api/admin/data-contracts'
-import { LoginLog as LoginLogApi } from '/@/api/admin/LoginLog'
+import { LoginLogApi } from '/@/api/admin/LoginLog'
 import dayjs from 'dayjs'
 
 const state = reactive({

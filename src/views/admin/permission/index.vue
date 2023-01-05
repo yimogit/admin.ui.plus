@@ -113,7 +113,7 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { PermissionListOutput } from '/@/api/admin/data-contracts'
-import { Permission as PermissionPermission } from '/@/api/admin/Permission'
+import { PermissionApi } from '/@/api/admin/Permission'
 import { listToTree } from '/@/utils/tree'
 import { cloneDeep } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
@@ -154,7 +154,7 @@ onUnmounted(() => {
 
 const onQuery = async () => {
   state.loading = true
-  const res = await new PermissionPermission().getList()
+  const res = await new PermissionApi().getList()
   if (res.data && res.data.length > 0) {
     state.permissionTreeData = listToTree(cloneDeep(res.data))
     state.formPermissionGroupTreeData = listToTree(cloneDeep(res.data).filter((a) => a.type === 1))
@@ -205,7 +205,7 @@ const onDelete = (row: PermissionListOutput) => {
   proxy.$modal
     .confirmDelete(`确定要删除${row.type === 1 ? '分组' : row.type === 2 ? '菜单' : row.type === 3 ? '权限点' : ''}【${row.label}】?`)
     .then(async () => {
-      await new PermissionPermission().delete({ id: row.id }, { loading: true })
+      await new PermissionApi().delete({ id: row.id }, { loading: true })
       onQuery()
     })
     .catch(() => {})

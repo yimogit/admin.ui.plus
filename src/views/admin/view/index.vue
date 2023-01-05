@@ -54,7 +54,7 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { ViewListOutput } from '/@/api/admin/data-contracts'
-import { View as ViewView } from '/@/api/admin/View'
+import { ViewApi } from '/@/api/admin/View'
 import { listToTree } from '/@/utils/tree'
 import { cloneDeep } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
@@ -88,7 +88,7 @@ onUnmounted(() => {
 
 const onQuery = async () => {
   state.loading = true
-  const res = await new ViewView().getList()
+  const res = await new ViewApi().getList()
   if (res.data && res.data.length > 0) {
     state.viewTreeData = listToTree(cloneDeep(res.data))
   } else {
@@ -112,7 +112,7 @@ const onDelete = (row: ViewListOutput) => {
   proxy.$modal
     .confirmDelete(`确定要删除视图【${row.label}】?`)
     .then(async () => {
-      await new ViewView().delete({ id: row.id }, { loading: true })
+      await new ViewApi().delete({ id: row.id }, { loading: true })
       onQuery()
     })
     .catch(() => {})
