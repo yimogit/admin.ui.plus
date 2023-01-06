@@ -9,7 +9,9 @@
  * ---------------------------------------------------------------
  */
 
+import { AxiosResponse } from 'axios'
 import {
+  FileDeleteInput,
   PageInputFileGetPageDto,
   ResultOutputFileEntity,
   ResultOutputListFileEntity,
@@ -35,6 +37,24 @@ export class FileApi<SecurityDataType = unknown> extends HttpClient<SecurityData
       secure: true,
       type: ContentType.Json,
       format: 'json',
+      ...params,
+    })
+  /**
+   * No description
+   *
+   * @tags file
+   * @name Delete
+   * @summary 删除文件
+   * @request POST:/api/admin/file/delete
+   * @secure
+   */
+  delete = (data: FileDeleteInput, params: RequestParams = {}) =>
+    this.request<AxiosResponse, any>({
+      path: `/api/admin/file/delete`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
       ...params,
     })
   /**

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog v-model="state.showDialog" destroy-on-close :title="title" draggable width="600px">
+    <el-dialog v-model="state.showDialog" :title="title" draggable width="600px">
       <div>
         <el-upload
           ref="uploadRef"

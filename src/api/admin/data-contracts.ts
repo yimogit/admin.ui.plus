@@ -666,6 +666,14 @@ export type DynamicFilterLogic = 0 | 1
  */
 export type DynamicFilterOperator = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18
 
+export interface FileDeleteInput {
+  /**
+   * 文件Id
+   * @format int64
+   */
+  id: number
+}
+
 /** 文件 */
 export interface FileEntity {
   /**
@@ -739,10 +747,17 @@ export interface FileGetPageDto {
 }
 
 export interface FileGetPageOutput {
-  /** Invalid=0,Minio=1,Aliyun=2,QCloud=3,Qiniu=4,HuaweiCloud=5 */
-  provider?: OSSProvider
+  /**
+   * 文件Id
+   * @format int64
+   */
+  id?: number
+  /** OSS供应商 */
+  providerName?: string | null
   /** 存储桶名称 */
   bucketName?: string | null
+  /** 文件目录 */
+  fileDirectory?: string | null
   /**
    * 文件Guid
    * @format uuid

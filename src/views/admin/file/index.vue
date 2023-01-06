@@ -14,16 +14,56 @@
 
     <el-card shadow="never" style="margin-top: 8px">
       <el-table v-loading="state.loading" :data="state.fileListData" row-key="id" style="width: 100%">
-        <el-table-column prop="fileName" label="文件名" :formatter="formatterFileName" min-width="120" show-overflow-tooltip />
+        <el-table-column prop="fileName" label="文件名" min-width="220">
+          <template #default="{ row }">
+            <div class="my-flex">
+              <el-image
+                v-if="isImage(row.extension)"
+                :src="row.linkUrl"
+                :preview-src-list="previewImglist"
+                :initial-index="getInitialIndex(row.linkUrl)"
+                :lazy="true"
+                :hide-on-click-modal="true"
+                fit="scale-down"
+                preview-teleported
+                style="width: 80px; height: 80px"
+              />
+              <div class="ml10 my-flex-fill my-flex-y-center">
+                <div>{{ (row.fileName || '') + (row.extension || '') }}</div>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column prop="sizeFormat" label="大小" width="120" />
         <el-table-column prop="providerName" label="供应商" width="80" />
         <el-table-column prop="bucketName" label="存储桶" width="80" />
-        <el-table-column prop="createdUserName" label="上传者" width="80" />
-        <el-table-column prop="createdTime" label="更新时间" :formatter="formatterTime" width="100" />
+        <el-table-column prop="fileDirectory" label="目录" width="120" />
+        <el-table-column prop="createdUserName" label="上传者" width="80">
+          <template #default="{ row }">
+            {{ row.modifiedUserName || row.createdUserName || '' }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="createdTime" label="更新时间" width="100">
+          <template #default="{ row }">
+            {{ formatterTime(row.modifiedTime || row.createdTime || '') }}
+          </template>
+        </el-table-column>
         <el-table-column label="操作" width="180" fixed="right" header-align="center" align="center">
-          <!-- <template #default="{ row }">
-            
-          </template> -->
+          <template #default="{ row }">
+            <el-popover :width="220">
+              <p>{{ row.linkUrl }}</p>
+              <div style="text-align: right; margin: 0">
+                <el-button icon="ele-CopyDocument" size="small" type="primary" @click="copyText(row.linkUrl)">复制地址</el-button>
+              </div>
+              <template #reference>
+                <el-button size="small" text type="primary">地址</el-button>
+              </template>
+            </el-popover>
+            <el-link class="my-link mr12 ml12" :href="row.linkUrl" type="primary" icon="ele-Download" size="small" :underline="false" target="_blank"
+              >下载</el-link
+            >
+            <el-button v-auth="'api:admin:view:softdelete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button>
+          </template>
         </el-table-column>
       </el-table>
       <div class="my-flex my-flex-end" style="margin-top: 20px">
@@ -46,11 +86,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted, onUnmounted, defineAsyncComponent } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, defineAsyncComponent, computed, getCurrentInstance } from 'vue'
 import { PageInputFileGetPageDto, FileGetPageOutput } from '/@/api/admin/data-contracts'
 import { FileApi } from '/@/api/admin/File'
 import dayjs from 'dayjs'
 import eventBus from '/@/utils/mitt'
+import { isImage } from '/@/utils/test'
+import commonFunction from '/@/utils/commonFunction'
+
+const { proxy } = getCurrentInstance() as any
 
 const FileUpload = defineAsyncComponent(() => import('./components/file-upload.vue'))
 
@@ -71,6 +115,18 @@ const state = reactive({
   fileLogsTitle: '',
 })
 
+const { copyText } = commonFunction()
+
+const previewImglist = computed(() => {
+  let imgList = [] as string[]
+  state.fileListData.forEach((a) => {
+    if (isImage(a.extension as string) && a.linkUrl) {
+      imgList.push(a.linkUrl as string)
+    }
+  })
+  return imgList
+})
+
 onMounted(() => {
   onQuery()
   eventBus.on('refreshFile', async () => {
@@ -82,12 +138,12 @@ onUnmounted(() => {
   eventBus.off('refreshFile')
 })
 
-const formatterFileName = (row: FileGetPageOutput, column: any, cellValue: any) => {
-  return (row.fileName || '') + (row.extension || '')
+const formatterTime = (cellValue: any) => {
+  return dayjs(cellValue).format('YYYY-MM-DD HH:mm:ss')
 }
 
-const formatterTime = (row: FileGetPageOutput, column: any, cellValue: any) => {
-  return dayjs(cellValue).format('YYYY-MM-DD HH:mm:ss')
+const getInitialIndex = (imgUrl: string) => {
+  return previewImglist.value.indexOf(imgUrl)
 }
 
 const onQuery = async () => {
@@ -112,6 +168,16 @@ const onCurrentChange = (val: number) => {
 const onUpload = () => {
   fileUploadRef.value.open()
 }
+
+const onDelete = (row: FileGetPageOutput) => {
+  proxy.$modal
+    .confirmDelete(`确定要删除文件【${row.fileName}${row.extension}】?`)
+    .then(async () => {
+      await new FileApi().delete({ id: row.id as number }, { loading: true, showSuccessMessage: true })
+      onQuery()
+    })
+    .catch(() => {})
+}
 </script>
 
 <script lang="ts">
@@ -122,4 +188,8 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.my-link {
+  font-size: 12px;
+}
+</style>
