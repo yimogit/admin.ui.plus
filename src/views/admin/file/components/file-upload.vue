@@ -1,12 +1,18 @@
 <template>
   <div>
     <el-dialog v-model="state.showDialog" :title="title" draggable width="600px">
+      <div class="mb15">
+        <el-input v-model="state.fileDirectory" placeholder="文件目录" clearable />
+        <div class="mt5">
+          <el-alert class="my-el-alert" title="目录不填则默认使用本地上传格式：upload/yyyy/MM/dd" type="info" :closable="false" />
+        </div>
+      </div>
       <div>
         <el-upload
           ref="uploadRef"
           :action="uploadAction"
           :headers="uploadHeaders"
-          :data="{ fileDirectory: '' }"
+          :data="{ fileDirectory: state.fileDirectory }"
           drag
           multiple
           :auto-upload="false"
@@ -48,6 +54,7 @@ defineProps({
 const state = reactive({
   showDialog: false,
   sureLoading: false,
+  fileDirectory: '',
   fileList: [] as UploadFile[],
 })
 
@@ -93,3 +100,11 @@ export default defineComponent({
   name: 'admin/file/upload',
 })
 </script>
+
+<style scoped lang="scss">
+.my-el-alert {
+  border: none;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+</style>
