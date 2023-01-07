@@ -7,7 +7,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
-          <el-button type="primary" icon="ele-Upload" @click="onUpload"> 上传 </el-button>
+          <el-button v-auth="'api:admin:file:upload-file'" type="primary" icon="ele-Upload" @click="onUpload"> 上传 </el-button>
         </el-form-item>
       </el-form>
     </el-card>

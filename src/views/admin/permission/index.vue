@@ -81,7 +81,7 @@
                   @click="onEdit(row)"
                   >编辑</el-button
                 >
-                <el-button v-auth="'api:admin:permission:softdelete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)"
+                <el-button v-auth="'api:admin:permission:delete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)"
                   >删除</el-button
                 >
               </template>
