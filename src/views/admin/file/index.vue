@@ -52,7 +52,7 @@
           <template #default="{ row }">
             <el-popover :width="220">
               <p>{{ row.linkUrl }}</p>
-              <div style="text-align: right; margin: 0">
+              <div class="mt10" style="text-align: right; margin: 0">
                 <el-button icon="ele-CopyDocument" size="small" type="primary" @click="copyText(row.linkUrl)">复制地址</el-button>
               </div>
               <template #reference>

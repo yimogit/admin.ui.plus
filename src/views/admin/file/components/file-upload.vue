@@ -2,9 +2,16 @@
   <div>
     <el-dialog v-model="state.showDialog" :title="title" draggable width="600px">
       <div class="mb15">
-        <el-input v-model="state.fileDirectory" placeholder="文件目录" clearable />
+        <el-row :gutter="35">
+          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+            <el-input v-model="state.fileDirectory" placeholder="文件目录" clearable />
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+            <el-switch v-model="state.fileReName" active-text="文件自动重命名" />
+          </el-col>
+        </el-row>
         <div class="mt5">
-          <el-alert class="my-el-alert" title="目录不填则默认使用本地上传格式：upload/yyyy/MM/dd" type="info" :closable="false" />
+          <el-alert class="my-el-alert" title="文件目录不填则默认使用本地上传格式：upload/yyyy/MM/dd" type="info" :closable="false" />
         </div>
       </div>
       <div>
@@ -12,7 +19,7 @@
           ref="uploadRef"
           :action="uploadAction"
           :headers="uploadHeaders"
-          :data="{ fileDirectory: state.fileDirectory }"
+          :data="{ fileDirectory: state.fileDirectory, fileReName: state.fileReName }"
           drag
           multiple
           :auto-upload="false"
@@ -27,6 +34,7 @@
       </div>
       <template #footer>
         <span class="dialog-footer">
+          <el-button @click="onClear" size="default">清空已上传</el-button>
           <el-button @click="onCancel" size="default">取 消</el-button>
           <el-button type="primary" @click="onSure" size="default" :loading="state.sureLoading">确 定</el-button>
         </span>
@@ -55,6 +63,7 @@ const state = reactive({
   showDialog: false,
   sureLoading: false,
   fileDirectory: '',
+  fileReName: true,
   fileList: [] as UploadFile[],
 })
 
@@ -76,6 +85,11 @@ const onSuccess = (response: any, uploadFile: UploadFile, uploadFiles: UploadFil
   if (response?.success) {
     eventBus.emit('refreshFile')
   }
+}
+
+// 清空已上传
+const onClear = async () => {
+  uploadRef.value!.clearFiles(['success', 'fail'])
 }
 
 // 取消

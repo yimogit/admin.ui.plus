@@ -74,6 +74,8 @@ export class FileApi<SecurityDataType = unknown> extends HttpClient<SecurityData
     query?: {
       /** @default "" */
       fileDirectory?: string
+      /** @default true */
+      fileReName?: boolean
     },
     params: RequestParams = {}
   ) =>
@@ -103,6 +105,8 @@ export class FileApi<SecurityDataType = unknown> extends HttpClient<SecurityData
     query?: {
       /** @default "" */
       fileDirectory?: string
+      /** @default true */
+      fileReName?: boolean
     },
     params: RequestParams = {}
   ) =>

@@ -724,6 +724,8 @@ export interface FileEntity {
    * @format uuid
    */
   fileGuid?: string
+  /** 保存文件名 */
+  saveFileName?: string | null
   /** 文件名 */
   fileName?: string | null
   /** 文件扩展名 */
