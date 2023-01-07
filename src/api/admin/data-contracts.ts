@@ -1836,6 +1836,8 @@ export interface PermissionListOutput {
   apiPaths?: string | null
   /** 图标 */
   icon?: string | null
+  /** 展开 */
+  opened?: boolean
   /**
    * 排序
    * @format int32

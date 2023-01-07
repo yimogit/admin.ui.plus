@@ -72,9 +72,15 @@ export class FileApi<SecurityDataType = unknown> extends HttpClient<SecurityData
       file: File
     },
     query?: {
-      /** @default "" */
+      /**
+       * 文件目录
+       * @default ""
+       */
       fileDirectory?: string
-      /** @default true */
+      /**
+       * 文件重命名
+       * @default true
+       */
       fileReName?: boolean
     },
     params: RequestParams = {}
@@ -103,9 +109,15 @@ export class FileApi<SecurityDataType = unknown> extends HttpClient<SecurityData
       files: File[]
     },
     query?: {
-      /** @default "" */
+      /**
+       * 文件目录
+       * @default ""
+       */
       fileDirectory?: string
-      /** @default true */
+      /**
+       * 文件重命名
+       * @default true
+       */
       fileReName?: boolean
     },
     params: RequestParams = {}

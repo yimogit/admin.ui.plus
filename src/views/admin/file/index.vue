@@ -59,10 +59,17 @@
                 <el-button size="small" text type="primary">地址</el-button>
               </template>
             </el-popover>
-            <el-link class="my-link mr12 ml12" :href="row.linkUrl" type="primary" icon="ele-Download" size="small" :underline="false" target="_blank"
+            <el-link
+              class="my-el-link mr12 ml12"
+              :href="row.linkUrl"
+              type="primary"
+              icon="ele-Download"
+              size="small"
+              :underline="false"
+              target="_blank"
               >下载</el-link
             >
-            <el-button v-auth="'api:admin:view:softdelete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button>
+            <el-button v-auth="'api:admin:file:delete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -189,7 +196,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.my-link {
+.my-el-link {
   font-size: 12px;
 }
 </style>

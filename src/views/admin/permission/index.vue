@@ -35,6 +35,7 @@
             v-loading="state.loading"
             row-key="id"
             :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+            :expand-row-keys="state.expandRowKeys"
           >
             <el-table-column prop="label" label="权限名称" width="240" show-overflow-tooltip>
               <template #default="{ row }">
@@ -114,7 +115,7 @@
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { PermissionListOutput } from '/@/api/admin/data-contracts'
 import { PermissionApi } from '/@/api/admin/Permission'
-import { listToTree } from '/@/utils/tree'
+import { listToTree, treeToList } from '/@/utils/tree'
 import { cloneDeep } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
 import { auth } from '/@/utils/authFunction'
@@ -139,10 +140,14 @@ const state = reactive({
   permissionTreeData: [] as Array<PermissionListOutput>,
   formPermissionGroupTreeData: [] as Array<PermissionListOutput>,
   formPermissionMenuTreeData: [] as Array<PermissionListOutput>,
+  expandRowKeys: [] as string[],
 })
 
-onMounted(() => {
-  onQuery()
+onMounted(async () => {
+  await onQuery()
+  state.expandRowKeys = treeToList(cloneDeep(state.permissionTreeData))
+    .filter((a: PermissionListOutput) => a.opened === true)
+    .map((a: PermissionListOutput) => a.id + '') as string[]
   eventBus.on('refreshPermission', async () => {
     onQuery()
   })
