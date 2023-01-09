@@ -26,6 +26,7 @@
             v-loading="state.loading"
             row-key="id"
             :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+            :expand-row-keys="state.expandRowKeys"
           >
             <el-table-column prop="label" label="接口名称" min-width="120" show-overflow-tooltip />
             <el-table-column prop="path" label="接口地址" min-width="120" show-overflow-tooltip />
@@ -56,7 +57,7 @@ import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncC
 import { ApiListOutput } from '/@/api/admin/data-contracts'
 import { ApiApi } from '/@/api/admin/Api'
 import { ApiApi as ApiExtApi } from '/@/api/admin.extend/Api'
-import { listToTree } from '/@/utils/tree'
+import { listToTree, treeToList } from '/@/utils/tree'
 import { cloneDeep, isArray } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
 
@@ -76,10 +77,14 @@ const state = reactive({
   },
   apiTreeData: [] as Array<ApiListOutput>,
   formApiTreeData: [] as Array<ApiListOutput>,
+  expandRowKeys: [] as string[],
 })
 
-onMounted(() => {
-  onQuery()
+onMounted(async () => {
+  await onQuery()
+  state.expandRowKeys = treeToList(cloneDeep(state.apiTreeData))
+    .filter((a: ApiListOutput) => a.parentId === 0)
+    .map((a: ApiListOutput) => a.id + '') as string[]
   eventBus.on('refreshApi', async () => {
     onQuery()
   })
