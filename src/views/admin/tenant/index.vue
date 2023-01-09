@@ -22,7 +22,7 @@
         <el-table-column label="操作" width="160" fixed="right" header-align="center" align="center">
           <template #default="{ row }">
             <el-button v-auth="'api:admin:tenant:update'" icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
-            <my-dropdown-more>
+            <my-dropdown-more v-auths="['api:admin:permission:assign', 'api:admin:tenant:delete']">
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item v-if="auth('api:admin:permission:assign')" @click="onSetTenantMenu(row)">菜单权限</el-dropdown-item>

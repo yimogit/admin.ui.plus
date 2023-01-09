@@ -40,7 +40,15 @@
             <el-table-column prop="sort" label="排序" width="80" align="center" show-overflow-tooltip />
             <el-table-column label="操作" width="100" fixed="right" header-align="center" align="right">
               <template #default="{ row }">
-                <el-button v-if="row.type === 1" icon="ele-Plus" size="small" text type="primary" @click="onAdd(2, row)"></el-button>
+                <el-button
+                  v-if="row.type === 1"
+                  v-auth="'api:admin:role:add'"
+                  icon="ele-Plus"
+                  size="small"
+                  text
+                  type="primary"
+                  @click="onAdd(2, row)"
+                ></el-button>
                 <my-dropdown-more icon-only v-auths="['api:admin:permission:assign', 'api:admin:role:update', 'api:admin:role:delete']">
                   <template #dropdown>
                     <el-dropdown-menu>
@@ -70,8 +78,8 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onGetRoleUserList"> 查询 </el-button>
-              <el-button type="primary" icon="ele-Plus" @click="onAddUser"> 添加员工 </el-button>
-              <el-button type="danger" icon="ele-Delete" @click="onRemoveUser"> 移除员工 </el-button>
+              <el-button v-auth="'api:admin:role:add-role-user'" type="primary" icon="ele-Plus" @click="onAddUser"> 添加员工 </el-button>
+              <el-button v-auth="'api:admin:role:remove-role-user'" type="danger" icon="ele-Delete" @click="onRemoveUser"> 移除员工 </el-button>
             </el-form-item>
           </el-form>
         </el-card>
