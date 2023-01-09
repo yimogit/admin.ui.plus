@@ -122,22 +122,31 @@ const onDelete = (row: ApiListOutput) => {
     .catch(() => {})
 }
 
-const syncApi = async (url: string) => {
-  const res = await new ApiExtApi().getSwaggerJson(url, { showErrorMessage: false })
+const syncApi = async (swaggerResource: any) => {
+  const res = await new ApiExtApi().getSwaggerJson(swaggerResource.url, { showErrorMessage: false })
   if (!res) {
     return
   }
 
   const tags = res.tags
   const paths = res.paths
-
   const apis = []
+  const urls = swaggerResource.url.split('/')
+  const code = urls.length >= 2 ? urls[urls.length - 2] : ''
+  if (code === '') {
+    return
+  }
+  apis[apis.length] = {
+    label: swaggerResource.name,
+    path: code,
+  }
   // tags
   if (tags && tags.length > 0) {
     tags.forEach((t: any) => {
       apis[apis.length] = {
         label: t.description,
         path: t.name,
+        parentPath: code,
       }
     })
   }
@@ -160,28 +169,29 @@ const syncApi = async (url: string) => {
   return await new ApiApi().sync({ apis })
 }
 
-const onSync = async () => {
+const onSync = () => {
   state.syncLoading = true
-  const resSwaggerResources = await new ApiExtApi().getSwaggerResources({ showErrorMessage: false }).catch(() => {
-    state.syncLoading = false
-  })
-  if (isArray(resSwaggerResources) && (resSwaggerResources?.length as number) > 0) {
-    for (let index = 0, len = resSwaggerResources.length, last = len - 1; index < len; index++) {
-      const swaggerResource = resSwaggerResources[index]
-      const resSyncApi = await syncApi(swaggerResource.url)
-      if (index === last) {
-        state.syncLoading = false
-        if (resSyncApi?.success) {
-          proxy.$modal.msgSuccess('同步成功')
-          onQuery()
-        } else {
-          proxy.$modal.msgError('同步失败')
-        }
+  const swaggerResources = ['/swagger-resources']
+  const lastSwaggerResourcesIndex = swaggerResources.length - 1
+  swaggerResources.forEach(async (swaggerResource, swaggerResourcesIndex) => {
+    const resSwaggerResources = await new ApiExtApi().getSwaggerResources(swaggerResource, { showErrorMessage: false }).catch(() => {
+      state.syncLoading = false
+    })
+    if (isArray(resSwaggerResources) && (resSwaggerResources?.length as number) > 0) {
+      for (let index = 0, len = resSwaggerResources.length, last = len - 1; index < len; index++) {
+        const swaggerResource = resSwaggerResources[index]
+        const resSyncApi = await syncApi(swaggerResource).catch(() => {
+          proxy.$modal.msgSuccess(`同步${swaggerResource.name}失败`)
+        })
       }
     }
-  } else {
-    state.syncLoading = false
-  }
+
+    if (swaggerResourcesIndex === lastSwaggerResourcesIndex) {
+      state.syncLoading = false
+      proxy.$modal.msgSuccess(`同步完成`)
+      onQuery()
+    }
+  })
 }
 </script>
 

@@ -22,9 +22,9 @@ export class ApiApi<SecurityDataType = unknown> extends HttpClient<SecurityDataT
    * @request GET:/swagger-resources
    * @secure
    */
-  getSwaggerResources = (params: RequestParams = {}) =>
+  getSwaggerResources = (path: string, params: RequestParams = {}) =>
     this.request<AxiosResponse, any>({
-      path: `/swagger-resources`,
+      path: path,
       method: 'GET',
       secure: true,
       format: 'json',
