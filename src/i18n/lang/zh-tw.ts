@@ -108,7 +108,7 @@ export default {
     logOutCancel: '取消',
     logOutExit: '退出中',
   },
-  標籤頁: {
+  tagsView: {
     refresh: '重繪',
     close: '關閉',
     closeOther: '關閉其它',
