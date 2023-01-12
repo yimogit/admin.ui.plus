@@ -35,9 +35,6 @@
           </template>
         </el-table-column>
         <el-table-column prop="sizeFormat" label="大小" width="120" />
-        <el-table-column prop="providerName" label="供应商" width="80" />
-        <el-table-column prop="bucketName" label="存储桶" width="80" />
-        <el-table-column prop="fileDirectory" label="目录" width="120" />
         <el-table-column prop="createdUserName" label="上传者" width="80">
           <template #default="{ row }">
             {{ row.modifiedUserName || row.createdUserName || '' }}
@@ -48,6 +45,9 @@
             {{ formatterTime(row.modifiedTime || row.createdTime || '') }}
           </template>
         </el-table-column>
+        <el-table-column prop="providerName" label="供应商" width="80" />
+        <el-table-column prop="bucketName" label="存储桶" min-width="120" />
+        <el-table-column prop="fileDirectory" label="目录" min-width="120" />
         <el-table-column label="操作" width="180" fixed="right" header-align="center" align="center">
           <template #default="{ row }">
             <el-popover :width="220">

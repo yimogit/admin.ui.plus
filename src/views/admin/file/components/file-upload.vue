@@ -15,6 +15,7 @@
         </div>
       </div>
       <div>
+        <!-- :before-remove="() => false" -->
         <el-upload
           ref="uploadRef"
           :action="uploadAction"
