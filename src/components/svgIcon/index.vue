@@ -50,7 +50,7 @@ const setIconSvgStyle = computed(() => {
 })
 // 设置图片样式
 const setIconImgOutStyle = computed(() => {
-  return `width: ${props.size}px;height: ${props.size}px;display: inline-block;overflow: hidden;`
+  return `width: ${props.size}px;height: ${props.size}px;line-height: ${props.size}px;display: inline-block;overflow: hidden;`
 })
 // 设置图片样式
 // https://gitee.com/lyt-top/vue-next-admin/issues/I59ND0
