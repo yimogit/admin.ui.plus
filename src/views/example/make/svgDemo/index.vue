@@ -4,7 +4,7 @@
       <SvgIcon name="iconfont icon-shuju1" color="red" :size="30" />
       <SvgIcon name="ele-Trophy" color="var(--el-color-primary)" :size="30" />
       <SvgIcon name="fa fa-flag-checkered" color="#09f" :size="30" />
-      <SvgIcon :name="logoMini" color="#09f" :size="30" />
+      <SvgIcon class="ml5" :name="logoMini" :size="30" />
     </el-card>
     <el-card shadow="hover" header="svgIcon：参数" class="mt15">
       <el-table :data="state.tableData" style="width: 100%">
