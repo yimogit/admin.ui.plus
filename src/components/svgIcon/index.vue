@@ -25,6 +25,7 @@ const props = defineProps({
   // svg 颜色
   color: {
     type: String,
+    default: () => 'currentColor',
   },
 })
 

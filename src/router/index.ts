@@ -11,7 +11,7 @@ import { Session, Local } from '/@/utils/storage'
 import { staticRoutes, notFoundAndNoPower } from '/@/router/route'
 import { initFrontEndControlRoutes } from '/@/router/frontEnd'
 import { initBackEndControlRoutes } from '/@/router/backEnd'
-import { adminTokenKey } from '/@/api/admin/http-client'
+import { adminTokenKey, getToken } from '/@/api/admin/http-client'
 import { ElMessage } from 'element-plus'
 
 /**
@@ -97,7 +97,7 @@ export function formatTwoStageRoutes(arr: any) {
 router.beforeEach(async (to, from, next) => {
   NProgress.configure({ showSpinner: false })
   if (to.meta.title) NProgress.start()
-  const token = Session.get('token')
+  const token = getToken()
   if (to.path === '/login' && !token) {
     next()
     NProgress.done()
