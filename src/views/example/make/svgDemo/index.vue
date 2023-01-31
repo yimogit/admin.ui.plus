@@ -44,7 +44,7 @@ const state = reactive({
       a2: 'svg 颜色',
       a3: 'string',
       a4: '',
-      a5: '',
+      a5: 'currentColor',
     },
   ],
 })
