@@ -18,7 +18,7 @@ export class OprationLogApi<SecurityDataType = unknown> extends HttpClient<Secur
    *
    * @tags opration-log
    * @name GetPage
-   * @summary 查询操作日志列表
+   * @summary 查询分页
    * @request POST:/api/admin/opration-log/get-page
    * @secure
    */

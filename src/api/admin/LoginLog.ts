@@ -18,7 +18,7 @@ export class LoginLogApi<SecurityDataType = unknown> extends HttpClient<Security
    *
    * @tags login-log
    * @name GetPage
-   * @summary 查询登录日志列表
+   * @summary 查询分页
    * @request POST:/api/admin/login-log/get-page
    * @secure
    */

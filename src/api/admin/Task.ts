@@ -26,7 +26,7 @@ export class TaskApi<SecurityDataType = unknown> extends HttpClient<SecurityData
    *
    * @tags task
    * @name Get
-   * @summary 查询任务
+   * @summary 查询
    * @request GET:/api/admin/task/get
    * @secure
    */
@@ -50,7 +50,7 @@ export class TaskApi<SecurityDataType = unknown> extends HttpClient<SecurityData
    *
    * @tags task
    * @name GetPage
-   * @summary 查询任务列表
+   * @summary 查询分页
    * @request POST:/api/admin/task/get-page
    * @secure
    */

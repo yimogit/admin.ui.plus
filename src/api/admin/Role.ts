@@ -30,7 +30,7 @@ export class RoleApi<SecurityDataType = unknown> extends HttpClient<SecurityData
    *
    * @tags role
    * @name Get
-   * @summary 查询角色
+   * @summary 查询
    * @request GET:/api/admin/role/get
    * @secure
    */
@@ -54,7 +54,7 @@ export class RoleApi<SecurityDataType = unknown> extends HttpClient<SecurityData
    *
    * @tags role
    * @name GetList
-   * @summary 查询角色列表
+   * @summary 查询列表
    * @request GET:/api/admin/role/get-list
    * @secure
    */
@@ -78,7 +78,7 @@ export class RoleApi<SecurityDataType = unknown> extends HttpClient<SecurityData
    *
    * @tags role
    * @name GetPage
-   * @summary 查询角色列表
+   * @summary 查询分页
    * @request POST:/api/admin/role/get-page
    * @secure
    */

@@ -18,7 +18,7 @@ export class TaskLogApi<SecurityDataType = unknown> extends HttpClient<SecurityD
    *
    * @tags task-log
    * @name GetPage
-   * @summary 查询任务日志列表
+   * @summary 查询分页
    * @request POST:/api/admin/task-log/get-page
    * @secure
    */

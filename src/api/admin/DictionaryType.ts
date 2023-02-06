@@ -26,7 +26,7 @@ export class DictionaryTypeApi<SecurityDataType = unknown> extends HttpClient<Se
    *
    * @tags dictionary-type
    * @name Get
-   * @summary 查询字典类型
+   * @summary 查询
    * @request GET:/api/admin/dictionary-type/get
    * @secure
    */
@@ -50,7 +50,7 @@ export class DictionaryTypeApi<SecurityDataType = unknown> extends HttpClient<Se
    *
    * @tags dictionary-type
    * @name GetPage
-   * @summary 查询字典类型列表
+   * @summary 查询分页
    * @request POST:/api/admin/dictionary-type/get-page
    * @secure
    */
@@ -122,6 +122,24 @@ export class DictionaryTypeApi<SecurityDataType = unknown> extends HttpClient<Se
       method: 'DELETE',
       query: query,
       secure: true,
+      ...params,
+    })
+  /**
+   * No description
+   *
+   * @tags dictionary-type
+   * @name BatchDelete
+   * @summary 批量彻底删除
+   * @request PUT:/api/admin/dictionary-type/batch-delete
+   * @secure
+   */
+  batchDelete = (data: number[], params: RequestParams = {}) =>
+    this.request<AxiosResponse, any>({
+      path: `/api/admin/dictionary-type/batch-delete`,
+      method: 'PUT',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
       ...params,
     })
   /**

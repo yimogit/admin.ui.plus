@@ -19,7 +19,7 @@ export class OrgApi<SecurityDataType = unknown> extends HttpClient<SecurityDataT
    *
    * @tags org
    * @name Get
-   * @summary 查询部门
+   * @summary 查询
    * @request GET:/api/admin/org/get
    * @secure
    */

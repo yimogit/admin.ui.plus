@@ -26,7 +26,7 @@ export class TenantApi<SecurityDataType = unknown> extends HttpClient<SecurityDa
    *
    * @tags tenant
    * @name Get
-   * @summary 查询租户
+   * @summary 查询
    * @request GET:/api/admin/tenant/get
    * @secure
    */
@@ -50,7 +50,7 @@ export class TenantApi<SecurityDataType = unknown> extends HttpClient<SecurityDa
    *
    * @tags tenant
    * @name GetPage
-   * @summary 查询租户列表
+   * @summary 查询分页
    * @request POST:/api/admin/tenant/get-page
    * @secure
    */

@@ -28,7 +28,7 @@ export class ApiApi<SecurityDataType = unknown> extends HttpClient<SecurityDataT
    *
    * @tags api
    * @name Get
-   * @summary 查询接口
+   * @summary 查询
    * @request GET:/api/admin/api/get
    * @secure
    */
@@ -147,6 +147,24 @@ export class ApiApi<SecurityDataType = unknown> extends HttpClient<SecurityDataT
       method: 'DELETE',
       query: query,
       secure: true,
+      ...params,
+    })
+  /**
+   * No description
+   *
+   * @tags api
+   * @name BatchDelete
+   * @summary 批量彻底删除
+   * @request PUT:/api/admin/api/batch-delete
+   * @secure
+   */
+  batchDelete = (data: number[], params: RequestParams = {}) =>
+    this.request<AxiosResponse, any>({
+      path: `/api/admin/api/batch-delete`,
+      method: 'PUT',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
       ...params,
     })
   /**

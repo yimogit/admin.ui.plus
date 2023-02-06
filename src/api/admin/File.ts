@@ -25,7 +25,7 @@ export class FileApi<SecurityDataType = unknown> extends HttpClient<SecurityData
    *
    * @tags file
    * @name GetPage
-   * @summary 查询文件列表
+   * @summary 查询分页
    * @request POST:/api/admin/file/get-page
    * @secure
    */
@@ -44,7 +44,7 @@ export class FileApi<SecurityDataType = unknown> extends HttpClient<SecurityData
    *
    * @tags file
    * @name Delete
-   * @summary 删除文件
+   * @summary 删除
    * @request POST:/api/admin/file/delete
    * @secure
    */
