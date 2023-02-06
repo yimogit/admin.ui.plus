@@ -3,9 +3,9 @@
     <el-row :gutter="8" style="width: 100%">
       <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
         <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-          <el-form :model="state.filterModel" :inline="true">
+          <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
             <el-form-item label="角色名称" prop="name">
-              <el-input v-model="state.filterModel.name" placeholder="角色名称" />
+              <el-input v-model="state.filterModel.name" placeholder="角色名称" @keyup.enter="onQuery" />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
@@ -72,9 +72,9 @@
       </el-col>
       <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
         <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-          <el-form :model="state.filterModel" :inline="true">
+          <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
             <el-form-item label="姓名" prop="name">
-              <el-input v-model="state.filterModel.name" placeholder="姓名" />
+              <el-input v-model="state.filterModel.name" placeholder="姓名" @keyup.enter="onGetRoleUserList" />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onGetRoleUserList"> 查询 </el-button>

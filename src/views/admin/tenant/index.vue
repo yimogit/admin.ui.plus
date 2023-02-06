@@ -1,9 +1,9 @@
 <template>
   <div style="padding: 0px 0px 8px 8px">
     <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-      <el-form :model="state.filterModel" :inline="true">
+      <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
         <el-form-item label="姓名" prop="name">
-          <el-input v-model="state.filterModel.name" placeholder="姓名" />
+          <el-input v-model="state.filterModel.name" placeholder="姓名" @keyup.enter="onQuery" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>

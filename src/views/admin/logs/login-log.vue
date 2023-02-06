@@ -1,9 +1,9 @@
 <template>
   <div style="padding: 0px 0px 8px 8px">
     <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-      <el-form :model="state.filterModel" :inline="true">
+      <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
         <el-form-item prop="name">
-          <el-input v-model="state.filterModel.createdUserName" placeholder="登录账户" />
+          <el-input v-model="state.filterModel.createdUserName" placeholder="登录账户" @keyup.enter="onQuery" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
@@ -76,6 +76,7 @@ const formatterTime = (row: any, column: any, cellValue: any) => {
 
 const onQuery = async () => {
   state.loading = true
+  state.pageInput.filter = state.filterModel
   const res = await new LoginLogApi().getPage(state.pageInput)
 
   state.loginLogListData = res?.data?.list ?? []
