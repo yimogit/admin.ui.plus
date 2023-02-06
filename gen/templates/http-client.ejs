@@ -214,6 +214,7 @@ export class HttpClient<SecurityDataType = unknown> {
       }
 
       if (window.tokenRefreshing) {
+        window.requests = window.requests ? window.requests : []
         return new Promise((resolve) => {
           window.requests.push(() => {
             resolve(this.instance(config))
@@ -237,8 +238,10 @@ export class HttpClient<SecurityDataType = unknown> {
         if (res?.success) {
           const token = res.data.token
           setToken(token)
-          window.requests.forEach((apiRequest) => apiRequest())
-          window.requests = []
+          if (window.requests?.length > 0) {
+            window.requests.forEach((apiRequest) => apiRequest())
+            window.requests = []
+          }
           return this.instance(config)
         } else {
           clearToken()
