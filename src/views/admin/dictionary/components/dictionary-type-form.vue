@@ -4,12 +4,12 @@
       <el-form ref="formRef" :model="form" size="default" label-width="80px">
         <el-row :gutter="35">
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-form-item label="名称" prop="name" :rules="[{ required: true, message: '请输入企业名称', trigger: ['blur', 'change'] }]">
+            <el-form-item label="名称" prop="name" :rules="[{ required: true, message: '请输入名称', trigger: ['blur', 'change'] }]">
               <el-input v-model="form.name" autocomplete="off" />
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-form-item label="编码" prop="code" :rules="[{ required: true, message: '请输入企业编码', trigger: ['blur', 'change'] }]">
+            <el-form-item label="编码" prop="code" :rules="[{ required: true, message: '请输入编码', trigger: ['blur', 'change'] }]">
               <el-input v-model="form.code" autocomplete="off" />
             </el-form-item>
           </el-col>
