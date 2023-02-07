@@ -25,7 +25,6 @@ const props = defineProps({
   // svg 颜色
   color: {
     type: String,
-    default: () => 'currentColor',
   },
 })
 
@@ -58,7 +57,8 @@ const setIconImgOutStyle = computed(() => {
 const setIconSvgInsStyle = computed(() => {
   const filterStyle: string[] = []
   const compatibles: string[] = ['-webkit', '-ms', '-o', '-moz']
-  compatibles.forEach((j) => filterStyle.push(`${j}-filter: drop-shadow(${props.color} ${props.size}px 0);`))
-  return `width: ${props.size}px;height: ${props.size}px;` + (props.color ? `position: relative;left: -${props.size}px;${filterStyle.join('')}` : '')
+  const color = props.color ? props.color : 'currentColor'
+  compatibles.forEach((j) => filterStyle.push(`${j}-filter: drop-shadow(${color} ${props.size}px 0);`))
+  return `width: ${props.size}px;height: ${props.size}px;` + (color ? `position: relative;left: -${props.size}px;${filterStyle.join('')}` : '')
 })
 </script>
