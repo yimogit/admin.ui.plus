@@ -1,7 +1,14 @@
 <template>
   <el-form size="large" class="login-content-form">
     <el-form-item class="login-animation1">
-      <el-input text :placeholder="$t('message.account.accountPlaceholder1')" v-model="state.ruleForm.userName" clearable autocomplete="off">
+      <el-input
+        text
+        :placeholder="$t('message.account.accountPlaceholder1')"
+        v-model="state.ruleForm.userName"
+        clearable
+        autocomplete="off"
+        @keyup.enter="onSignIn"
+      >
         <template #prefix>
           <el-icon class="el-input__icon"><ele-User /></el-icon>
         </template>
@@ -13,6 +20,7 @@
         :placeholder="$t('message.account.accountPlaceholder2')"
         v-model="state.ruleForm.password"
         autocomplete="off"
+        @keyup.enter="onSignIn"
       >
         <template #prefix>
           <el-icon class="el-input__icon"><ele-Unlock /></el-icon>
