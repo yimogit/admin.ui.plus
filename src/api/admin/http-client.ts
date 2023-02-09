@@ -202,7 +202,7 @@ export class HttpClient<SecurityDataType = unknown> {
     if (error.message.includes('Network')) message = window.navigator.onLine ? '服务端异常' : '您已断网'
 
     if (message) {
-      ElMessage.error({ message })
+      ElMessage.error({ message, grouping: true })
     }
   }
 
@@ -366,11 +366,11 @@ export class HttpClient<SecurityDataType = unknown> {
         const data = res.data
         if (data.success) {
           if (showSuccessMessage) {
-            ElMessage.success({ message: data.msg ? data.msg : '操作成功' })
+            ElMessage.success({ message: data.msg ? data.msg : '操作成功', grouping: true })
           }
         } else {
           if (showErrorMessage) {
-            ElMessage.error({ message: data.msg ? data.msg : '操作失败' })
+            ElMessage.error({ message: data.msg ? data.msg : '操作失败', grouping: true })
           }
           // return Promise.reject(res)
         }
