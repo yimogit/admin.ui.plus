@@ -9,7 +9,7 @@
  * ---------------------------------------------------------------
  */
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType, RawAxiosRequestHeaders } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, RawAxiosRequestHeaders, ResponseType } from 'axios'
 import { ElLoading, ElMessage, LoadingOptions } from 'element-plus'
 import { Local, Session } from '/@/utils/storage'
 
