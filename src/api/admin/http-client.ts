@@ -9,7 +9,7 @@
  * ---------------------------------------------------------------
  */
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType, RawAxiosRequestHeaders } from 'axios'
 import { ElLoading, ElMessage, LoadingOptions } from 'element-plus'
 import { Local, Session } from '/@/utils/storage'
 
@@ -116,7 +116,7 @@ export class HttpClient<SecurityDataType = unknown> {
         ...((method && this.instance.defaults.headers[method.toLowerCase() as keyof HeadersDefaults]) || {}),
         ...(params1.headers || {}),
         ...((params2 && params2.headers) || {}),
-      },
+      } as RawAxiosRequestHeaders,
     }
   }
 
@@ -291,8 +291,9 @@ export class HttpClient<SecurityDataType = unknown> {
    * 生成每个请求的唯一key
    */
   protected getPendingKey(config: AxiosRequestConfig) {
-    let { data } = config
-    const { url, method, params, headers } = config
+    let { data, headers } = config
+    headers = headers as RawAxiosRequestHeaders
+    const { url, method, params } = config
     if (typeof data === 'string') data = JSON.parse(data)
     return [url, method, headers && headers.Authorization ? headers.Authorization : '', JSON.stringify(params), JSON.stringify(data)].join('&')
   }
@@ -401,7 +402,7 @@ export class HttpClient<SecurityDataType = unknown> {
         headers: {
           ...(requestParams.headers || {}),
           ...(type && type !== ContentType.FormData ? { 'Content-Type': type } : {}),
-        },
+        } as RawAxiosRequestHeaders,
         params: query,
         responseType: responseFormat,
         data: body,
