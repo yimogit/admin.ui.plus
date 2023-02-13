@@ -61,7 +61,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/org/form">
 import { reactive, toRefs, ref, PropType } from 'vue'
 import { OrgListOutput, OrgUpdateInput } from '/@/api/admin/data-contracts'
 import { OrgApi } from '/@/api/admin/Org'
@@ -136,13 +136,5 @@ const onSure = () => {
 
 defineExpose({
   open,
-})
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/org/form',
 })
 </script>

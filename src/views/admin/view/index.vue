@@ -49,7 +49,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/view">
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { ViewListOutput } from '/@/api/admin/data-contracts'
 import { ViewApi } from '/@/api/admin/View'
@@ -115,14 +115,6 @@ const onDelete = (row: ViewListOutput) => {
     })
     .catch(() => {})
 }
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/view',
-})
 </script>
 
 <style scoped lang="scss"></style>

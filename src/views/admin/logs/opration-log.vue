@@ -50,7 +50,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/oprationLog">
 import { reactive, onMounted } from 'vue'
 import { OprationLogListOutput, PageInputLogGetPageDto } from '/@/api/admin/data-contracts'
 import { OprationLogApi } from '/@/api/admin/OprationLog'
@@ -98,14 +98,6 @@ const onCurrentChange = (val: number) => {
   state.pageInput.currentPage = val
   onQuery()
 }
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/oprationLog',
-})
 </script>
 
 <style scoped lang="scss"></style>

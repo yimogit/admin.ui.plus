@@ -35,7 +35,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/dictionaryType/typeForm">
 import { reactive, toRefs, getCurrentInstance, ref } from 'vue'
 import { DictionaryTypeAddInput, DictionaryTypeUpdateInput } from '/@/api/admin/data-contracts'
 import { DictionaryTypeApi } from '/@/api/admin/DictionaryType'
@@ -106,13 +106,5 @@ const onSure = () => {
 
 defineExpose({
   open,
-})
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/dictionaryType/typeForm',
 })
 </script>

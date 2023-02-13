@@ -23,7 +23,7 @@
   </el-card>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/org/menu">
 import { onMounted, reactive, ref, watch, nextTick } from 'vue'
 import { OrgListOutput } from '/@/api/admin/data-contracts'
 import { OrgApi } from '/@/api/admin/Org'
@@ -104,13 +104,5 @@ const initData = async () => {
 
 defineExpose({
   orgMenuRef,
-})
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/org/menu',
 })
 </script>

@@ -30,7 +30,7 @@
   </el-dialog>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/role/components/set-role-data-scope">
 import { ref, toRefs, reactive, computed, defineAsyncComponent } from 'vue'
 import { RoleGetListOutput, RoleSetDataScopeInput } from '/@/api/admin/data-contracts'
 import { RoleApi } from '/@/api/admin/Role'
@@ -112,14 +112,6 @@ const onSure = async () => {
 defineExpose({
   open,
   close,
-})
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/role/components/set-role-data-scope',
 })
 </script>
 

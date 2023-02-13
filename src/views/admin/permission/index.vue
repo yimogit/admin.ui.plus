@@ -111,7 +111,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/permission">
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { PermissionListOutput } from '/@/api/admin/data-contracts'
 import { PermissionApi } from '/@/api/admin/Permission'
@@ -215,14 +215,6 @@ const onDelete = (row: PermissionListOutput) => {
     })
     .catch(() => {})
 }
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/permission',
-})
 </script>
 
 <style scoped lang="scss"></style>

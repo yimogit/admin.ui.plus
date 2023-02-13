@@ -16,7 +16,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/cache">
 import { reactive, onMounted, getCurrentInstance } from 'vue'
 import { CacheApi } from '/@/api/admin/Cache'
 const { proxy } = getCurrentInstance() as any
@@ -53,14 +53,6 @@ const onClear = (row: any) => {
     })
     .catch(() => {})
 }
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/cache',
-})
 </script>
 
 <style scoped lang="scss"></style>

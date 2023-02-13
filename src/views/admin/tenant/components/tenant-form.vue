@@ -52,7 +52,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/tenant/form">
 import { reactive, toRefs, getCurrentInstance, ref } from 'vue'
 import { TenantAddInput, TenantUpdateInput } from '/@/api/admin/data-contracts'
 import { TenantApi } from '/@/api/admin/Tenant'
@@ -124,13 +124,5 @@ const onSure = () => {
 
 defineExpose({
   open,
-})
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/tenant/form',
 })
 </script>

@@ -63,7 +63,7 @@
   </el-dialog>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/user/components/user-select">
 import { ref, reactive, defineAsyncComponent } from 'vue'
 import { ElTable } from 'element-plus'
 import { UserGetPageOutput, PageInputUserGetPageDto, OrgListOutput } from '/@/api/admin/data-contracts'
@@ -176,14 +176,6 @@ const onSure = () => {
 defineExpose({
   open,
   close,
-})
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/user/components/user-select',
 })
 </script>
 

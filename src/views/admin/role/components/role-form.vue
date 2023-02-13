@@ -51,7 +51,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/role/form">
 import { reactive, toRefs, ref, PropType } from 'vue'
 import { RoleGetListOutput, RoleUpdateInput } from '/@/api/admin/data-contracts'
 import { RoleApi } from '/@/api/admin/Role'
@@ -124,13 +124,5 @@ const onSure = () => {
 
 defineExpose({
   open,
-})
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/role/form',
 })
 </script>

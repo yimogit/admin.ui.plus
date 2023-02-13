@@ -37,7 +37,7 @@
   </el-drawer>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/taskLog">
 import { reactive } from 'vue'
 import { ResultOutputPageOutputTaskLog, PageInputTaskLogGetPageDto, TaskListOutput } from '/@/api/admin/data-contracts'
 import { TaskLogApi } from '/@/api/admin/TaskLog'
@@ -101,14 +101,6 @@ const onCancel = () => {
 
 defineExpose({
   open,
-})
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/taskLog',
 })
 </script>
 

@@ -44,7 +44,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/file/upload">
 import { ref, reactive, computed } from 'vue'
 import { UploadFile, UploadFiles } from 'element-plus'
 import { getToken } from '/@/api/admin/http-client'
@@ -105,14 +105,6 @@ const onSure = async () => {
 
 defineExpose({
   open,
-})
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/file/upload',
 })
 </script>
 

@@ -44,7 +44,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/personal/change-password-form">
 import { reactive, toRefs, ref } from 'vue'
 import { UserChangePasswordInput } from '/@/api/admin/data-contracts'
 import { UserApi } from '/@/api/admin/User'
@@ -114,13 +114,5 @@ const onSure = () => {
 
 defineExpose({
   open,
-})
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/personal/change-password-form',
 })
 </script>

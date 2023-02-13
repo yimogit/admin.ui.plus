@@ -122,7 +122,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/permission/permission-menu-form">
 import { reactive, toRefs, getCurrentInstance, ref, PropType, defineAsyncComponent } from 'vue'
 import { PermissionListOutput, PermissionUpdateMenuInput, ViewListOutput } from '/@/api/admin/data-contracts'
 import { PermissionApi } from '/@/api/admin/Permission'
@@ -232,14 +232,6 @@ const onSure = () => {
 
 defineExpose({
   open,
-})
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/permission/permission-menu-form',
 })
 </script>
 

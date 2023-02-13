@@ -92,7 +92,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/file">
 import { ref, reactive, onMounted, onUnmounted, defineAsyncComponent, computed, getCurrentInstance } from 'vue'
 import { PageInputFileGetPageDto, FileGetPageOutput } from '/@/api/admin/data-contracts'
 import { FileApi } from '/@/api/admin/File'
@@ -185,14 +185,6 @@ const onDelete = (row: FileGetPageOutput) => {
     })
     .catch(() => {})
 }
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/file',
-})
 </script>
 
 <style scoped lang="scss">

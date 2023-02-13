@@ -65,7 +65,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/view/form">
 import { reactive, toRefs, ref, PropType } from 'vue'
 import { ViewListOutput, ViewUpdateInput } from '/@/api/admin/data-contracts'
 import { ViewApi } from '/@/api/admin/View'
@@ -142,13 +142,5 @@ const onSure = () => {
 
 defineExpose({
   open,
-})
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/view/form',
 })
 </script>

@@ -52,7 +52,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/api">
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { ApiListOutput } from '/@/api/admin/data-contracts'
 import { ApiApi } from '/@/api/admin/Api'
@@ -198,14 +198,6 @@ const onSync = () => {
     }
   })
 }
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/api',
-})
 </script>
 
 <style scoped lang="scss"></style>

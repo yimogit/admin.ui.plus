@@ -79,7 +79,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/task">
 import { ref, reactive, onMounted, getCurrentInstance, defineAsyncComponent } from 'vue'
 import { TaskListOutput, PageInputTaskGetPageDto } from '/@/api/admin/data-contracts'
 import { TaskApi } from '/@/api/admin/Task'
@@ -206,14 +206,6 @@ const onCurrentChange = (val: number) => {
   state.pageInput.currentPage = val
   onQuery()
 }
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/task',
-})
 </script>
 
 <style scoped lang="scss"></style>

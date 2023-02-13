@@ -53,7 +53,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/tenant">
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { TenantListOutput, PageInputTenantGetPageDto } from '/@/api/admin/data-contracts'
 import { TenantApi } from '/@/api/admin/Tenant'
@@ -141,14 +141,6 @@ const onSetTenantMenu = (tenant: TenantListOutput) => {
   }
   setTenantMenuRef.value.open(tenant)
 }
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/tenant',
-})
 </script>
 
 <style scoped lang="scss"></style>

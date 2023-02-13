@@ -11,20 +11,12 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/dict">
 import { defineAsyncComponent } from 'vue'
 
 // 引入组件
 const DictionaryType = defineAsyncComponent(() => import('./dictionary-type.vue'))
 const Dictionary = defineAsyncComponent(() => import('./dictionary.vue'))
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/dict',
-})
 </script>
 
 <style scoped lang="scss"></style>

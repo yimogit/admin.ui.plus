@@ -109,7 +109,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/role">
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, nextTick, defineAsyncComponent } from 'vue'
 import { RoleGetListOutput, UserGetRoleUserListOutput, UserGetPageOutput, RoleAddRoleUserListInput, RoleType } from '/@/api/admin/data-contracts'
 import { RoleApi } from '/@/api/admin/Role'
@@ -317,14 +317,6 @@ const onSetRoleDataScope = (role: RoleGetListOutput) => {
   }
   setRoleDataScopeRef.value.open(role)
 }
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/role',
-})
 </script>
 
 <style scoped lang="scss"></style>

@@ -99,7 +99,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/user/form">
 import { reactive, toRefs, getCurrentInstance, ref, watch, defineAsyncComponent } from 'vue'
 import { UserAddInput, UserUpdateInput, OrgListOutput, RoleGetListOutput } from '/@/api/admin/data-contracts'
 import { UserApi } from '/@/api/admin/User'
@@ -248,13 +248,5 @@ const onSure = () => {
 
 defineExpose({
   open,
-})
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/user/form',
 })
 </script>

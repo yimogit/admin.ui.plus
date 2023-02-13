@@ -69,7 +69,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/user">
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { UserGetPageOutput, PageInputUserGetPageDto, OrgListOutput, UserSetManagerInput, UserResetPasswordInput } from '/@/api/admin/data-contracts'
 import { UserApi } from '/@/api/admin/User'
@@ -187,14 +187,6 @@ const onOrgNodeClick = (node: OrgListOutput | null) => {
   }
   onQuery()
 }
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/user',
-})
 </script>
 
 <style scoped lang="scss"></style>

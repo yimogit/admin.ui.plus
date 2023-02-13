@@ -47,7 +47,7 @@
   <dictionary-form ref="dictionaryFormRef" :title="state.dictionaryFormTitle"></dictionary-form>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/dictType">
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { DictionaryListOutput, PageInputDictionaryGetPageDto, DictionaryTypeListOutput } from '/@/api/admin/data-contracts'
 import { DictionaryApi } from '/@/api/admin/Dictionary'
@@ -128,14 +128,6 @@ const onCurrentChange = (val: number) => {
   state.pageInput.currentPage = val
   onQuery()
 }
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/dictType',
-})
 </script>
 
 <style scoped lang="scss"></style>

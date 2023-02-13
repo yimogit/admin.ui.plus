@@ -23,7 +23,7 @@
   </el-dialog>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/role/components/set-role-menu">
 import { ref, reactive, getCurrentInstance, computed } from 'vue'
 import { RoleGetListOutput, PermissionAssignInput } from '/@/api/admin/data-contracts'
 import { PermissionApi } from '/@/api/admin/Permission'
@@ -116,14 +116,6 @@ const onSure = async () => {
 defineExpose({
   open,
   close,
-})
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/role/components/set-role-menu',
 })
 </script>
 

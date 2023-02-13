@@ -54,7 +54,7 @@
   <dictionary-type-form ref="dictionaryTypeFormRef" :title="state.dictionaryTypeFormTitle"></dictionary-type-form>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="'admin/dictType'">
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, nextTick, defineAsyncComponent } from 'vue'
 import { DictionaryTypeListOutput, PageInputDictionaryTypeGetPageDto } from '/@/api/admin/data-contracts'
 import { DictionaryTypeApi } from '/@/api/admin/DictionaryType'
@@ -140,14 +140,6 @@ const onCurrentChange = (val: number) => {
 const onTableCurrentChange = (currentRow: DictionaryTypeListOutput) => {
   eventBus.emit('refreshDict', currentRow)
 }
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/dictType',
-})
 </script>
 
 <style scoped lang="scss"></style>

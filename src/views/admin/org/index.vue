@@ -48,7 +48,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="admin/org">
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { OrgListOutput } from '/@/api/admin/data-contracts'
 import { OrgApi } from '/@/api/admin/Org'
@@ -112,14 +112,6 @@ const onDelete = (row: OrgListOutput) => {
     })
     .catch(() => {})
 }
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'admin/org',
-})
 </script>
 
 <style scoped lang="scss"></style>
