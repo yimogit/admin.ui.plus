@@ -45,6 +45,11 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+            <el-form-item label="排序">
+              <el-input-number v-model="form.sort" />
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
             <el-form-item label="启用">
               <el-switch v-model="form.enabled" />
             </el-form-item>

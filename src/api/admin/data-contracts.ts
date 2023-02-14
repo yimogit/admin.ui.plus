@@ -24,6 +24,11 @@ export interface ApiAddInput {
   httpMethods?: string | null
   /** 说明 */
   description?: string | null
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
   /** 启用 */
   enabled?: boolean
 }
@@ -107,6 +112,11 @@ export interface ApiGetOutput {
   httpMethods?: string | null
   /** 说明 */
   description?: string | null
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
   /** 启用 */
   enabled?: boolean
   /**
@@ -142,6 +152,11 @@ export interface ApiListOutput {
   httpMethods?: string | null
   /** 说明 */
   description?: string | null
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
   /** 启用 */
   enabled?: boolean
 }
@@ -178,6 +193,11 @@ export interface ApiUpdateInput {
   httpMethods?: string | null
   /** 说明 */
   description?: string | null
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
   /** 启用 */
   enabled?: boolean
   /**

@@ -31,6 +31,7 @@
             <el-table-column prop="label" label="接口名称" min-width="120" show-overflow-tooltip />
             <el-table-column prop="path" label="接口地址" min-width="120" show-overflow-tooltip />
             <el-table-column prop="description" label="接口描述" min-width="120" show-overflow-tooltip />
+            <el-table-column prop="sort" label="排序" width="80" align="center" show-overflow-tooltip />
             <el-table-column label="状态" width="80" align="center" show-overflow-tooltip>
               <template #default="{ row }">
                 <el-tag type="success" v-if="row.enabled">启用</el-tag>
