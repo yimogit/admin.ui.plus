@@ -184,9 +184,9 @@ const onSync = () => {
       state.syncLoading = false
     })
     if (isArray(resSwaggerResources) && (resSwaggerResources?.length as number) > 0) {
-      for (let index = 0, len = resSwaggerResources.length, last = len - 1; index < len; index++) {
+      for (let index = 0, len = resSwaggerResources.length; index < len; index++) {
         const swaggerResource = resSwaggerResources[index]
-        const resSyncApi = await syncApi(swaggerResource).catch(() => {
+        await syncApi(swaggerResource).catch(() => {
           proxy.$modal.msgSuccess(`同步${swaggerResource.name}失败`)
         })
       }

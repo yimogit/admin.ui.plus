@@ -46,7 +46,7 @@
 
 <script lang="ts" setup name="admin/file/upload">
 import { ref, reactive, computed } from 'vue'
-import { UploadFile, UploadFiles } from 'element-plus'
+import { UploadFile } from 'element-plus'
 import { getToken } from '/@/api/admin/http-client'
 import type { UploadInstance } from 'element-plus'
 import eventBus from '/@/utils/mitt'
@@ -77,12 +77,12 @@ const uploadHeaders = computed(() => {
 })
 
 // 打开对话框
-const open = async (row: any = {}) => {
+const open = async () => {
   state.showDialog = true
 }
 
 // 上传成功
-const onSuccess = (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
+const onSuccess = (response: any) => {
   if (response?.success) {
     eventBus.emit('refreshFile')
   }
