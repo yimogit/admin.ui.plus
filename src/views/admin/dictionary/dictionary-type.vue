@@ -22,7 +22,7 @@
       @current-change="onTableCurrentChange"
     >
       <el-table-column prop="name" label="名称" min-width="120" show-overflow-tooltip />
-      <el-table-column prop="code" label="编码" width="80" show-overflow-tooltip />
+      <el-table-column prop="code" label="编码" min-width="120" show-overflow-tooltip />
       <el-table-column label="状态" width="80" align="center" show-overflow-tooltip>
         <template #default="{ row }">
           <el-tag type="success" v-if="row.enabled">启用</el-tag>

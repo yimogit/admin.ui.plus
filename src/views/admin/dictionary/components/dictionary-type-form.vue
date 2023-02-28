@@ -69,7 +69,7 @@ const open = async (row: any = {}) => {
       state.form = res.data as DictionaryTypeAddInput & DictionaryTypeUpdateInput
     }
   } else {
-    state.form = {} as DictionaryTypeAddInput & DictionaryTypeUpdateInput
+    state.form = { enabled: true } as DictionaryTypeAddInput & DictionaryTypeUpdateInput
   }
   state.showDialog = true
 }

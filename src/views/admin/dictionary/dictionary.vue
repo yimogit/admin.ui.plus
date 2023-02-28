@@ -14,8 +14,8 @@
   <el-card shadow="never" style="margin-top: 8px">
     <el-table v-loading="state.loading" :data="state.dictionaryListData" row-key="id" style="width: 100%">
       <el-table-column prop="name" label="名称" min-width="120" show-overflow-tooltip />
-      <el-table-column prop="code" label="编码" width="80" show-overflow-tooltip />
-      <el-table-column prop="value" label="值" width="80" show-overflow-tooltip />
+      <el-table-column prop="code" label="编码" min-width="120" show-overflow-tooltip />
+      <el-table-column prop="value" label="值" min-width="120" show-overflow-tooltip />
       <el-table-column label="状态" width="70" align="center" show-overflow-tooltip>
         <template #default="{ row }">
           <el-tag type="success" v-if="row.enabled">启用</el-tag>
