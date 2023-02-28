@@ -125,10 +125,12 @@ const close = () => {
 
 const onQuery = async () => {
   state.loading = true
-  const res = await new UserApi().getPage(state.pageInput)
+  const res = await new UserApi().getPage(state.pageInput).catch(() => {
+    state.loading = false
+  })
 
   state.userListData = res?.data?.list ?? []
-  state.total = res.data?.total ?? 0
+  state.total = res?.data?.total ?? 0
   state.loading = false
 }
 

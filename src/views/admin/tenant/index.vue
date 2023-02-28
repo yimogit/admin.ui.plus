@@ -97,10 +97,12 @@ onUnmounted(() => {
 
 const onQuery = async () => {
   state.loading = true
-  const res = await new TenantApi().getPage(state.pageInput)
+  const res = await new TenantApi().getPage(state.pageInput).catch(() => {
+    state.loading = false
+  })
 
   state.tenantListData = res?.data?.list ?? []
-  state.total = res.data?.total ?? 0
+  state.total = res?.data?.total ?? 0
   state.loading = false
 }
 

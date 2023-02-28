@@ -207,7 +207,9 @@ onMounted(() => {
 // 初始化数据
 const initData = async () => {
   state.loading = true
-  const res = await new UserApi().getBasic()
+  const res = await new UserApi().getBasic().catch(() => {
+    state.loading = false
+  })
   if (res?.success) {
     state.personalForm.name = res.data?.name as string
     state.personalForm.nickName = res.data?.nickName as string

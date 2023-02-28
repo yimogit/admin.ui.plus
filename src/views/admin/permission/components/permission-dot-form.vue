@@ -134,7 +134,9 @@ const open = async (row: any = {}) => {
   await getApis()
 
   if (row.id > 0) {
-    const res = await new PermissionApi().getDot({ id: row.id })
+    const res = await new PermissionApi().getDot({ id: row.id }).catch(() => {
+      proxy.$modal.closeLoading()
+    })
 
     if (res?.success) {
       let formData = res.data as PermissionUpdateDotInput
@@ -179,9 +181,13 @@ const onSure = () => {
     let res = {} as any
     state.form.parentId = state.form.parentId && state.form.parentId > 0 ? state.form.parentId : undefined
     if (state.form.id != undefined && state.form.id > 0) {
-      res = await new PermissionApi().updateDot(state.form, { showSuccessMessage: true })
+      res = await new PermissionApi().updateDot(state.form, { showSuccessMessage: true }).catch(() => {
+        state.sureLoading = false
+      })
     } else {
-      res = await new PermissionApi().addDot(state.form, { showSuccessMessage: true })
+      res = await new PermissionApi().addDot(state.form, { showSuccessMessage: true }).catch(() => {
+        state.sureLoading = false
+      })
     }
 
     state.sureLoading = false

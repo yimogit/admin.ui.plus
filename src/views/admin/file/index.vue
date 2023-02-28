@@ -155,10 +155,12 @@ const getInitialIndex = (imgUrl: string) => {
 
 const onQuery = async () => {
   state.loading = true
-  const res = await new FileApi().getPage({ ...state.pageInput, filter: state.filterModel })
+  const res = await new FileApi().getPage({ ...state.pageInput, filter: state.filterModel }).catch(() => {
+    state.loading = false
+  })
 
   state.fileListData = res?.data?.list ?? []
-  state.total = res.data?.total ?? 0
+  state.total = res?.data?.total ?? 0
   state.loading = false
 }
 

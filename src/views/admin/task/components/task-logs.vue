@@ -71,10 +71,12 @@ const formatterTime = (row: any, column: any, cellValue: any) => {
 
 const onQuery = async () => {
   state.loading = true
-  const res = await new TaskLogApi().getPage(state.pageInput)
+  const res = await new TaskLogApi().getPage(state.pageInput).catch(() => {
+    state.loading = false
+  })
 
   state.taskLogListData = res?.data?.list ?? []
-  state.total = res.data?.total ?? 0
+  state.total = res?.data?.total ?? 0
   state.loading = false
 }
 const onSizeChange = (val: number) => {

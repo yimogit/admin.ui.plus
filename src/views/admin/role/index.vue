@@ -162,8 +162,10 @@ onUnmounted(() => {
 
 const onQuery = async () => {
   state.loading = true
-  const res = await new RoleApi().getList()
-  if (res.data && res.data.length > 0) {
+  const res = await new RoleApi().getList().catch(() => {
+    state.loading = false
+  })
+  if (res && res.data && res.data.length > 0) {
     state.roleTreeData = listToTree(cloneDeep(res.data))
     state.roleFormTreeData = listToTree(cloneDeep(res.data).filter((a) => a.parentId === 0))
     if (state.roleTreeData[0].children?.length > 0) {
@@ -216,7 +218,9 @@ const onDelete = (row: RoleGetListOutput) => {
 
 const onGetRoleUserList = async () => {
   state.userListLoading = true
-  const res = await new RoleApi().getRoleUserList({ RoleId: state.roleId })
+  const res = await new RoleApi().getRoleUserList({ RoleId: state.roleId }).catch(() => {
+    state.userListLoading = false
+  })
   state.userListLoading = false
   if (res?.success) {
     if (res.data && res.data.length > 0) {
@@ -296,7 +300,9 @@ const onSureUser = async (users: UserGetPageOutput[]) => {
   state.sureLoading = true
   const userIds = users?.map((a) => a.id)
   const input = { roleId: state.roleId, userIds } as RoleAddRoleUserListInput
-  await new RoleApi().addRoleUser(input, { showSuccessMessage: true })
+  await new RoleApi().addRoleUser(input, { showSuccessMessage: true }).catch(() => {
+    state.sureLoading = false
+  })
   state.sureLoading = false
   userSelectRef.value.close()
   onGetRoleUserList()

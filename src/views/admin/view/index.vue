@@ -86,8 +86,10 @@ onUnmounted(() => {
 
 const onQuery = async () => {
   state.loading = true
-  const res = await new ViewApi().getList()
-  if (res.data && res.data.length > 0) {
+  const res = await new ViewApi().getList().catch(() => {
+    state.loading = false
+  })
+  if (res && res.data && res.data.length > 0) {
     state.viewTreeData = listToTree(cloneDeep(res.data))
   } else {
     state.viewTreeData = []

@@ -86,7 +86,9 @@ const onCheckChange = () => {
 
 const initData = async () => {
   state.loading = true
-  const res = await new OrgApi().getList()
+  const res = await new OrgApi().getList().catch(() => {
+    state.loading = false
+  })
   state.loading = false
   if (res?.success && res.data && res.data.length > 0) {
     state.orgTreeData = listToTree(res.data)

@@ -82,10 +82,12 @@ const formatterTime = (row: any, column: any, cellValue: any) => {
 const onQuery = async () => {
   state.loading = true
   state.pageInput.filter = state.filterModel
-  const res = await new OprationLogApi().getPage(state.pageInput)
+  const res = await new OprationLogApi().getPage(state.pageInput).catch(() => {
+    state.loading = false
+  })
 
   state.oprationLogListData = res?.data?.list ?? []
-  state.total = res.data?.total ?? 0
+  state.total = res?.data?.total ?? 0
   state.loading = false
 }
 

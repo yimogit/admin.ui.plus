@@ -147,7 +147,9 @@ const open = async (row: any = {}) => {
   proxy.$modal.loading()
   await getViews()
   if (row.id > 0) {
-    const res = await new PermissionApi().getGroup({ id: row.id })
+    const res = await new PermissionApi().getGroup({ id: row.id }).catch(() => {
+      proxy.$modal.closeLoading()
+    })
 
     if (res?.success) {
       let formData = res.data as PermissionUpdateGroupInput
@@ -180,9 +182,13 @@ const onSure = () => {
     let res = {} as any
     state.form.parentId = state.form.parentId && state.form.parentId > 0 ? state.form.parentId : undefined
     if (state.form.id != undefined && state.form.id > 0) {
-      res = await new PermissionApi().updateGroup(state.form, { showSuccessMessage: true })
+      res = await new PermissionApi().updateGroup(state.form, { showSuccessMessage: true }).catch(() => {
+        state.sureLoading = false
+      })
     } else {
-      res = await new PermissionApi().addGroup(state.form, { showSuccessMessage: true })
+      res = await new PermissionApi().addGroup(state.form, { showSuccessMessage: true }).catch(() => {
+        state.sureLoading = false
+      })
     }
 
     state.sureLoading = false

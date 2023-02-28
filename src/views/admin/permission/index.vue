@@ -159,8 +159,10 @@ onUnmounted(() => {
 
 const onQuery = async () => {
   state.loading = true
-  const res = await new PermissionApi().getList()
-  if (res.data && res.data.length > 0) {
+  const res = await new PermissionApi().getList().catch(() => {
+    state.loading = false
+  })
+  if (res && res.data && res.data.length > 0) {
     state.permissionTreeData = listToTree(cloneDeep(res.data))
     state.formPermissionGroupTreeData = listToTree(cloneDeep(res.data).filter((a) => a.type === 1))
     state.formPermissionMenuTreeData = listToTree(cloneDeep(res.data).filter((a) => a.type === 1 || a.type === 2))

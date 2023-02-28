@@ -77,10 +77,12 @@ const formatterTime = (row: any, column: any, cellValue: any) => {
 const onQuery = async () => {
   state.loading = true
   state.pageInput.filter = state.filterModel
-  const res = await new LoginLogApi().getPage(state.pageInput)
+  const res = await new LoginLogApi().getPage(state.pageInput).catch(() => {
+    state.loading = false
+  })
 
   state.loginLogListData = res?.data?.list ?? []
-  state.total = res.data?.total ?? 0
+  state.total = res?.data?.total ?? 0
   state.loading = false
 }
 

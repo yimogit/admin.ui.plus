@@ -97,8 +97,10 @@ onUnmounted(() => {
 
 const onQuery = async () => {
   state.loading = true
-  const res = await new ApiApi().getList()
-  if (res.data && res.data.length > 0) {
+  const res = await new ApiApi().getList().catch(() => {
+    state.loading = false
+  })
+  if (res && res.data && res.data.length > 0) {
     state.apiTreeData = listToTree(cloneDeep(res.data))
     state.formApiTreeData = listToTree(res.data.filter((a) => a.parentId === 0))
   } else {

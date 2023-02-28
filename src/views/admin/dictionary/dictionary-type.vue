@@ -96,9 +96,11 @@ onUnmounted(() => {
 const onQuery = async () => {
   state.loading = true
   state.pageInput.filter = state.filterModel
-  const res = await new DictionaryTypeApi().getPage(state.pageInput)
+  const res = await new DictionaryTypeApi().getPage(state.pageInput).catch(() => {
+    state.loading = false
+  })
   state.dictionaryTypeListData = res?.data?.list ?? []
-  state.total = res.data?.total ?? 0
+  state.total = res?.data?.total ?? 0
   if (state.dictionaryTypeListData.length > 0) {
     nextTick(() => {
       tableRef.value!.setCurrentRow(state.dictionaryTypeListData[0])

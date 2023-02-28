@@ -84,8 +84,10 @@ onUnmounted(() => {
 
 const onQuery = async () => {
   state.loading = true
-  const res = await new OrgApi().getList()
-  if (res.data && res.data.length > 0) {
+  const res = await new OrgApi().getList().catch(() => {
+    state.loading = false
+  })
+  if (res && res.data && res.data.length > 0) {
     state.orgTreeData = listToTree(res.data)
   } else {
     state.orgTreeData = []

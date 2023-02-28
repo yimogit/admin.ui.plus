@@ -39,7 +39,9 @@ onMounted(() => {
 
 const onQuery = async () => {
   state.loading = true
-  const res = await new CacheApi().getList()
+  const res = await new CacheApi().getList().catch(() => {
+    state.loading = false
+  })
   state.cacheListData = res?.data ?? []
   state.loading = false
 }

@@ -79,8 +79,10 @@ const close = () => {
 const onQuery = async () => {
   state.loading = true
 
-  const res = await new PermissionApi().getPermissionList()
-  if (res.data && res.data.length > 0) {
+  const res = await new PermissionApi().getPermissionList().catch(() => {
+    state.loading = false
+  })
+  if (res && res.data && res.data.length > 0) {
     state.permissionTreeData = listToTree(cloneDeep(res.data))
   } else {
     state.permissionTreeData = []
