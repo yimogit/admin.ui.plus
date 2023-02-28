@@ -94,9 +94,9 @@
             @row-click="onUserRowClick"
           >
             <el-table-column type="selection" width="55" />
-            <el-table-column prop="name" label="姓名" show-overflow-tooltip />
-            <!-- <el-table-column prop="mobile" label="手机号" width="120" show-overflow-tooltip />
-            <el-table-column prop="email" label="邮箱" min-width="120" show-overflow-tooltip /> -->
+            <el-table-column prop="name" label="姓名" min-width="120" show-overflow-tooltip />
+            <el-table-column prop="mobile" label="手机号" min-width="120" show-overflow-tooltip />
+            <!-- <el-table-column prop="email" label="邮箱" min-width="120" show-overflow-tooltip /> -->
           </el-table>
         </el-card>
       </el-col>

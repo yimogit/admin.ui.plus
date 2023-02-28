@@ -8,9 +8,9 @@
       </el-col>
       <el-col :xs="24" :sm="16" :md="16" :lg="18" :xl="20">
         <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-          <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
-            <el-form-item label="姓名" prop="name">
-              <el-input v-model="state.filterModel.name" placeholder="姓名" @keyup.enter="onQuery" />
+          <el-form inline="true" @submit.stop.prevent>
+            <el-form-item>
+              <my-select-input v-model="state.pageInput.dynamicFilter" :filters="state.filters" @search="onQuery" />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
@@ -80,6 +80,7 @@ import { auth } from '/@/utils/authFunction'
 const UserForm = defineAsyncComponent(() => import('./components/user-form.vue'))
 const OrgMenu = defineAsyncComponent(() => import('/@/views/admin/org/components/org-menu.vue'))
 const MyDropdownMore = defineAsyncComponent(() => import('/@/components/my-dropdown-more/index.vue'))
+const MySelectInput = defineAsyncComponent(() => import('/@/components/my-select-input/index.vue'))
 
 const { proxy } = getCurrentInstance() as any
 
@@ -88,9 +89,6 @@ const userFormRef = ref()
 const state = reactive({
   loading: false,
   userFormTitle: '',
-  filterModel: {
-    name: '',
-  },
   total: 0,
   pageInput: {
     currentPage: 1,
@@ -98,8 +96,36 @@ const state = reactive({
     filter: {
       orgId: null,
     },
+    dynamicFilter: {},
   } as PageInputUserGetPageDto,
   userListData: [] as Array<UserGetPageOutput>,
+  filters: [
+    {
+      field: 'name',
+      operator: 'Contains',
+      description: '姓名',
+      componentName: 'el-input',
+      defaultSelect: true,
+    },
+    {
+      field: 'mobile',
+      operator: 'Contains',
+      description: '手机号',
+      componentName: 'el-input',
+    },
+    {
+      field: 'email',
+      operator: 'Contains',
+      description: '邮箱',
+      componentName: 'el-input',
+    },
+    {
+      field: 'userName',
+      operator: 'Contains',
+      description: '用户名',
+      componentName: 'el-input',
+    },
+  ] as Array<DynamicFilterInfo>,
 })
 
 onMounted(() => {
