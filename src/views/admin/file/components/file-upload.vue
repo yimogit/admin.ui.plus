@@ -25,6 +25,7 @@
           multiple
           :auto-upload="false"
           :on-success="onSuccess"
+          :on-error="onError"
         >
           <el-icon class="el-icon--upload"><ele-UploadFilled /></el-icon>
           <div class="el-upload__text">拖拽上传或<em>点击上传</em></div>
@@ -46,9 +47,9 @@
 
 <script lang="ts" setup name="admin/file/upload">
 import { ref, reactive, computed } from 'vue'
-import { UploadFile } from 'element-plus'
 import { getToken } from '/@/api/admin/http-client'
-import type { UploadInstance } from 'element-plus'
+import { ElMessage } from 'element-plus'
+import type { UploadInstance, UploadProps, UploadFile } from 'element-plus'
 import eventBus from '/@/utils/mitt'
 
 const uploadRef = ref<UploadInstance>()
@@ -81,8 +82,18 @@ const open = async () => {
   state.showDialog = true
 }
 
+//上传失败
+const onError: UploadProps['onError'] = (error) => {
+  const message = (error.message && JSON.parse(error.message)?.msg) || ''
+  if (message)
+    ElMessage({
+      message: message,
+      type: 'error',
+    })
+}
+
 // 上传成功
-const onSuccess = (response: any) => {
+const onSuccess: UploadProps['onSuccess'] = (response) => {
   if (response?.success) {
     eventBus.emit('refreshFile')
   }
