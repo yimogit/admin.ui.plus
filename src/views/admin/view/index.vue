@@ -3,9 +3,9 @@
     <el-row :gutter="8" style="width: 100%">
       <el-col :span="24" :xs="24">
         <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-          <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
-            <el-form-item label="视图名称" prop="name">
-              <el-input v-model="state.filterModel.name" placeholder="视图名称" @keyup.enter="onQuery" />
+          <el-form :inline="true" @submit.stop.prevent>
+            <el-form-item label="视图名称">
+              <el-input v-model="state.filter.name" placeholder="视图名称" @keyup.enter="onQuery" />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
@@ -53,7 +53,7 @@
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { ViewListOutput } from '/@/api/admin/data-contracts'
 import { ViewApi } from '/@/api/admin/View'
-import { listToTree } from '/@/utils/tree'
+import { listToTree, filterTree } from '/@/utils/tree'
 import { cloneDeep } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
 
@@ -66,7 +66,7 @@ const { proxy } = getCurrentInstance() as any
 const state = reactive({
   loading: false,
   viewFormTitle: '',
-  filterModel: {
+  filter: {
     name: '',
   },
   viewTreeData: [] as Array<ViewListOutput>,
@@ -90,7 +90,11 @@ const onQuery = async () => {
     state.loading = false
   })
   if (res && res.data && res.data.length > 0) {
-    state.viewTreeData = listToTree(cloneDeep(res.data))
+    state.viewTreeData = filterTree(listToTree(cloneDeep(res.data)), state.filter.name, {
+      filterWhere: (item: any, keyword: string) => {
+        return item.label?.toLocaleLowerCase().indexOf(keyword) > -1 || item.path?.toLocaleLowerCase().indexOf(keyword) > -1
+      },
+    })
   } else {
     state.viewTreeData = []
     state.formViewTreeData = []

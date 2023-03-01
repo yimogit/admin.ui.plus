@@ -165,7 +165,7 @@ const onQuery = async () => {
   if (res && res.data && res.data.length > 0) {
     state.permissionTreeData = filterTree(listToTree(cloneDeep(res.data)), state.filter.name, {
       filterWhere: (item: any, keyword: string) => {
-        return item.label?.toLocaleLowerCase().indexOf(keyword) > -1
+        return item.label?.toLocaleLowerCase().indexOf(keyword) > -1 || item.path?.toLocaleLowerCase().indexOf(keyword) > -1
       },
     })
     state.formPermissionGroupTreeData = listToTree(cloneDeep(res.data).filter((a) => a.type === 1))

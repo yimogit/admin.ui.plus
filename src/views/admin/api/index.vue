@@ -3,9 +3,9 @@
     <el-row :gutter="8" style="width: 100%">
       <el-col :span="24" :xs="24">
         <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-          <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
-            <el-form-item label="接口名称" prop="name">
-              <el-input v-model="state.filterModel.name" placeholder="接口名称" @keyup.enter="onQuery" />
+          <el-form :inline="true" @submit.stop.prevent>
+            <el-form-item label="接口名称">
+              <el-input v-model="state.filter.name" placeholder="接口名称" @keyup.enter="onQuery" />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
@@ -58,7 +58,7 @@ import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncC
 import { ApiListOutput } from '/@/api/admin/data-contracts'
 import { ApiApi } from '/@/api/admin/Api'
 import { ApiApi as ApiExtApi } from '/@/api/admin.extend/Api'
-import { listToTree, treeToList } from '/@/utils/tree'
+import { listToTree, treeToList, filterTree } from '/@/utils/tree'
 import { cloneDeep, isArray } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
 
@@ -73,7 +73,7 @@ const state = reactive({
   loading: false,
   syncLoading: false,
   apiFormTitle: '',
-  filterModel: {
+  filter: {
     name: '',
   },
   apiTreeData: [] as Array<ApiListOutput>,
@@ -101,7 +101,11 @@ const onQuery = async () => {
     state.loading = false
   })
   if (res && res.data && res.data.length > 0) {
-    state.apiTreeData = listToTree(cloneDeep(res.data))
+    state.apiTreeData = filterTree(listToTree(cloneDeep(res.data)), state.filter.name, {
+      filterWhere: (item: any, keyword: string) => {
+        return item.label?.toLocaleLowerCase().indexOf(keyword) > -1 || item.path?.toLocaleLowerCase().indexOf(keyword) > -1
+      },
+    })
     state.formApiTreeData = listToTree(res.data.filter((a) => a.parentId === 0))
   } else {
     state.apiTreeData = []
