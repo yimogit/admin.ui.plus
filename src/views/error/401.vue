@@ -27,7 +27,6 @@ import { Session, Local } from '/@/utils/storage'
 import { adminTokenKey } from '/@/api/admin/http-client'
 
 const onSetAuth = () => {
-  // https://gitee.com/lyt-top/vue-next-admin/issues/I5C3JS
   // 清除缓存/token等
   Local.remove(adminTokenKey)
   Session.clear()
