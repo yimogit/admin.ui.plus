@@ -107,10 +107,7 @@ const state = reactive({
 
 // 头像地址
 const avatar = computed(() => {
-  return (
-    (userInfos.value.photo && `${import.meta.env.VITE_API_URL}/upload/admin/avatar/${userInfos.value.photo}`) ||
-    'https://img2.baidu.com/it/u=1978192862,2048448374&fm=253&fmt=auto&app=138&f=JPEG?w=504&h=500'
-  )
+  return userInfos.value.photo || 'https://img2.baidu.com/it/u=1978192862,2048448374&fm=253&fmt=auto&app=138&f=JPEG?w=504&h=500'
 })
 
 // 设置分割样式
