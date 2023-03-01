@@ -1,5 +1,5 @@
 <template>
-  <el-input v-model="state.filter.value" class="my-input-with-select" @keyup.enter="onSearch" v-bind="$attrs">
+  <el-input v-model="state.filter.value" class="my-input-with-select" clearable @keyup.enter="onSearch" v-bind="$attrs">
     <template v-if="state.filters.length > 0" #prepend>
       <el-select v-model="state.filter.field" style="width: 100px" @change="onChange">
         <el-option v-for="field in state.filters" :key="field.field" :label="field.description" :value="field.field" />

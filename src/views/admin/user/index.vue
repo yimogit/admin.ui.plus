@@ -8,14 +8,20 @@
       </el-col>
       <el-col :xs="24" :sm="16" :md="16" :lg="18" :xl="20">
         <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-          <el-form inline="true" @submit.stop.prevent>
-            <el-form-item>
-              <my-select-input v-model="state.pageInput.dynamicFilter" :filters="state.filters" @search="onQuery" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
-              <el-button v-auth="'api:admin:user:add'" type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
-            </el-form-item>
+          <el-form @submit.stop.prevent style="max-width: 640px">
+            <el-row :gutter="35">
+              <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+                <el-form-item>
+                  <my-select-input v-model="state.pageInput.dynamicFilter" :filters="state.filters" @search="onQuery" />
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+                <el-form-item>
+                  <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
+                  <el-button v-auth="'api:admin:user:add'" type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
+                </el-form-item>
+              </el-col>
+            </el-row>
           </el-form>
         </el-card>
 
