@@ -3,9 +3,9 @@
     <el-row :gutter="8" style="width: 100%">
       <el-col :span="24" :xs="24">
         <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-          <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
-            <el-form-item label="部门名称" prop="name">
-              <el-input v-model="state.filterModel.name" placeholder="部门名称" @keyup.enter="onQuery" />
+          <el-form :inline="true" @submit.stop.prevent>
+            <el-form-item label="部门名称">
+              <el-input v-model="state.filter.name" placeholder="部门名称" @keyup.enter="onQuery" />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
@@ -52,7 +52,7 @@
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { OrgListOutput } from '/@/api/admin/data-contracts'
 import { OrgApi } from '/@/api/admin/Org'
-import { listToTree } from '/@/utils/tree'
+import { listToTree, filterTree } from '/@/utils/tree'
 import eventBus from '/@/utils/mitt'
 
 // 引入组件
@@ -65,7 +65,7 @@ const orgFormRef = ref()
 const state = reactive({
   loading: false,
   orgFormTitle: '',
-  filterModel: {
+  filter: {
     name: '',
   },
   orgTreeData: [] as Array<OrgListOutput>,
@@ -88,7 +88,7 @@ const onQuery = async () => {
     state.loading = false
   })
   if (res && res.data && res.data.length > 0) {
-    state.orgTreeData = listToTree(res.data)
+    state.orgTreeData = filterTree(listToTree(res.data), state.filter.name)
   } else {
     state.orgTreeData = []
   }

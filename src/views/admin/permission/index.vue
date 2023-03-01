@@ -3,9 +3,9 @@
     <el-row :gutter="8" style="width: 100%">
       <el-col :span="24" :xs="24">
         <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-          <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
-            <el-form-item label="权限名称" prop="name">
-              <el-input v-model="state.filterModel.name" placeholder="权限名称" @keyup.enter="onQuery" />
+          <el-form :inline="true" @submit.stop.prevent>
+            <el-form-item label="权限名称">
+              <el-input v-model="state.filter.name" placeholder="权限名称" @keyup.enter="onQuery" />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
@@ -115,7 +115,7 @@
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
 import { PermissionListOutput } from '/@/api/admin/data-contracts'
 import { PermissionApi } from '/@/api/admin/Permission'
-import { listToTree, treeToList } from '/@/utils/tree'
+import { listToTree, treeToList, filterTree } from '/@/utils/tree'
 import { cloneDeep } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
 import { auth } from '/@/utils/authFunction'
@@ -134,7 +134,7 @@ const permissionDotFormRef = ref()
 const state = reactive({
   loading: false,
   permissionFormTitle: '',
-  filterModel: {
+  filter: {
     name: '',
   },
   permissionTreeData: [] as Array<PermissionListOutput>,
@@ -163,7 +163,11 @@ const onQuery = async () => {
     state.loading = false
   })
   if (res && res.data && res.data.length > 0) {
-    state.permissionTreeData = listToTree(cloneDeep(res.data))
+    state.permissionTreeData = filterTree(listToTree(cloneDeep(res.data)), state.filter.name, {
+      filterWhere: (item: any, keyword: string) => {
+        return item.label?.toLocaleLowerCase().indexOf(keyword) > -1
+      },
+    })
     state.formPermissionGroupTreeData = listToTree(cloneDeep(res.data).filter((a) => a.type === 1))
     state.formPermissionMenuTreeData = listToTree(cloneDeep(res.data).filter((a) => a.type === 1 || a.type === 2))
   } else {

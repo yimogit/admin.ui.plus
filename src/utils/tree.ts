@@ -111,36 +111,31 @@ export function treeToList(
 filterTree(cloneDeep(tree), keyword)
 
 filterTree(cloneDeep(tree), keyword, {
-  getChildren: (item: any) => {
-    return item['children']
-  },
-  filterWhere: (item: any) => {
-    return item.name?.toLocaleLowerCase().indexOf(keyword) > -1
+  children: 'children',
+  filterWhere: (item: any, filterword: string) => {
+    return item.name?.toLocaleLowerCase().indexOf(filterword) > -1
   },
 })
 */
 export function filterTree(tree: any = [], keyword: string, options = {}) {
-  const { getChildren, filterWhere } = Object.assign(
+  const { children, filterWhere } = Object.assign(
     {
-      getChildren: (item: any) => {
-        return item['children']
-      },
-      filterWhere: (item: any) => {
-        return item.name?.toLocaleLowerCase().indexOf(keyword) > -1
+      children: 'children',
+      filterWhere: (item: any, word: string) => {
+        return item.name?.toLocaleLowerCase().indexOf(word) > -1
       },
     },
     options || {}
   )
 
   return tree.filter((item: any) => {
-    if (filterWhere(item)) {
+    if (filterWhere(item, keyword)) {
       return true
     }
 
-    let children = getChildren(item)
-    if (children) {
-      children = filterTree(item.children, keyword, { getChildren, filterWhere })
-      return children.length > 0
+    if (item[children]) {
+      item[children] = filterTree(item[children], keyword, { children, filterWhere })
+      return item[children].length > 0
     }
 
     return false
