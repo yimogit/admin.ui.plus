@@ -3,9 +3,9 @@
     <el-row :gutter="8" style="width: 100%">
       <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
         <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-          <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
-            <el-form-item label="角色名称" prop="name">
-              <el-input v-model="state.filterModel.name" placeholder="角色名称" @keyup.enter="onQuery" />
+          <el-form :inline="true" @submit.stop.prevent>
+            <el-form-item label="角色名称">
+              <el-input v-model="state.filter.roleName" placeholder="角色名称" @keyup.enter="onQuery" />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
@@ -72,9 +72,9 @@
       </el-col>
       <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
         <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-          <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
-            <el-form-item label="姓名" prop="name">
-              <el-input v-model="state.filterModel.name" placeholder="姓名" @keyup.enter="onGetRoleUserList" />
+          <el-form :inline="true" @submit.stop.prevent>
+            <el-form-item label="姓名">
+              <el-input v-model="state.filter.name" placeholder="姓名" @keyup.enter="onGetRoleUserList" />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onGetRoleUserList"> 查询 </el-button>
@@ -113,7 +113,7 @@
 import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, nextTick, defineAsyncComponent } from 'vue'
 import { RoleGetListOutput, UserGetRoleUserListOutput, UserGetPageOutput, RoleAddRoleUserListInput, RoleType } from '/@/api/admin/data-contracts'
 import { RoleApi } from '/@/api/admin/Role'
-import { listToTree } from '/@/utils/tree'
+import { listToTree, filterTree } from '/@/utils/tree'
 import { ElTable } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
@@ -140,8 +140,9 @@ const state = reactive({
   userListLoading: false,
   sureLoading: false,
   roleFormTitle: '',
-  filterModel: {
+  filter: {
     name: '',
+    roleName: '',
   },
   roleTreeData: [] as any,
   roleFormTreeData: [] as any,
@@ -166,9 +167,9 @@ const onQuery = async () => {
     state.loading = false
   })
   if (res && res.data && res.data.length > 0) {
-    state.roleTreeData = listToTree(cloneDeep(res.data))
+    state.roleTreeData = filterTree(listToTree(cloneDeep(res.data)), state.filter.roleName)
     state.roleFormTreeData = listToTree(cloneDeep(res.data).filter((a) => a.parentId === 0))
-    if (state.roleTreeData[0].children?.length > 0) {
+    if (state.roleTreeData.length > 0 && state.roleTreeData[0].children?.length > 0) {
       nextTick(() => {
         roleTableRef.value!.setCurrentRow(state.roleTreeData[0].children[0])
       })
@@ -218,7 +219,7 @@ const onDelete = (row: RoleGetListOutput) => {
 
 const onGetRoleUserList = async () => {
   state.userListLoading = true
-  const res = await new RoleApi().getRoleUserList({ RoleId: state.roleId }).catch(() => {
+  const res = await new RoleApi().getRoleUserList({ RoleId: state.roleId, Name: state.filter.name }).catch(() => {
     state.userListLoading = false
   })
   state.userListLoading = false
