@@ -13,7 +13,7 @@
 
     <el-card shadow="never" style="margin-top: 8px">
       <el-table v-loading="state.loading" :data="state.loginLogListData" row-key="id" style="width: 100%">
-        <el-table-column prop="createdUserName" label="操作账号" width="100">
+        <el-table-column prop="createdUserName" label="登录账号" width="100">
           <template #default="{ row }"> {{ row.createdUserName }}<br />{{ row.nickName }} </template>
         </el-table-column>
         <el-table-column prop="ip" label="IP地址" width="130" />

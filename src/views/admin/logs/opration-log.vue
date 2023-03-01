@@ -25,11 +25,6 @@
             <el-tag :type="row.status ? 'success' : 'danger'" disable-transitions>{{ row.status ? '成功' : '失败' }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="操作状态" width="80">
-          <template #default="{ row }">
-            <el-tag :type="row.status ? 'success' : 'danger'" disable-transitions>{{ row.status ? '成功' : '失败' }}</el-tag>
-          </template>
-        </el-table-column>
         <el-table-column prop="createdTime" label="操作时间" :formatter="formatterTime" width="160" />
         <el-table-column prop="msg" label="操作消息" width="" />
       </el-table>
