@@ -322,10 +322,10 @@ export interface CaptchaOutput {
 export type DataScope = 1 | 2 | 3 | 4 | 5
 
 /**
- * MySql=0,SqlServer=1,PostgreSQL=2,Oracle=3,Sqlite=4,OdbcOracle=5,OdbcSqlServer=6,OdbcMySql=7,OdbcPostgreSQL=8,Odbc=9,OdbcDameng=10,MsAccess=11,Dameng=12,OdbcKingbaseES=13,ShenTong=14,KingbaseES=15,Firebird=16,Custom=17,ClickHouse=18,GBase=19,CustomOracle=20,CustomSqlServer=21,CustomMySql=22,CustomPostgreSQL=23
+ * MySql=0,SqlServer=1,PostgreSQL=2,Oracle=3,Sqlite=4,OdbcOracle=5,OdbcSqlServer=6,OdbcMySql=7,OdbcPostgreSQL=8,Odbc=9,OdbcDameng=10,MsAccess=11,Dameng=12,OdbcKingbaseES=13,ShenTong=14,KingbaseES=15,Firebird=16,Custom=17,ClickHouse=18,GBase=19,QuestDb=20,CustomOracle=21,CustomSqlServer=22,CustomMySql=23,CustomPostgreSQL=24
  * @format int32
  */
-export type DataType = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23
+export type DataType = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24
 
 /** 添加 */
 export interface DictionaryAddInput {
@@ -1442,6 +1442,12 @@ export interface PageOutputUserGetPageOutput {
   /** 数据 */
   list?: UserGetPageOutput[] | null
 }
+
+/**
+ * 密码加密类型:MD5Encrypt32=0,PasswordHasher=1
+ * @format int32
+ */
+export type PasswordEncryptType = 0 | 1
 
 export interface PermissionAddApiInput {
   /**
@@ -2846,7 +2852,7 @@ export interface RoleUpdateInput {
 }
 
 /**
- * 性别:Unknown=0,Male=1,Female=2
+ * 性别:Unknown(未知)=0,Male(男)=1,Female(女)=2
  * @format int32
  */
 export type Sex = 0 | 1 | 2
@@ -2857,7 +2863,7 @@ export interface StaffAddInput {
   jobNumber?: string | null
   /** 职位 */
   position?: string | null
-  /** 性别:Unknown=0,Male=1,Female=2 */
+  /** 性别:Unknown(未知)=0,Male(男)=1,Female(女)=2 */
   sex?: Sex
   /**
    * 入职时间
@@ -3028,7 +3034,7 @@ export interface TenantAddInput {
   email?: string | null
   /** 数据库注册键 */
   dbKey?: string | null
-  /** MySql=0,SqlServer=1,PostgreSQL=2,Oracle=3,Sqlite=4,OdbcOracle=5,OdbcSqlServer=6,OdbcMySql=7,OdbcPostgreSQL=8,Odbc=9,OdbcDameng=10,MsAccess=11,Dameng=12,OdbcKingbaseES=13,ShenTong=14,KingbaseES=15,Firebird=16,Custom=17,ClickHouse=18,GBase=19,CustomOracle=20,CustomSqlServer=21,CustomMySql=22,CustomPostgreSQL=23 */
+  /** MySql=0,SqlServer=1,PostgreSQL=2,Oracle=3,Sqlite=4,OdbcOracle=5,OdbcSqlServer=6,OdbcMySql=7,OdbcPostgreSQL=8,Odbc=9,OdbcDameng=10,MsAccess=11,Dameng=12,OdbcKingbaseES=13,ShenTong=14,KingbaseES=15,Firebird=16,Custom=17,ClickHouse=18,GBase=19,QuestDb=20,CustomOracle=21,CustomSqlServer=22,CustomMySql=23,CustomPostgreSQL=24 */
   dbType?: DataType
   /** 连接字符串 */
   connectionString?: string | null
@@ -3098,7 +3104,7 @@ export interface TenantEntity {
   tenantType?: TenantType
   /** 数据库注册键 */
   dbKey?: string | null
-  /** MySql=0,SqlServer=1,PostgreSQL=2,Oracle=3,Sqlite=4,OdbcOracle=5,OdbcSqlServer=6,OdbcMySql=7,OdbcPostgreSQL=8,Odbc=9,OdbcDameng=10,MsAccess=11,Dameng=12,OdbcKingbaseES=13,ShenTong=14,KingbaseES=15,Firebird=16,Custom=17,ClickHouse=18,GBase=19,CustomOracle=20,CustomSqlServer=21,CustomMySql=22,CustomPostgreSQL=23 */
+  /** MySql=0,SqlServer=1,PostgreSQL=2,Oracle=3,Sqlite=4,OdbcOracle=5,OdbcSqlServer=6,OdbcMySql=7,OdbcPostgreSQL=8,Odbc=9,OdbcDameng=10,MsAccess=11,Dameng=12,OdbcKingbaseES=13,ShenTong=14,KingbaseES=15,Firebird=16,Custom=17,ClickHouse=18,GBase=19,QuestDb=20,CustomOracle=21,CustomSqlServer=22,CustomMySql=23,CustomPostgreSQL=24 */
   dbType?: DataType
   /** 连接字符串 */
   connectionString?: string | null
@@ -3133,7 +3139,7 @@ export interface TenantGetOutput {
   email?: string | null
   /** 数据库注册键 */
   dbKey?: string | null
-  /** MySql=0,SqlServer=1,PostgreSQL=2,Oracle=3,Sqlite=4,OdbcOracle=5,OdbcSqlServer=6,OdbcMySql=7,OdbcPostgreSQL=8,Odbc=9,OdbcDameng=10,MsAccess=11,Dameng=12,OdbcKingbaseES=13,ShenTong=14,KingbaseES=15,Firebird=16,Custom=17,ClickHouse=18,GBase=19,CustomOracle=20,CustomSqlServer=21,CustomMySql=22,CustomPostgreSQL=23 */
+  /** MySql=0,SqlServer=1,PostgreSQL=2,Oracle=3,Sqlite=4,OdbcOracle=5,OdbcSqlServer=6,OdbcMySql=7,OdbcPostgreSQL=8,Odbc=9,OdbcDameng=10,MsAccess=11,Dameng=12,OdbcKingbaseES=13,ShenTong=14,KingbaseES=15,Firebird=16,Custom=17,ClickHouse=18,GBase=19,QuestDb=20,CustomOracle=21,CustomSqlServer=22,CustomMySql=23,CustomPostgreSQL=24 */
   dbType?: DataType
   /** 连接字符串 */
   connectionString?: string | null
@@ -3169,7 +3175,7 @@ export interface TenantListOutput {
   phone?: string | null
   /** 邮箱地址 */
   email?: string | null
-  /** MySql=0,SqlServer=1,PostgreSQL=2,Oracle=3,Sqlite=4,OdbcOracle=5,OdbcSqlServer=6,OdbcMySql=7,OdbcPostgreSQL=8,Odbc=9,OdbcDameng=10,MsAccess=11,Dameng=12,OdbcKingbaseES=13,ShenTong=14,KingbaseES=15,Firebird=16,Custom=17,ClickHouse=18,GBase=19,CustomOracle=20,CustomSqlServer=21,CustomMySql=22,CustomPostgreSQL=23 */
+  /** MySql=0,SqlServer=1,PostgreSQL=2,Oracle=3,Sqlite=4,OdbcOracle=5,OdbcSqlServer=6,OdbcMySql=7,OdbcPostgreSQL=8,Odbc=9,OdbcDameng=10,MsAccess=11,Dameng=12,OdbcKingbaseES=13,ShenTong=14,KingbaseES=15,Firebird=16,Custom=17,ClickHouse=18,GBase=19,QuestDb=20,CustomOracle=21,CustomSqlServer=22,CustomMySql=23,CustomPostgreSQL=24 */
   dbType?: DataType
   /** 数据库名称 */
   dbTypeName?: string | null
@@ -3216,7 +3222,7 @@ export interface TenantUpdateInput {
   email?: string | null
   /** 数据库注册键 */
   dbKey?: string | null
-  /** MySql=0,SqlServer=1,PostgreSQL=2,Oracle=3,Sqlite=4,OdbcOracle=5,OdbcSqlServer=6,OdbcMySql=7,OdbcPostgreSQL=8,Odbc=9,OdbcDameng=10,MsAccess=11,Dameng=12,OdbcKingbaseES=13,ShenTong=14,KingbaseES=15,Firebird=16,Custom=17,ClickHouse=18,GBase=19,CustomOracle=20,CustomSqlServer=21,CustomMySql=22,CustomPostgreSQL=23 */
+  /** MySql=0,SqlServer=1,PostgreSQL=2,Oracle=3,Sqlite=4,OdbcOracle=5,OdbcSqlServer=6,OdbcMySql=7,OdbcPostgreSQL=8,Odbc=9,OdbcDameng=10,MsAccess=11,Dameng=12,OdbcKingbaseES=13,ShenTong=14,KingbaseES=15,Firebird=16,Custom=17,ClickHouse=18,GBase=19,QuestDb=20,CustomOracle=21,CustomSqlServer=22,CustomMySql=23,CustomPostgreSQL=24 */
   dbType?: DataType
   /** 连接字符串 */
   connectionString?: string | null
@@ -3365,6 +3371,8 @@ export interface UserEntity {
   userName?: string | null
   /** 密码 */
   password?: string | null
+  /** 密码加密类型:MD5Encrypt32=0,PasswordHasher=1 */
+  passwordEncryptType?: PasswordEncryptType
   /** 姓名 */
   name?: string | null
   /** 手机号 */
@@ -3515,6 +3523,8 @@ export interface UserGetRoleUserListOutput {
   id?: number
   /** 姓名 */
   name?: string | null
+  /** 手机号 */
+  mobile?: string | null
 }
 
 export interface UserPermissionsOutput {
@@ -3597,7 +3607,7 @@ export interface UserStaffEntity {
   position?: string | null
   /** 工号 */
   jobNumber?: string | null
-  /** 性别:Unknown=0,Male=1,Female=2 */
+  /** 性别:Unknown(未知)=0,Male(男)=1,Female(女)=2 */
   sex?: Sex
   /**
    * 入职时间
