@@ -3,8 +3,8 @@
     <el-dialog v-model="state.showDialog" destroy-on-close :title="title" draggable width="600px">
       <el-form :model="form" ref="formRef" size="default" label-width="80px">
         <el-row :gutter="35">
-          <!-- <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-form-item label="上级分组">
+          <el-col v-if="form.type === 2" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+            <el-form-item label="上级分组" prop="parentId" :rules="[{ required: true, message: '请选择上级分组', trigger: ['change'] }]">
               <el-tree-select
                 v-model="form.parentId"
                 :data="roleTreeData"
@@ -18,7 +18,7 @@
                 class="w100"
               />
             </el-form-item>
-          </el-col> -->
+          </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <el-form-item label="名称" prop="name" :rules="[{ required: true, message: '请输入名称', trigger: ['blur', 'change'] }]">
               <el-input v-model="form.name" clearable />
