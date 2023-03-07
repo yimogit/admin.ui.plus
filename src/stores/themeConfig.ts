@@ -70,7 +70,7 @@ export const useThemeConfig = defineStore('themeConfig', {
       // 初始化变量，用于更新菜单 el-scrollbar 的高度，请勿删除
       isFixedHeaderChange: false,
       // 是否开启经典布局分割菜单（仅经典布局生效）
-      isClassicSplitMenu: false,
+      isClassicSplitMenu: true,
       // 是否开启自动锁屏
       isLockScreen: false,
       // 开启自动锁屏倒计时(s/秒)
@@ -104,9 +104,9 @@ export const useThemeConfig = defineStore('themeConfig', {
       // 是否开启色弱模式
       isInvert: false,
       // 是否开启水印
-      isWartermark: false,
+      isWatermark: false,
       // 水印文案
-      wartermarkText: '中台Admin',
+      watermarkText: '中台Admin',
 
       /**
        * 其它设置
@@ -127,7 +127,7 @@ export const useThemeConfig = defineStore('themeConfig', {
        * 中的 `initSetLayoutChange(设置布局切换，重置主题样式)` 方法
        */
       // 布局切换：可选值"<默认 defaults | 经典 classic | 横向 transverse | 分栏 columns>"，默认 defaults
-      layout: 'columns',
+      layout: 'classic',
 
       /**
        * 后端控制路由

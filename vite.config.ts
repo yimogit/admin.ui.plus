@@ -33,7 +33,7 @@ const viteConfig = defineConfig(({ mode, command }: ConfigEnv) => {
     },
     server: {
       host: '0.0.0.0',
-      port: env.VITE_PORT as unknown as number,
+      port: env.VITE_PORT,
       open: env.VITE_OPEN,
       proxy: {
         '/gitee': {
@@ -66,7 +66,8 @@ const viteConfig = defineConfig(({ mode, command }: ConfigEnv) => {
       __VUE_I18N_LEGACY_API__: JSON.stringify(false),
       __VUE_I18N_FULL_INSTALL__: JSON.stringify(false),
       __INTLIFY_PROD_DEVTOOLS__: JSON.stringify(false),
-      __VERSION__: JSON.stringify(process.env.npm_package_version),
+      __NEXT_VERSION__: JSON.stringify(process.env.npm_package_version),
+      __NEXT_NAME__: JSON.stringify(process.env.npm_package_name),
     },
   }
 })

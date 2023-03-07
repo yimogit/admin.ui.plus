@@ -302,15 +302,15 @@
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
-          <div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsWartermark') }}</div>
+          <div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsWatermark') }}</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isWartermark" size="small" @change="onWartermarkChange"></el-switch>
+            <el-switch v-model="getThemeConfig.isWatermark" size="small" @change="onWatermarkChange"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt14">
-          <div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourWartermarkText') }}</div>
+          <div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourWatermarkText') }}</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-input v-model="getThemeConfig.wartermarkText" size="default" style="width: 90px" @input="onWartermarkTextInput"></el-input>
+            <el-input v-model="getThemeConfig.watermarkText" size="default" style="width: 90px" @input="onWatermarkTextInput"></el-input>
           </div>
         </div>
 
@@ -472,11 +472,12 @@ import { storeToRefs } from 'pinia'
 import { useThemeConfig } from '/@/stores/themeConfig'
 import { useChangeColor } from '/@/utils/theme'
 import { verifyAndSpace } from '/@/utils/toolsValidate'
-import { Local, Session } from '/@/utils/storage'
-import Watermark from '/@/utils/wartermark'
+import { Local } from '/@/utils/storage'
+import Watermark from '/@/utils/watermark'
 import commonFunction from '/@/utils/commonFunction'
 import other from '/@/utils/other'
 import mittBus from '/@/utils/mitt'
+import { getToken, setToken } from '/@/api/admin/http-client'
 
 // 定义变量内容
 // 预定义主要颜色
@@ -668,15 +669,15 @@ const onAddDarkChange = () => {
   else body.setAttribute('data-theme', '')
 }
 // 4、界面显示 --> 开启水印
-const onWartermarkChange = () => {
-  getThemeConfig.value.isWartermark ? Watermark.set(getThemeConfig.value.wartermarkText) : Watermark.del()
+const onWatermarkChange = () => {
+  getThemeConfig.value.isWatermark ? Watermark.set(getThemeConfig.value.watermarkText) : Watermark.del()
   setLocalThemeConfig()
 }
 // 4、界面显示 --> 水印文案
-const onWartermarkTextInput = (val: string) => {
-  getThemeConfig.value.wartermarkText = verifyAndSpace(val)
-  if (getThemeConfig.value.wartermarkText === '') return false
-  if (getThemeConfig.value.isWartermark) Watermark.set(getThemeConfig.value.wartermarkText)
+const onWatermarkTextInput = (val: string) => {
+  getThemeConfig.value.watermarkText = verifyAndSpace(val)
+  if (getThemeConfig.value.watermarkText === '') return false
+  if (getThemeConfig.value.isWatermark) Watermark.set(getThemeConfig.value.watermarkText)
   setLocalThemeConfig()
 }
 // 5、布局切换
@@ -734,11 +735,12 @@ const onCopyConfigClick = () => {
 }
 // 一键恢复默认
 const onResetConfigClick = () => {
+  const token = getToken()
   Local.clear()
-  Session.clear()
+  setToken(token)
   window.location.reload()
   // @ts-ignore
-  Local.set('version', __VERSION__)
+  Local.set('version', __NEXT_VERSION__)
 }
 // 初始化菜单样式等
 const initSetStyle = () => {
@@ -771,7 +773,7 @@ onMounted(() => {
       // 深色模式
       if (getThemeConfig.value.isIsDark) onAddDarkChange()
       // 开启水印
-      onWartermarkChange()
+      onWatermarkChange()
       // 语言国际化
       if (Local.get('themeConfig')) locale.value = Local.get('themeConfig').globalI18n
       // 初始化菜单样式等

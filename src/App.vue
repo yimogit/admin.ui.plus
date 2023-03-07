@@ -1,8 +1,8 @@
 <template>
   <el-config-provider :size="getGlobalComponentSize" :locale="getGlobalI18n">
-    <router-view v-show="themeConfig.lockScreenTime > 1" />
+    <router-view v-show="getLockScreen" />
     <LockScreen v-if="themeConfig.isLockScreen" />
-    <Setings ref="setingsRef" v-show="themeConfig.lockScreenTime > 1" />
+    <Setings ref="setingsRef" v-show="getLockScreen" />
     <CloseFull v-if="!themeConfig.isLockScreen" />
     <Upgrade v-if="getVersion" />
   </el-config-provider>
@@ -34,12 +34,18 @@ const stores = useTagsViewRoutes()
 const storesThemeConfig = useThemeConfig()
 const { themeConfig } = storeToRefs(storesThemeConfig)
 
+// 设置锁屏时组件显示隐藏
+const getLockScreen = computed(() => {
+  // 防止锁屏后，刷新出现不相关界面
+  return themeConfig.value.isLockScreen ? themeConfig.value.lockScreenTime > 1 : themeConfig.value.lockScreenTime >= 0
+})
+
 // 获取版本号
 const getVersion = computed(() => {
   let isVersion = false
   if (route.path !== '/login') {
     // @ts-ignore
-    const currentVersion = __VERSION__
+    const currentVersion = __NEXT_VERSION__
     const lastVersion = Local.get('version')
     if (!lastVersion) {
       Local.set('version', currentVersion)
