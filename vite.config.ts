@@ -21,6 +21,8 @@ const viteConfig = defineConfig(({ mode, command }: ConfigEnv) => {
       vue(),
       vueSetupExtend(),
       compression({
+        threshold: 5121,
+        disable: !env.VITE_COMPRESSION,
         deleteOriginFile: false,
       }),
     ],
