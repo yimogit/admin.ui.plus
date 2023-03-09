@@ -5,6 +5,7 @@
 // 用户信息
 declare interface UserInfosState<T = any> {
   userInfos: {
+    token: string
     authBtnList: string[]
     photo: string
     roles: string[]

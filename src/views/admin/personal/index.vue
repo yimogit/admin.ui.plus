@@ -143,7 +143,6 @@ import { UserGetBasicOutput } from '/@/api/admin/data-contracts'
 import { useUserInfo } from '/@/stores/userInfo'
 import pinia from '/@/stores/index'
 import { storeToRefs } from 'pinia'
-import { getToken } from '/@/api/admin/http-client'
 import { AxiosResponse } from 'axios'
 
 // 引入组件
@@ -184,7 +183,7 @@ const currentTime = computed(() => {
 
 // 上传头像请求头部
 const avatarHeaders = computed(() => {
-  return { Authorization: 'Bearer ' + getToken() }
+  return { Authorization: 'Bearer ' + userInfos.value.token }
 })
 
 // 头像地址

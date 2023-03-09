@@ -47,10 +47,14 @@
 
 <script lang="ts" setup name="admin/file/upload">
 import { ref, reactive, computed } from 'vue'
-import { getToken } from '/@/api/admin/http-client'
 import { ElMessage } from 'element-plus'
 import type { UploadInstance, UploadProps, UploadFile } from 'element-plus'
 import eventBus from '/@/utils/mitt'
+import { storeToRefs } from 'pinia'
+import { useUserInfo } from '/@/stores/userInfo'
+
+const stores = useUserInfo()
+const { userInfos } = storeToRefs(stores)
 
 const uploadRef = ref<UploadInstance>()
 
@@ -74,7 +78,7 @@ const uploadAction = computed(() => {
 })
 
 const uploadHeaders = computed(() => {
-  return { Authorization: 'Bearer ' + getToken() }
+  return { Authorization: 'Bearer ' + userInfos.value.token }
 })
 
 // 打开对话框

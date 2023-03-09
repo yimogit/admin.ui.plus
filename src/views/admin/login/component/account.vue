@@ -78,7 +78,7 @@ import { formatAxis } from '/@/utils/formatTime'
 import { NextLoading } from '/@/utils/loading'
 import { AuthApi } from '/@/api/admin/Auth'
 import { AuthLoginInput } from '/@/api/admin/data-contracts'
-import { adminTokenKey } from '/@/api/admin/http-client'
+import { setToken, adminTokenKey } from '/@/api/admin/http-client'
 
 // 定义变量内容
 const { t } = useI18n()
@@ -114,7 +114,7 @@ const onSignIn = async () => {
   }
 
   const token = res.data?.token
-  Local.set(adminTokenKey, token)
+  setToken(token)
   Session.set('token', token)
   // 添加完动态路由，再进行 router 跳转，否则可能报错 No match found for location with path "/"
   const isNoPower = await initBackEndControlRoutes()

@@ -2,7 +2,10 @@ import { defineStore } from 'pinia'
 //import Cookies from 'js-cookie'
 import { Session } from '/@/utils/storage'
 import { AuthApi } from '/@/api/admin/Auth'
-import { clearToken } from '/@/api/admin/http-client'
+import { getToken, clearToken } from '/@/api/admin/http-client'
+import { merge } from 'lodash-es'
+
+const token = getToken()
 
 /**
  * 用户信息
@@ -11,6 +14,7 @@ import { clearToken } from '/@/api/admin/http-client'
 export const useUserInfo = defineStore('userInfo', {
   state: (): UserInfosState => ({
     userInfos: {
+      token: token || '',
       userName: '',
       photo: '',
       time: 0,
@@ -24,15 +28,18 @@ export const useUserInfo = defineStore('userInfo', {
       if (Session.get('userInfo')) {
         this.userInfos = Session.get('userInfo')
       } else {
-        const userInfos: any = await this.getApiUserInfo()
-        this.userInfos = userInfos
+        const userInfos: any = await this.getApiUserInfo().catch(() => {})
+        merge(this.userInfos, userInfos)
       }
     },
-    async setUserName(userName: string) {
+    setUserName(userName: string) {
       this.userInfos.userName = userName
     },
-    async setPhoto(photo: string) {
+    setPhoto(photo: string) {
       this.userInfos.photo = photo
+    },
+    setToken(token: string) {
+      this.userInfos.token = token
     },
     // 模拟接口数据
     async getApiUserInfo() {

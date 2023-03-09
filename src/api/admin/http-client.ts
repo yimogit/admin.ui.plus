@@ -12,6 +12,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, RawAxiosRequestHeaders, ResponseType } from 'axios'
 import { ElLoading, ElMessage, LoadingOptions } from 'element-plus'
 import { Local, Session } from '/@/utils/storage'
+import { useUserInfo } from '/@/stores/userInfo'
 
 export const adminTokenKey = 'admin-token'
 
@@ -21,6 +22,7 @@ export const getToken = () => {
 }
 // 设置token
 export const setToken = (token: any) => {
+  useUserInfo().setToken(token)
   return Local.set(adminTokenKey, token)
 }
 // 清除token
