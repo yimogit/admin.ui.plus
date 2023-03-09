@@ -114,10 +114,10 @@ export async function setAddRoute() {
  * @returns 返回后端路由菜单数据
  */
 export async function getBackEndControlRoutes() {
-  const res = await new AuthApi().getUserInfo()
-  if (res?.success && (res?.data?.menus?.length as number) > 0) {
+  const res = await new AuthApi().getUserMenus()
+  if (res?.success && (res?.data?.length as number) > 0) {
     const menus = [] as any
-    res.data?.menus?.forEach((menu) => {
+    res.data?.forEach((menu) => {
       menus.push({
         id: menu.id,
         parentId: menu.parentId,

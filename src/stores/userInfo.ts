@@ -38,7 +38,7 @@ export const useUserInfo = defineStore('userInfo', {
     async getApiUserInfo() {
       return new Promise((resolve, reject) => {
         new AuthApi()
-          .getUserInfo()
+          .getUserPermissions()
           .then((res) => {
             if (res?.success) {
               const user = res.data?.user

@@ -216,9 +216,15 @@ export interface AuthGetPasswordEncryptKeyOutput {
 
 export interface AuthGetUserInfoOutput {
   user?: AuthUserProfileDto
-  /** 用户菜单 */
+  /** 用户菜单列表 */
   menus?: AuthUserMenuDto[] | null
-  /** 用户权限点 */
+  /** 用户权限列表 */
+  permissions?: string[] | null
+}
+
+export interface AuthGetUserPermissionsOutput {
+  user?: AuthUserProfileDto
+  /** 用户权限列表 */
   permissions?: string[] | null
 }
 
@@ -2074,6 +2080,28 @@ export interface ResultOutputAuthGetUserInfoOutput {
 }
 
 /** 结果输出 */
+export interface ResultOutputAuthGetUserPermissionsOutput {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  data?: AuthGetUserPermissionsOutput
+}
+
+/** 结果输出 */
+export interface ResultOutputAuthUserProfileDto {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  data?: AuthUserProfileDto
+}
+
+/** 结果输出 */
 export interface ResultOutputCaptchaOutput {
   /** 是否成功标记 */
   success?: boolean
@@ -2201,6 +2229,18 @@ export interface ResultOutputListApiListOutput {
   msg?: string | null
   /** 数据 */
   data?: ApiListOutput[] | null
+}
+
+/** 结果输出 */
+export interface ResultOutputListAuthUserMenuDto {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  /** 数据 */
+  data?: AuthUserMenuDto[] | null
 }
 
 /** 结果输出 */
