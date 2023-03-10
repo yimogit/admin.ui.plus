@@ -73,12 +73,12 @@ import { useI18n } from 'vue-i18n'
 // import { useThemeConfig } from '/@/stores/themeConfig'
 // import { initFrontEndControlRoutes } from '/@/router/frontEnd'
 import { initBackEndControlRoutes } from '/@/router/backEnd'
-import { Local, Session } from '/@/utils/storage'
+import { Session } from '/@/utils/storage'
 import { formatAxis } from '/@/utils/formatTime'
 import { NextLoading } from '/@/utils/loading'
 import { AuthApi } from '/@/api/admin/Auth'
 import { AuthLoginInput } from '/@/api/admin/data-contracts'
-import { setToken, adminTokenKey } from '/@/api/admin/http-client'
+import { useUserInfo } from '/@/stores/userInfo'
 
 // 定义变量内容
 const { t } = useI18n()
@@ -114,8 +114,7 @@ const onSignIn = async () => {
   }
 
   const token = res.data?.token
-  setToken(token)
-  Session.set('token', token)
+  useUserInfo().setToken(token)
   // 添加完动态路由，再进行 router 跳转，否则可能报错 No match found for location with path "/"
   const isNoPower = await initBackEndControlRoutes()
   // 执行完 initBackEndControlRoutes，再执行 signInSuccess
@@ -125,7 +124,7 @@ const onSignIn = async () => {
 const signInSuccess = (isNoPower: boolean | undefined) => {
   if (isNoPower) {
     ElMessage.warning('抱歉，您没有分配权限，请联系管理员')
-    Local.remove(adminTokenKey)
+    useUserInfo().removeToken()
     Session.clear()
   } else {
     // 初始化登录成功时间问候语

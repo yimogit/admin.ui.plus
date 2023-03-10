@@ -215,6 +215,7 @@ export interface AuthGetPasswordEncryptKeyOutput {
 }
 
 export interface AuthGetUserInfoOutput {
+  /** 用户个人信息 */
   user?: AuthUserProfileDto
   /** 用户菜单列表 */
   menus?: AuthUserMenuDto[] | null
@@ -223,6 +224,7 @@ export interface AuthGetUserInfoOutput {
 }
 
 export interface AuthGetUserPermissionsOutput {
+  /** 用户个人信息 */
   user?: AuthUserProfileDto
   /** 用户权限列表 */
   permissions?: string[] | null
@@ -291,6 +293,7 @@ export interface AuthUserMenuDto {
   sort?: number | null
 }
 
+/** 用户个人信息 */
 export interface AuthUserProfileDto {
   /** 账号 */
   userName?: string | null
@@ -2098,6 +2101,7 @@ export interface ResultOutputAuthUserProfileDto {
   code?: string | null
   /** 消息 */
   msg?: string | null
+  /** 用户个人信息 */
   data?: AuthUserProfileDto
 }
 

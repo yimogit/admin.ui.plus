@@ -477,7 +477,7 @@ import Watermark from '/@/utils/watermark'
 import commonFunction from '/@/utils/commonFunction'
 import other from '/@/utils/other'
 import mittBus from '/@/utils/mitt'
-import { getToken, setToken } from '/@/api/admin/http-client'
+import { useUserInfo } from '/@/stores/userInfo'
 
 // 定义变量内容
 // 预定义主要颜色
@@ -735,9 +735,11 @@ const onCopyConfigClick = () => {
 }
 // 一键恢复默认
 const onResetConfigClick = () => {
-  const token = getToken()
+  const storesUseUserInfo = useUserInfo()
+  const { userInfos } = storeToRefs(storesUseUserInfo)
+  const token = userInfos.value.token
   Local.clear()
-  setToken(token)
+  storesUseUserInfo.setToken(token)
   window.location.reload()
   // @ts-ignore
   Local.set('version', __NEXT_VERSION__)

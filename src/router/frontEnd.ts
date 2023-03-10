@@ -7,7 +7,6 @@ import { useUserInfo } from '/@/stores/userInfo'
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes'
 import { useRoutesList } from '/@/stores/routesList'
 import { NextLoading } from '/@/utils/loading'
-import { getToken } from '/@/api/admin/http-client'
 
 // 前端控制路由
 
@@ -22,7 +21,9 @@ export async function initFrontEndControlRoutes() {
   // 界面 loading 动画开始执行
   if (window.nextLoading === undefined) NextLoading.start()
   // 无 token 停止执行下一步
-  if (!getToken()) return false
+  const stores = useUserInfo(pinia)
+  const { userInfos } = storeToRefs(stores)
+  if (!userInfos.value.token) return false
   // 触发初始化用户信息 pinia
   await useUserInfo(pinia).setUserInfos()
   // 无登录权限时，添加判断

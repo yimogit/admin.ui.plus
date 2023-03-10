@@ -7,11 +7,11 @@ import { useKeepALiveNames } from '/@/stores/keepAliveNames'
 import { useRoute } from '/@/stores/route'
 import { useRoutesList } from '/@/stores/routesList'
 import { useThemeConfig } from '/@/stores/themeConfig'
-import { Session, Local } from '/@/utils/storage'
+import { Session } from '/@/utils/storage'
 import { staticRoutes, notFoundAndNoPower } from '/@/router/route'
 import { initFrontEndControlRoutes } from '/@/router/frontEnd'
 import { initBackEndControlRoutes } from '/@/router/backEnd'
-import { adminTokenKey, getToken } from '/@/api/admin/http-client'
+import { useUserInfo } from '/@/stores/userInfo'
 import { ElMessage } from 'element-plus'
 
 /**
@@ -96,14 +96,16 @@ export function formatTwoStageRoutes(arr: any) {
 router.beforeEach(async (to, from, next) => {
   NProgress.configure({ showSpinner: false })
   if (to.meta.title) NProgress.start()
-  const token = getToken()
+  const storesUseUserInfo = useUserInfo(pinia)
+  const { userInfos } = storeToRefs(storesUseUserInfo)
+  const token = userInfos.value.token
   if (to.path === '/login' && !token) {
     next()
     NProgress.done()
   } else {
     if (!token) {
       next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`)
-      Local.remove(adminTokenKey)
+      storesUseUserInfo.removeToken()
       Session.clear()
       NProgress.done()
     } else if (token && to.path === '/login') {
@@ -120,7 +122,7 @@ router.beforeEach(async (to, from, next) => {
           const isNoPower = await initBackEndControlRoutes()
           if (isNoPower) {
             ElMessage.warning('抱歉，您没有分配权限，请联系管理员')
-            Local.remove(adminTokenKey)
+            storesUseUserInfo.removeToken()
             Session.clear()
           }
           // 解决刷新时，一直跳 404 页面问题，关联问题 No match found for location with path 'xxx'

@@ -1,11 +1,9 @@
 import { defineStore } from 'pinia'
-//import Cookies from 'js-cookie'
-import { Session } from '/@/utils/storage'
 import { AuthApi } from '/@/api/admin/Auth'
-import { getToken, clearToken } from '/@/api/admin/http-client'
 import { merge } from 'lodash-es'
+import { Local } from '/@/utils/storage'
 
-const token = getToken()
+export const adminTokenKey = 'admin-token'
 
 /**
  * 用户信息
@@ -14,7 +12,7 @@ const token = getToken()
 export const useUserInfo = defineStore('userInfo', {
   state: (): UserInfosState => ({
     userInfos: {
-      token: token || '',
+      token: Local.get(adminTokenKey) || '',
       userName: '',
       photo: '',
       time: 0,
@@ -24,13 +22,8 @@ export const useUserInfo = defineStore('userInfo', {
   }),
   actions: {
     async setUserInfos() {
-      // 存储用户信息到浏览器缓存
-      if (Session.get('userInfo')) {
-        this.userInfos = Session.get('userInfo')
-      } else {
-        const userInfos: any = await this.getApiUserInfo().catch(() => {})
-        merge(this.userInfos, userInfos)
-      }
+      const userInfos: any = await this.getApiUserInfo().catch(() => {})
+      merge(this.userInfos, userInfos)
     },
     setUserName(userName: string) {
       this.userInfos.userName = userName
@@ -40,6 +33,17 @@ export const useUserInfo = defineStore('userInfo', {
     },
     setToken(token: string) {
       this.userInfos.token = token
+      Local.set(adminTokenKey, token)
+    },
+    removeToken() {
+      this.userInfos.token = ''
+      Local.remove(adminTokenKey)
+    },
+    clear() {
+      this.userInfos.token = ''
+      Local.remove(adminTokenKey)
+      window.requests = []
+      window.location.reload()
     },
     // 模拟接口数据
     async getApiUserInfo() {
@@ -58,7 +62,7 @@ export const useUserInfo = defineStore('userInfo', {
               }
               resolve(userInfos)
             } else {
-              clearToken()
+              this.clear()
             }
           })
           .catch((err) => {

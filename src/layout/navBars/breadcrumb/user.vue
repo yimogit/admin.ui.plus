@@ -85,7 +85,6 @@ import { useThemeConfig } from '/@/stores/themeConfig'
 import other from '/@/utils/other'
 import mittBus from '/@/utils/mitt'
 import { Local } from '/@/utils/storage'
-import { clearToken } from '/@/api/admin/http-client'
 
 // 引入组件
 const UserNews = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/userNews.vue'))
@@ -94,9 +93,9 @@ const Search = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/s
 // 定义变量内容
 const { locale, t } = useI18n()
 const router = useRouter()
-const stores = useUserInfo()
+const storesUseUserInfo = useUserInfo()
 const storesThemeConfig = useThemeConfig()
-const { userInfos } = storeToRefs(stores)
+const { userInfos } = storeToRefs(storesUseUserInfo)
 const { themeConfig } = storeToRefs(storesThemeConfig)
 const searchRef = ref()
 const state = reactive({
@@ -163,7 +162,7 @@ const onHandleCommandClick = (path: string) => {
       },
     })
       .then(async () => {
-        clearToken()
+        storesUseUserInfo.clear()
       })
       .catch(() => {})
   } else if (path === 'wareHouse') {

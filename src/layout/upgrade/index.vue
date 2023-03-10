@@ -37,7 +37,7 @@ import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import { useThemeConfig } from '/@/stores/themeConfig'
 import { Local } from '/@/utils/storage'
-import { getToken, setToken } from '/@/api/admin/http-client'
+import { useUserInfo } from '/@/stores/userInfo'
 
 // 定义变量内容
 const { t } = useI18n()
@@ -64,9 +64,11 @@ const onUpgrade = () => {
   state.isLoading = true
   state.btnTxt = t('message.upgrade.btnTwoLoading')
   setTimeout(() => {
-    const token = getToken()
+    const storesUseUserInfo = useUserInfo()
+    const { userInfos } = storeToRefs(storesUseUserInfo)
+    const token = userInfos.value.token
     Local.clear()
-    setToken(token)
+    storesUseUserInfo.setToken(token)
     window.location.reload()
     Local.set('version', state.version)
   }, 2000)

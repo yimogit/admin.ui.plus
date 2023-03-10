@@ -4,27 +4,8 @@ const { apiConfig, generateResponses, config } = it;
 
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType, RawAxiosRequestHeaders } from 'axios'
 import { ElLoading, ElMessage, LoadingOptions } from 'element-plus'
-import { Local, Session } from '/@/utils/storage'
+import { storeToRefs } from 'pinia'
 import { useUserInfo } from '/@/stores/userInfo'
-
-export const adminTokenKey = 'admin-token'
-
-// 获得token
-export const getToken = () => {
-  return Local.get(adminTokenKey)
-}
-// 设置token
-export const setToken = (token: any) => {
-  useUserInfo().setToken(token)
-  return Local.set(adminTokenKey, token)
-}
-// 清除token
-export const clearToken = () => {
-  Local.remove(adminTokenKey)
-  Session.remove('token')
-  window.requests = []
-  window.location.reload()
-}
 
 export type QueryParamsType = Record<string | number, any>;
 
@@ -209,9 +190,11 @@ export class HttpClient<SecurityDataType = unknown> {
     * @param {*} config
     */
     protected async refreshToken(config: any) {
-      const token = getToken()
+      const storesUseUserInfo = useUserInfo()
+      const { userInfos } = storeToRefs(storesUseUserInfo)
+      const token = userInfos.value.token
       if (!token) {
-        clearToken()
+        storesUseUserInfo.clear()
         return Promise.reject(config)
       }
 
@@ -239,19 +222,19 @@ export class HttpClient<SecurityDataType = unknown> {
       .then((res) => {
         if (res?.success) {
           const token = res.data.token
-          setToken(token)
+          storesUseUserInfo.setToken(token)
           if (window.requests?.length > 0) {
             window.requests.forEach((apiRequest) => apiRequest())
             window.requests = []
           }
           return this.instance(config)
         } else {
-          clearToken()
+          storesUseUserInfo.clear()
           return Promise.reject(res)
         }
       })
       .catch((error) => {
-        clearToken()
+        storesUseUserInfo.clear()
         return Promise.reject(error)
       })
       .finally(() => {
@@ -351,7 +334,8 @@ export class HttpClient<SecurityDataType = unknown> {
               }
             }
 
-            const accessToken = getToken()
+            const { userInfos } = storeToRefs(useUserInfo())
+            const accessToken = userInfos.value.token
             config.headers!['Authorization'] = `Bearer ${accessToken}`
             return config
           },

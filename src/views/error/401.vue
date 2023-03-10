@@ -23,12 +23,12 @@
 </template>
 
 <script setup lang="ts" name="noPower">
-import { Session, Local } from '/@/utils/storage'
-import { adminTokenKey } from '/@/api/admin/http-client'
+import { Session } from '/@/utils/storage'
+import { useUserInfo } from '/@/stores/userInfo'
 
 const onSetAuth = () => {
   // 清除缓存/token等
-  Local.remove(adminTokenKey)
+  useUserInfo().removeToken()
   Session.clear()
   // 使用 reload 时，不需要调用 resetRoute() 重置路由
   window.location.reload()

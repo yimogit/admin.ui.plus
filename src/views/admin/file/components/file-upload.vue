@@ -88,7 +88,14 @@ const open = async () => {
 
 //上传失败
 const onError: UploadProps['onError'] = (error) => {
-  const message = (error.message && JSON.parse(error.message)?.msg) || ''
+  let message = ''
+  if (error.message) {
+    try {
+      message = JSON.parse(error.message)?.msg
+    } catch (err) {
+      message = error.message || ''
+    }
+  }
   if (message)
     ElMessage({
       message: message,
