@@ -230,14 +230,17 @@ const onAvatarSuccess = (res: AxiosResponse) => {
 }
 
 // 上传头像失败
-const onAvatarError = (err: any) => {
+const onAvatarError = (error: any) => {
   state.avatarLoading = false
-  if (err.message) {
-    const res = JSON.parse(err.message) as AxiosResponse
-    if (!res?.success && res.msg) {
-      proxy.$modal.msgError(res.msg)
+  let message = ''
+  if (error.message) {
+    try {
+      message = JSON.parse(error.message)?.msg
+    } catch (err) {
+      message = error.message || ''
     }
   }
+  if (message) proxy.$modal.msgError(message)
 }
 
 // 更新个人信息

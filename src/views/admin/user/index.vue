@@ -37,15 +37,23 @@
                 {{ row.roleNames ? row.roleNames.join(',') : '' }}
               </template>
             </el-table-column>
-            <el-table-column label="启用" width="70" align="center" show-overflow-tooltip>
+            <el-table-column label="状态" width="80" align="center">
               <template #default="{ row }">
                 <el-switch
+                  v-if="auth('api:admin:user:set-enable')"
                   v-model="row.enabled"
                   :loading="row.loading"
                   :active-value="true"
                   :inactive-value="false"
+                  inline-prompt
+                  active-text="启用"
+                  inactive-text="禁用"
                   :before-change="() => onSetEnable(row)"
                 />
+                <template v-else>
+                  <el-tag type="success" v-if="row.enabled">启用</el-tag>
+                  <el-tag type="danger" v-else>禁用</el-tag>
+                </template>
               </template>
             </el-table-column>
             <el-table-column label="操作" width="160" fixed="right" header-align="center" align="center">
