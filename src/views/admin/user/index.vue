@@ -37,6 +37,17 @@
                 {{ row.roleNames ? row.roleNames.join(',') : '' }}
               </template>
             </el-table-column>
+            <el-table-column label="启用" width="70" align="center" show-overflow-tooltip>
+              <template #default="{ row }">
+                <el-switch
+                  v-model="row.enabled"
+                  :loading="row.loading"
+                  :active-value="true"
+                  :inactive-value="false"
+                  :before-change="() => onSetEnable(row)"
+                />
+              </template>
+            </el-table-column>
             <el-table-column label="操作" width="160" fixed="right" header-align="center" align="center">
               <template #default="{ row }">
                 <el-button v-auth="'api:admin:user:update'" icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
@@ -203,6 +214,32 @@ const onSetManager = (row: UserGetPageOutput) => {
       onQuery()
     })
     .catch(() => {})
+}
+
+const onSetEnable = (row: UserGetPageOutput & { loading: boolean }) => {
+  return new Promise((resolve, reject) => {
+    proxy.$modal
+      .confirm(`确定要${row.enabled ? '禁用' : '启用'}【${row.name}】?`)
+      .then(async () => {
+        row.loading = true
+        const res = await new UserApi()
+          .setEnable({ userId: row.id, enabled: !row.enabled }, { showSuccessMessage: true })
+          .catch(() => {
+            reject(new Error('Error'))
+          })
+          .finally(() => {
+            row.loading = false
+          })
+        if (res && res.success) {
+          resolve(true)
+        } else {
+          reject(new Error('Cancel'))
+        }
+      })
+      .catch(() => {
+        reject(new Error('Cancel'))
+      })
+  })
 }
 
 const onSizeChange = (val: number) => {

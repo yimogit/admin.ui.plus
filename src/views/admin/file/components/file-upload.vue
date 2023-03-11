@@ -24,6 +24,11 @@
           drag
           multiple
           :auto-upload="false"
+          :before-upload="
+            () => {
+              state.token = storesUserInfo.getToken()
+            }
+          "
           :on-success="onSuccess"
           :on-error="onError"
         >
@@ -50,11 +55,9 @@ import { ref, reactive, computed } from 'vue'
 import { ElMessage } from 'element-plus'
 import type { UploadInstance, UploadProps, UploadFile } from 'element-plus'
 import eventBus from '/@/utils/mitt'
-import { storeToRefs } from 'pinia'
 import { useUserInfo } from '/@/stores/userInfo'
 
-const stores = useUserInfo()
-const { userInfos } = storeToRefs(stores)
+const storesUserInfo = useUserInfo()
 
 const uploadRef = ref<UploadInstance>()
 
@@ -71,6 +74,7 @@ const state = reactive({
   fileDirectory: '',
   fileReName: true,
   fileList: [] as UploadFile[],
+  token: storesUserInfo.getToken(),
 })
 
 const uploadAction = computed(() => {
@@ -78,7 +82,7 @@ const uploadAction = computed(() => {
 })
 
 const uploadHeaders = computed(() => {
-  return { Authorization: 'Bearer ' + userInfos.value.token }
+  return { Authorization: 'Bearer ' + state.token }
 })
 
 // 打开对话框

@@ -14,6 +14,7 @@
                 :show-file-list="false"
                 :before-upload="
                   () => {
+                    state.token = storesUserInfo.getToken()
                     state.avatarLoading = true
                   }
                 "
@@ -149,6 +150,10 @@ import { AxiosResponse } from 'axios'
 const ChangePasswordForm = defineAsyncComponent(() => import('./components/change-password-form.vue'))
 
 const { proxy } = getCurrentInstance() as any
+const changePasswordFormRef = ref()
+const formRef = ref()
+const storesUserInfo = useUserInfo(pinia)
+const { userInfos } = storeToRefs(storesUserInfo)
 
 // 定义变量内容
 const state = reactive({
@@ -168,13 +173,10 @@ const state = reactive({
   },
   avatarLoading: false,
   updateLoading: false,
+  token: storesUserInfo.getToken(),
 })
 
-const changePasswordFormRef = ref()
-const formRef = ref()
 const { personalInfo, personalForm } = toRefs(state)
-const storesUserInfo = useUserInfo(pinia)
-const { userInfos } = storeToRefs(storesUserInfo)
 
 // 当前时间提示语
 const currentTime = computed(() => {
@@ -183,7 +185,7 @@ const currentTime = computed(() => {
 
 // 上传头像请求头部
 const avatarHeaders = computed(() => {
-  return { Authorization: 'Bearer ' + userInfos.value.token }
+  return { Authorization: 'Bearer ' + state.token }
 })
 
 // 头像地址

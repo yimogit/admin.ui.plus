@@ -1,5 +1,4 @@
 import { RouteRecordRaw } from 'vue-router'
-import { storeToRefs } from 'pinia'
 import pinia from '/@/stores/index'
 import { useUserInfo } from '/@/stores/userInfo'
 import { useRequestOldRoutes } from '/@/stores/requestOldRoutes'
@@ -37,9 +36,8 @@ const dynamicViewsModules: Record<string, Function> = Object.assign({}, { ...lay
 export async function initBackEndControlRoutes() {
   // 界面 loading 动画开始执行
   if (window.nextLoading === undefined) NextLoading.start()
-  const { userInfos } = storeToRefs(useUserInfo())
   // 无 token 停止执行下一步
-  if (!userInfos.value.token) return false
+  if (!useUserInfo().getToken()) return false
   // 触发初始化用户信息 pinia
   await useUserInfo().setUserInfos()
   // 获取路由菜单数据

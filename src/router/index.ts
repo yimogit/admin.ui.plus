@@ -97,8 +97,7 @@ router.beforeEach(async (to, from, next) => {
   NProgress.configure({ showSpinner: false })
   if (to.meta.title) NProgress.start()
   const storesUseUserInfo = useUserInfo(pinia)
-  const { userInfos } = storeToRefs(storesUseUserInfo)
-  const token = userInfos.value.token
+  const token = storesUseUserInfo.getToken()
   if (to.path === '/login' && !token) {
     next()
     NProgress.done()

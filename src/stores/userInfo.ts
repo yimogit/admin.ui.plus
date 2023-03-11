@@ -35,6 +35,11 @@ export const useUserInfo = defineStore('userInfo', {
       this.userInfos.token = token
       Local.set(adminTokenKey, token)
     },
+    getToken() {
+      const token = Local.get(adminTokenKey)
+      this.userInfos.token = token
+      return token
+    },
     removeToken() {
       this.userInfos.token = ''
       Local.remove(adminTokenKey)

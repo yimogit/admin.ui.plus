@@ -3234,6 +3234,17 @@ export interface TenantListOutput {
   createdTime?: string | null
 }
 
+/** 设置启用 */
+export interface TenantSetEnableInput {
+  /**
+   * 租户Id
+   * @format int64
+   */
+  tenantId?: number
+  /** 是否启用 */
+  enabled?: boolean
+}
+
 /**
  * 租户类型:Platform=1,Tenant=2
  * @format int32
@@ -3320,8 +3331,8 @@ export interface UserAddInput {
    * @minLength 1
    */
   password: string
-  /** 用户状态:Enabled=0,Disabled=1,WaitChangePasssword=2,WaitActive=3 */
-  status?: UserStatus
+  /** 启用 */
+  enabled?: boolean
 }
 
 /** 添加会员 */
@@ -3342,7 +3353,7 @@ export interface UserAddMemberInput {
    * @minLength 1
    */
   password: string
-  /** 用户状态:Enabled=0,Disabled=1,WaitChangePasssword=2,WaitActive=3 */
+  /** 用户状态:WaitChangePasssword=2,WaitActive=3 */
   status?: UserStatus
 }
 
@@ -3441,10 +3452,12 @@ export interface UserEntity {
   nickName?: string | null
   /** 头像 */
   avatar?: string | null
-  /** 用户状态:Enabled=0,Disabled=1,WaitChangePasssword=2,WaitActive=3 */
+  /** 用户状态:WaitChangePasssword=2,WaitActive=3 */
   status?: UserStatus
   /** 用户类型:Member=0,DefaultUser=1,TenantAdmin=10,PlatformAdmin=100 */
   type?: UserType
+  /** 启用 */
+  enabled?: boolean
   /** 角色列表 */
   roles?: RoleEntity[] | null
   /** 部门列表 */
@@ -3545,6 +3558,8 @@ export interface UserGetPageOutput {
   roleNames?: string[] | null
   /** 是否主管 */
   isManager?: boolean
+  /** 启用 */
+  enabled?: boolean
   roles?: RoleEntity[] | null
   /**
    * 创建时间
@@ -3585,6 +3600,17 @@ export interface UserResetPasswordInput {
   id?: number
   /** 密码 */
   password?: string | null
+}
+
+/** 设置启用 */
+export interface UserSetEnableInput {
+  /**
+   * 用户Id
+   * @format int64
+   */
+  userId?: number
+  /** 是否启用 */
+  enabled?: boolean
 }
 
 /** 设置主管 */
@@ -3663,10 +3689,10 @@ export interface UserStaffEntity {
 }
 
 /**
- * 用户状态:Enabled=0,Disabled=1,WaitChangePasssword=2,WaitActive=3
+ * 用户状态:WaitChangePasssword=2,WaitActive=3
  * @format int32
  */
-export type UserStatus = 0 | 1 | 2 | 3
+export type UserStatus = 2 | 3
 
 /**
  * 用户类型:Member=0,DefaultUser=1,TenantAdmin=10,PlatformAdmin=100

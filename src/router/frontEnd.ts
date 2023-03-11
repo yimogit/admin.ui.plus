@@ -21,9 +21,8 @@ export async function initFrontEndControlRoutes() {
   // 界面 loading 动画开始执行
   if (window.nextLoading === undefined) NextLoading.start()
   // 无 token 停止执行下一步
-  const stores = useUserInfo(pinia)
-  const { userInfos } = storeToRefs(stores)
-  if (!userInfos.value.token) return false
+  const storeUseUserInfo = useUserInfo(pinia)
+  if (!storeUseUserInfo.getToken()) return false
   // 触发初始化用户信息 pinia
   await useUserInfo(pinia).setUserInfos()
   // 无登录权限时，添加判断

@@ -736,8 +736,7 @@ const onCopyConfigClick = () => {
 // 一键恢复默认
 const onResetConfigClick = () => {
   const storesUseUserInfo = useUserInfo()
-  const { userInfos } = storeToRefs(storesUseUserInfo)
-  const token = userInfos.value.token
+  const token = storesUseUserInfo.getToken()
   Local.clear()
   storesUseUserInfo.setToken(token)
   window.location.reload()

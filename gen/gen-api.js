@@ -17,7 +17,7 @@ apis?.forEach((api, index) => {
       url: api.url,
       httpClientType: 'axios',
       modular: true,
-      cleanOutput: true,
+      cleanOutput: false,
       moduleNameIndex: 2, // 0 api, 1 api htt-client data-contracts, 2 apis htt-client data-contracts
       moduleNameFirstTag: true, //apis htt-client data-contracts
       unwrapResponseData: true,

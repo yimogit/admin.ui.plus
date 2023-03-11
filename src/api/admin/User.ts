@@ -22,6 +22,7 @@ import {
   UserAddMemberInput,
   UserChangePasswordInput,
   UserResetPasswordInput,
+  UserSetEnableInput,
   UserSetManagerInput,
   UserUpdateBasicInput,
   UserUpdateInput,
@@ -248,6 +249,24 @@ export class UserApi<SecurityDataType = unknown> extends HttpClient<SecurityData
   setManager = (data: UserSetManagerInput, params: RequestParams = {}) =>
     this.request<AxiosResponse, any>({
       path: `/api/admin/user/set-manager`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    })
+  /**
+   * No description
+   *
+   * @tags user
+   * @name SetEnable
+   * @summary 设置启用
+   * @request POST:/api/admin/user/set-enable
+   * @secure
+   */
+  setEnable = (data: UserSetEnableInput, params: RequestParams = {}) =>
+    this.request<AxiosResponse, any>({
+      path: `/api/admin/user/set-enable`,
       method: 'POST',
       body: data,
       secure: true,
