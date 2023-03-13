@@ -27,10 +27,15 @@
                 { validator: testMobile, trigger: ['blur', 'change'] },
               ]"
             >
-              <el-input v-model="form.phone" autocomplete="off" maxlength="11" />
+              <el-input v-model="form.phone" autocomplete="off" maxlength="11" @blur="onBlurMobile" />
             </el-form-item>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+            <el-form-item label="账号" prop="userName" :rules="[{ required: true, message: '请输入管理员账号', trigger: ['blur', 'change'] }]">
+              <el-input v-model="form.userName" autocomplete="off" />
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
             <el-form-item label="邮箱" prop="email" :rules="[{ validator: testEmail, trigger: ['blur', 'change'] }]">
               <el-input v-model="form.email" autocomplete="off" />
             </el-form-item>
@@ -56,7 +61,7 @@
 import { reactive, toRefs, getCurrentInstance, ref } from 'vue'
 import { TenantAddInput, TenantUpdateInput } from '/@/api/admin/data-contracts'
 import { TenantApi } from '/@/api/admin/Tenant'
-import { testMobile, testEmail } from '/@/utils/test'
+import { isMobile, testMobile, testEmail } from '/@/utils/test'
 import eventBus from '/@/utils/mitt'
 
 defineProps({
@@ -87,9 +92,16 @@ const open = async (row: any = {}) => {
       state.form = res.data as TenantAddInput & TenantUpdateInput
     }
   } else {
-    state.form = {} as TenantAddInput & TenantUpdateInput
+    state.form = { enabled: true } as TenantAddInput & TenantUpdateInput
   }
   state.showDialog = true
+}
+
+//手机号失去焦点
+const onBlurMobile = () => {
+  if (!state.form.userName && state.form.phone && isMobile(state.form.phone)) {
+    state.form.userName = state.form.phone
+  }
 }
 
 // 取消

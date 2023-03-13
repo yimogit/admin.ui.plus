@@ -27,17 +27,18 @@
 
         <el-card shadow="never" style="margin-top: 8px">
           <el-table v-loading="state.loading" :data="state.userListData" row-key="id" style="width: 100%">
+            <el-table-column prop="userName" label="账号" width="120" show-overflow-tooltip />
             <el-table-column prop="name" label="姓名" width="120" show-overflow-tooltip>
               <template #default="{ row }"> {{ row.name }} <el-tag v-if="row.isManager" type="success">主管</el-tag> </template>
             </el-table-column>
             <el-table-column prop="mobile" label="手机号" width="120" show-overflow-tooltip />
-            <el-table-column prop="email" label="邮箱" min-width="120" show-overflow-tooltip />
-            <el-table-column prop="roleNames" label="角色" min-width="120" show-overflow-tooltip>
+            <el-table-column prop="email" label="邮箱" min-width="180" show-overflow-tooltip />
+            <el-table-column prop="roleNames" label="角色" min-width="140" show-overflow-tooltip>
               <template #default="{ row }">
                 {{ row.roleNames ? row.roleNames.join(',') : '' }}
               </template>
             </el-table-column>
-            <el-table-column label="状态" width="80" align="center">
+            <el-table-column label="状态" width="80" align="center" fixed="right">
               <template #default="{ row }">
                 <el-switch
                   v-if="auth('api:admin:user:set-enable')"
@@ -56,7 +57,7 @@
                 </template>
               </template>
             </el-table-column>
-            <el-table-column label="操作" width="160" fixed="right" header-align="center" align="center">
+            <el-table-column label="操作" width="140" header-align="center" align="center" fixed="right">
               <template #default="{ row }">
                 <el-button v-auth="'api:admin:user:update'" icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
                 <my-dropdown-more v-auths="['api:admin:user:set-manager', 'api:admin:user:reset-password', 'api:admin:user:delete']">

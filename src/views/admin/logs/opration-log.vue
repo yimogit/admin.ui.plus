@@ -17,8 +17,8 @@
           <template #default="{ row }"> {{ row.createdUserName }}<br />{{ row.nickName }} </template>
         </el-table-column>
         <el-table-column prop="ip" label="IP地址" width="130" />
-        <el-table-column prop="apiLabel" label="操作名称" width />
-        <el-table-column prop="apiPath" label="操作接口" width />
+        <el-table-column prop="apiLabel" label="操作名称" min-width="220" />
+        <el-table-column prop="apiPath" label="操作接口" min-width="260" />
         <el-table-column prop="elapsedMilliseconds" label="耗时(毫秒)" width="100" />
         <el-table-column prop="status" label="操作状态" width="80">
           <template #default="{ row }">

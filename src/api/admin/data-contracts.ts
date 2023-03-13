@@ -3055,6 +3055,11 @@ export interface TaskUpdateInput {
 /** 添加 */
 export interface TenantAddInput {
   /**
+   * 租户Id
+   * @format int64
+   */
+  id?: number
+  /**
    * 企业名称
    * @minLength 1
    */
@@ -3070,10 +3075,12 @@ export interface TenantAddInput {
    */
   realName: string
   /**
-   * 手机号码
+   * 账号
    * @minLength 1
    */
-  phone: string
+  userName: string
+  /** 手机号码 */
+  phone?: string | null
   /** 邮箱地址 */
   email?: string | null
   /** 数据库注册键 */
@@ -3127,23 +3134,20 @@ export interface TenantEntity {
   modifiedTime?: string | null
   /** 是否删除 */
   isDeleted?: boolean
-  /** 企业名称 */
-  name?: string | null
-  /** 编码 */
-  code?: string | null
-  /** 姓名 */
-  realName?: string | null
-  /** 手机号码 */
-  phone?: string | null
-  /** 邮箱地址 */
-  email?: string | null
   /**
    * 授权用户
    * @format int64
    */
-  userId?: number | null
+  userId?: number
   /** 用户 */
   user?: UserEntity
+  /**
+   * 授权部门
+   * @format int64
+   */
+  orgId?: number
+  /** 组织架构 */
+  org?: OrgEntity
   /** 租户类型:Platform=1,Tenant=2 */
   tenantType?: TenantType
   /** 数据库注册键 */
@@ -3175,10 +3179,12 @@ export interface TenantGetOutput {
    */
   realName: string
   /**
-   * 手机号码
+   * 账号
    * @minLength 1
    */
-  phone: string
+  userName: string
+  /** 手机号码 */
+  phone?: string | null
   /** 邮箱地址 */
   email?: string | null
   /** 数据库注册键 */
@@ -3192,7 +3198,7 @@ export interface TenantGetOutput {
   /** 说明 */
   description?: string | null
   /**
-   * 接口Id
+   * 租户Id
    * @format int64
    */
   id: number
@@ -3209,12 +3215,14 @@ export interface TenantListOutput {
    * @format int64
    */
   id?: number
-  /** 企业编码 */
-  code?: string | null
   /** 企业名称 */
   name?: string | null
+  /** 企业编码 */
+  code?: string | null
   /** 姓名 */
   realName?: string | null
+  /** 账号 */
+  userName?: string | null
   /** 手机号码 */
   phone?: string | null
   /** 邮箱地址 */
@@ -3269,10 +3277,12 @@ export interface TenantUpdateInput {
    */
   realName: string
   /**
-   * 手机号码
+   * 账号
    * @minLength 1
    */
-  phone: string
+  userName: string
+  /** 手机号码 */
+  phone?: string | null
   /** 邮箱地址 */
   email?: string | null
   /** 数据库注册键 */
@@ -3286,7 +3296,7 @@ export interface TenantUpdateInput {
   /** 说明 */
   description?: string | null
   /**
-   * 接口Id
+   * 租户Id
    * @format int64
    */
   id: number
@@ -3326,11 +3336,7 @@ export interface UserAddInput {
   managerUserName?: string | null
   /** 员工添加 */
   staff?: StaffAddInput
-  /**
-   * 密码
-   * @minLength 1
-   */
-  password: string
+  password?: string | null
   /** 启用 */
   enabled?: boolean
 }

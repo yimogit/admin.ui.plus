@@ -17,7 +17,7 @@
                 { validator: testMobile, trigger: ['blur', 'change'] },
               ]"
             >
-              <el-input v-model="form.mobile" autocomplete="off" maxlength="11" />
+              <el-input v-model="form.mobile" autocomplete="off" maxlength="11" @blur="onBlurMobile" />
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
@@ -49,12 +49,18 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-            <el-form-item label="用户名" prop="userName" :rules="[{ required: true, message: '请输入用户名', trigger: ['blur', 'change'] }]">
+            <el-form-item label="账号" prop="userName" :rules="[{ required: true, message: '请输入账号', trigger: ['blur', 'change'] }]">
               <el-input v-model="form.userName" autocomplete="off" />
             </el-form-item>
           </el-col>
-          <el-col v-if="!(form.id > 0)" :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-            <el-form-item label="密码" prop="password" :rules="[{ required: true, message: '请输入密码', trigger: ['blur', 'change'] }]">
+          <el-col v-if="!isUpdate" :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+            <el-form-item prop="password">
+              <template #label
+                ><div class="my-flex-y-center">
+                  密码<el-tooltip effect="dark" content="选填，不填则使用系统默认密码" placement="top" hide-after="0">
+                    <SvgIcon name="ele-InfoFilled" class="ml5" />
+                  </el-tooltip></div
+              ></template>
               <el-input key="password" v-model="form.password" show-password autocomplete="off" />
             </el-form-item>
           </el-col>
@@ -82,7 +88,7 @@
               />
             </el-form-item>
           </el-col>
-          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <el-col :xs="24" :sm="span" :md="span" :lg="span" :xl="span">
             <el-form-item label="邮箱" prop="email" :rules="[{ validator: testEmail, trigger: ['blur', 'change'] }]">
               <el-input v-model="form.email" autocomplete="off" />
             </el-form-item>
@@ -100,14 +106,14 @@
 </template>
 
 <script lang="ts" setup name="admin/user/form">
-import { reactive, toRefs, getCurrentInstance, ref, watch, defineAsyncComponent } from 'vue'
+import { reactive, toRefs, getCurrentInstance, ref, watch, defineAsyncComponent, computed } from 'vue'
 import { UserAddInput, UserUpdateInput, OrgListOutput, RoleGetListOutput } from '/@/api/admin/data-contracts'
 import { UserApi } from '/@/api/admin/User'
 import { OrgApi } from '/@/api/admin/Org'
 import { RoleApi } from '/@/api/admin/Role'
 import { listToTree, treeToList } from '/@/utils/tree'
 import { cloneDeep } from 'lodash-es'
-import { testMobile, testEmail } from '/@/utils/test'
+import { isMobile, testMobile, testEmail } from '/@/utils/test'
 import eventBus from '/@/utils/mitt'
 
 // 引入组件
@@ -136,6 +142,14 @@ const state = reactive({
   roleTreeData: [] as RoleGetListOutput[],
 })
 const { form } = toRefs(state)
+
+const isUpdate = computed(() => {
+  return state.form.id > 0
+})
+
+const span = computed(() => {
+  return isUpdate.value ? 12 : 24
+})
 
 watch(
   () => state.form.orgIds,
@@ -218,6 +232,13 @@ const open = async (row: any = {}) => {
 
   proxy.$modal.closeLoading()
   state.showDialog = true
+}
+
+//手机号失去焦点
+const onBlurMobile = () => {
+  if (!state.form.userName && state.form.mobile && isMobile(state.form.mobile)) {
+    state.form.userName = state.form.mobile
+  }
 }
 
 // 取消
