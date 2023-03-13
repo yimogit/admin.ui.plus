@@ -4,7 +4,7 @@
       <el-form :model="form" ref="formRef" size="default" label-width="80px">
         <el-row :gutter="35">
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-form-item label="上级部门">
+            <el-form-item label="上级部门" prop="parentId" :rules="[{ required: true, message: '请输入上级部门', trigger: ['change'] }]">
               <el-tree-select
                 v-model="form.parentId"
                 :data="orgTreeData"

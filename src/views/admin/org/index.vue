@@ -35,8 +35,24 @@
             </el-table-column>
             <el-table-column label="操作" width="160" fixed="right" header-align="center" align="center">
               <template #default="{ row }">
-                <el-button v-auth="'api:admin:org:update'" icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
-                <el-button v-auth="'api:admin:org:delete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button>
+                <el-button
+                  v-if="auth('api:admin:org:update') && row.parentId > 0"
+                  icon="ele-EditPen"
+                  size="small"
+                  text
+                  type="primary"
+                  @click="onEdit(row)"
+                  >编辑</el-button
+                >
+                <el-button
+                  v-if="auth('api:admin:org:delete') && row.parentId > 0"
+                  icon="ele-Delete"
+                  size="small"
+                  text
+                  type="danger"
+                  @click="onDelete(row)"
+                  >删除</el-button
+                >
               </template>
             </el-table-column>
           </el-table>
@@ -54,6 +70,7 @@ import { OrgListOutput } from '/@/api/admin/data-contracts'
 import { OrgApi } from '/@/api/admin/Org'
 import { listToTree, filterTree } from '/@/utils/tree'
 import eventBus from '/@/utils/mitt'
+import { auth } from '/@/utils/authFunction'
 
 // 引入组件
 const OrgForm = defineAsyncComponent(() => import('./components/org-form.vue'))
