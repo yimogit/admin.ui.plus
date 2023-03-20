@@ -1,53 +1,49 @@
 <template>
-  <div style="padding: 0px 0px 8px 8px">
-    <el-row :gutter="8" style="width: 100%">
-      <el-col :span="24" :xs="24">
-        <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-          <el-form :inline="true" @submit.stop.prevent>
-            <el-form-item label="接口名称">
-              <el-input v-model="state.filter.name" placeholder="接口名称" @keyup.enter="onQuery" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
-              <el-button v-auth="'api:admin:api:add'" type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
-              <el-popconfirm title="确定要同步接口" hide-icon width="180" hide-after="0" @confirm="onSync">
-                <template #reference>
-                  <el-button v-auth="'api:admin:api:sync'" :loading="state.syncLoading" type="primary" icon="ele-Refresh"> 同步 </el-button>
-                </template>
-              </el-popconfirm>
-            </el-form-item>
-          </el-form>
-        </el-card>
+  <div class="my-layout">
+    <el-card class="mt8" shadow="never" :body-style="{ paddingBottom: '0' }">
+      <el-form :inline="true" @submit.stop.prevent>
+        <el-form-item label="接口名称">
+          <el-input v-model="state.filter.name" placeholder="接口名称" @keyup.enter="onQuery" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
+          <el-button v-auth="'api:admin:api:add'" type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
+          <el-popconfirm title="确定要同步接口" hide-icon width="180" hide-after="0" @confirm="onSync">
+            <template #reference>
+              <el-button v-auth="'api:admin:api:sync'" :loading="state.syncLoading" type="primary" icon="ele-Refresh"> 同步 </el-button>
+            </template>
+          </el-popconfirm>
+        </el-form-item>
+      </el-form>
+    </el-card>
 
-        <el-card shadow="never" style="margin-top: 8px">
-          <el-table
-            :data="state.apiTreeData"
-            style="width: 100%"
-            v-loading="state.loading"
-            row-key="id"
-            :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-            :expand-row-keys="state.expandRowKeys"
-          >
-            <el-table-column prop="label" label="接口名称" min-width="120" show-overflow-tooltip />
-            <el-table-column prop="path" label="接口地址" min-width="120" show-overflow-tooltip />
-            <el-table-column prop="description" label="接口描述" min-width="120" show-overflow-tooltip />
-            <el-table-column prop="sort" label="排序" width="80" align="center" show-overflow-tooltip />
-            <el-table-column label="状态" width="80" align="center" show-overflow-tooltip>
-              <template #default="{ row }">
-                <el-tag type="success" v-if="row.enabled">启用</el-tag>
-                <el-tag type="danger" v-else>禁用</el-tag>
-              </template>
-            </el-table-column>
-            <el-table-column label="操作" width="160" fixed="right" header-align="center" align="center">
-              <template #default="{ row }">
-                <el-button v-auth="'api:admin:api:update'" icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
-                <el-button v-auth="'api:admin:api:delete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-card>
-      </el-col>
-    </el-row>
+    <el-card class="my-fill mt8" shadow="never">
+      <el-table
+        :data="state.apiTreeData"
+        style="width: 100%"
+        v-loading="state.loading"
+        row-key="id"
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+        :expand-row-keys="state.expandRowKeys"
+      >
+        <el-table-column prop="label" label="接口名称" min-width="120" show-overflow-tooltip />
+        <el-table-column prop="path" label="接口地址" min-width="120" show-overflow-tooltip />
+        <el-table-column prop="description" label="接口描述" min-width="120" show-overflow-tooltip />
+        <el-table-column prop="sort" label="排序" width="80" align="center" show-overflow-tooltip />
+        <el-table-column label="状态" width="80" align="center" show-overflow-tooltip>
+          <template #default="{ row }">
+            <el-tag type="success" v-if="row.enabled">启用</el-tag>
+            <el-tag type="danger" v-else>禁用</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="160" fixed="right" header-align="center" align="center">
+          <template #default="{ row }">
+            <el-button v-auth="'api:admin:api:update'" icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
+            <el-button v-auth="'api:admin:api:delete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
 
     <api-form ref="apiFormRef" :title="state.apiFormTitle" :api-tree-data="state.formApiTreeData"></api-form>
   </div>

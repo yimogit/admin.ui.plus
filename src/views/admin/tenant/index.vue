@@ -1,6 +1,6 @@
 <template>
-  <div style="padding: 0px 0px 8px 8px">
-    <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
+  <div class="my-layout">
+    <el-card class="mt8" shadow="never" :body-style="{ paddingBottom: '0' }">
       <el-form :inline="true" @submit.stop.prevent>
         <el-form-item label="姓名">
           <el-input v-model="state.filter.name" placeholder="姓名" @keyup.enter="onQuery" />
@@ -12,8 +12,8 @@
       </el-form>
     </el-card>
 
-    <el-card shadow="never" style="margin-top: 8px">
-      <el-table v-loading="state.loading" :data="state.tenantListData" row-key="id" style="width: 100%">
+    <el-card class="my-fill mt8" shadow="never">
+      <el-table v-loading="state.loading" :data="state.tenantListData" row-key="id" height="'100%'" style="width: 100%; height: 100%">
         <el-table-column prop="name" label="企业名称" min-width="120" show-overflow-tooltip />
         <el-table-column prop="code" label="企业编码" width="120" show-overflow-tooltip />
         <el-table-column prop="realName" label="姓名" width="120" show-overflow-tooltip />
@@ -52,6 +52,7 @@
           </template>
         </el-table-column>
       </el-table>
+
       <div class="my-flex my-flex-end" style="margin-top: 20px">
         <el-pagination
           v-model:currentPage="state.pageInput.currentPage"
@@ -190,5 +191,3 @@ const onSetTenantMenu = (tenant: TenantListOutput) => {
   setTenantMenuRef.value.open(tenant)
 }
 </script>
-
-<style scoped lang="scss"></style>

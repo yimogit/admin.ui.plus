@@ -1,5 +1,5 @@
 <template>
-  <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
+  <el-card class="mt8" shadow="never" :body-style="{ paddingBottom: '0' }">
     <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
       <el-form-item prop="name">
         <el-input v-model="state.filterModel.name" placeholder="名称或编码" @keyup.enter="onQuery" />
@@ -11,7 +11,7 @@
     </el-form>
   </el-card>
 
-  <el-card shadow="never" style="margin-top: 8px">
+  <el-card class="my-fill mt8" shadow="never">
     <el-table
       ref="tableRef"
       v-loading="state.loading"

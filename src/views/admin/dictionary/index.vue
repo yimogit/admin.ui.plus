@@ -1,22 +1,26 @@
 <template>
-  <div style="padding: 0px 0px 8px 8px">
-    <el-row :gutter="8" style="width: 100%">
-      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+  <my-layout>
+    <pane size="50" min-size="30" max-size="70">
+      <div class="my-flex-column w100 h100">
         <dictionary-type></dictionary-type>
-      </el-col>
-      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+      </div>
+    </pane>
+    <pane>
+      <div class="my-flex-column w100 h100">
         <dictionary></dictionary>
-      </el-col>
-    </el-row>
-  </div>
+      </div>
+    </pane>
+  </my-layout>
 </template>
 
 <script lang="ts" setup name="admin/dict">
 import { defineAsyncComponent } from 'vue'
+import { Pane } from 'splitpanes'
 
 // 引入组件
 const DictionaryType = defineAsyncComponent(() => import('./dictionary-type.vue'))
 const Dictionary = defineAsyncComponent(() => import('./dictionary.vue'))
+const MyLayout = defineAsyncComponent(() => import('/@/components/my-layout/index.vue'))
 </script>
 
 <style scoped lang="scss"></style>

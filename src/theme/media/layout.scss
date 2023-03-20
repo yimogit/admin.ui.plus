@@ -63,3 +63,13 @@
     display: none !important;
   }
 }
+
+@media screen and (max-width: 1000px) {
+  .splitpanes__pane {
+    height: auto !important;
+  }
+
+  .splitpanes__splitter {
+    display: none !important;
+  }
+}

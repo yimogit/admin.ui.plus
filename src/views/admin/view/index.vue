@@ -1,49 +1,45 @@
 <template>
-  <div style="padding: 0px 0px 8px 8px">
-    <el-row :gutter="8" style="width: 100%">
-      <el-col :span="24" :xs="24">
-        <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-          <el-form :inline="true" @submit.stop.prevent>
-            <el-form-item label="视图名称">
-              <el-input v-model="state.filter.name" placeholder="视图名称" @keyup.enter="onQuery" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
-              <el-button v-auth="'api:admin:view:add'" type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
-            </el-form-item>
-          </el-form>
-        </el-card>
+  <div class="my-layout">
+    <el-card class="mt8" shadow="never" :body-style="{ paddingBottom: '0' }">
+      <el-form :inline="true" @submit.stop.prevent>
+        <el-form-item label="视图名称">
+          <el-input v-model="state.filter.name" placeholder="视图名称" @keyup.enter="onQuery" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
+          <el-button v-auth="'api:admin:view:add'" type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
 
-        <el-card shadow="never" style="margin-top: 8px">
-          <el-table
-            :data="state.viewTreeData"
-            style="width: 100%"
-            v-loading="state.loading"
-            row-key="id"
-            default-expand-all
-            :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-          >
-            <el-table-column prop="label" label="视图名称" min-width="120" show-overflow-tooltip />
-            <el-table-column prop="name" label="视图命名" min-width="120" show-overflow-tooltip />
-            <el-table-column prop="path" label="视图地址" min-width="120" show-overflow-tooltip />
-            <el-table-column prop="sort" label="排序" width="80" align="center" show-overflow-tooltip />
-            <!-- <el-table-column prop="description" label="视图描述" min-width="120" show-overflow-tooltip /> -->
-            <el-table-column label="状态" width="80" align="center" show-overflow-tooltip>
-              <template #default="{ row }">
-                <el-tag type="success" v-if="row.enabled">启用</el-tag>
-                <el-tag type="danger" v-else>禁用</el-tag>
-              </template>
-            </el-table-column>
-            <el-table-column label="操作" width="160" fixed="right" header-align="center" align="center">
-              <template #default="{ row }">
-                <el-button v-auth="'api:admin:view:update'" icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
-                <el-button v-auth="'api:admin:view:delete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-card>
-      </el-col>
-    </el-row>
+    <el-card class="my-fill mt8" shadow="never">
+      <el-table
+        :data="state.viewTreeData"
+        style="width: 100%"
+        v-loading="state.loading"
+        row-key="id"
+        default-expand-all
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+      >
+        <el-table-column prop="label" label="视图名称" min-width="120" show-overflow-tooltip />
+        <el-table-column prop="name" label="视图命名" min-width="120" show-overflow-tooltip />
+        <el-table-column prop="path" label="视图地址" min-width="120" show-overflow-tooltip />
+        <el-table-column prop="sort" label="排序" width="80" align="center" show-overflow-tooltip />
+        <!-- <el-table-column prop="description" label="视图描述" min-width="120" show-overflow-tooltip /> -->
+        <el-table-column label="状态" width="80" align="center" show-overflow-tooltip>
+          <template #default="{ row }">
+            <el-tag type="success" v-if="row.enabled">启用</el-tag>
+            <el-tag type="danger" v-else>禁用</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="160" fixed="right" header-align="center" align="center">
+          <template #default="{ row }">
+            <el-button v-auth="'api:admin:view:update'" icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
+            <el-button v-auth="'api:admin:view:delete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
 
     <view-form ref="viewFormRef" :title="state.viewFormTitle" :view-tree-data="state.viewTreeData"></view-form>
   </div>

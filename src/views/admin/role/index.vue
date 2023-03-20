@@ -1,8 +1,8 @@
 <template>
-  <div style="padding: 0px 0px 8px 8px">
-    <el-row :gutter="8" style="width: 100%">
-      <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-        <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
+  <my-layout>
+    <pane size="50" min-size="30" max-size="70">
+      <div class="my-flex-column w100 h100">
+        <el-card class="mt8" shadow="never" :body-style="{ paddingBottom: '0' }">
           <el-form :inline="true" @submit.stop.prevent>
             <el-form-item label="角色名称">
               <el-input v-model="state.filter.roleName" placeholder="角色名称" @keyup.enter="onQuery" />
@@ -24,7 +24,7 @@
           </el-form>
         </el-card>
 
-        <el-card shadow="never" style="margin-top: 8px">
+        <el-card class="my-fill mt8" shadow="never">
           <el-table
             ref="roleTableRef"
             v-loading="state.loading"
@@ -69,9 +69,11 @@
             </el-table-column>
           </el-table>
         </el-card>
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-        <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
+      </div>
+    </pane>
+    <pane>
+      <div class="my-flex-column w100 h100">
+        <el-card class="mt8" shadow="never" :body-style="{ paddingBottom: '0' }">
           <el-form :inline="true" @submit.stop.prevent>
             <el-form-item label="姓名">
               <el-input v-model="state.filter.name" placeholder="姓名" @keyup.enter="onGetRoleUserList" />
@@ -84,7 +86,7 @@
           </el-form>
         </el-card>
 
-        <el-card shadow="never" style="margin-top: 8px">
+        <el-card class="my-fill mt8" shadow="never">
           <el-table
             ref="userTableRef"
             v-loading="state.userListLoading"
@@ -99,14 +101,14 @@
             <!-- <el-table-column prop="email" label="邮箱" min-width="120" show-overflow-tooltip /> -->
           </el-table>
         </el-card>
-      </el-col>
-    </el-row>
+      </div>
+    </pane>
 
     <role-form ref="roleFormRef" :title="state.roleFormTitle" :role-tree-data="state.roleFormTreeData"></role-form>
     <user-select ref="userSelectRef" title="添加员工" multiple :sure-loading="state.sureLoading" @sure="onSureUser"></user-select>
     <set-role-menu ref="setRoleMenuRef"></set-role-menu>
     <set-role-data-scope ref="setRoleDataScopeRef"></set-role-data-scope>
-  </div>
+  </my-layout>
 </template>
 
 <script lang="ts" setup name="admin/role">
@@ -118,6 +120,7 @@ import { ElTable } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
 import { auth } from '/@/utils/authFunction'
+import { Pane } from 'splitpanes'
 
 // 引入组件
 const RoleForm = defineAsyncComponent(() => import('./components/role-form.vue'))
@@ -125,6 +128,7 @@ const SetRoleMenu = defineAsyncComponent(() => import('./components/set-role-men
 const SetRoleDataScope = defineAsyncComponent(() => import('./components/set-role-data-scope.vue'))
 const UserSelect = defineAsyncComponent(() => import('/@/views/admin/user/components/user-select.vue'))
 const MyDropdownMore = defineAsyncComponent(() => import('/@/components/my-dropdown-more/index.vue'))
+const MyLayout = defineAsyncComponent(() => import('/@/components/my-layout/index.vue'))
 
 const { proxy } = getCurrentInstance() as any
 

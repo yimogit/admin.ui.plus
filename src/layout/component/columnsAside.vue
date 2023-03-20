@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-columns-aside my-flex-column">
+  <div v-show="!isTagsViewCurrenFull" class="layout-columns-aside my-flex-column">
     <div v-if="setShowLogo" class="layout-logo">
       <img :src="logoMini" class="layout-logo-medium-img" />
     </div>
@@ -54,6 +54,7 @@ import { storeToRefs } from 'pinia'
 import pinia from '/@/stores/index'
 import { useRoutesList } from '/@/stores/routesList'
 import { useThemeConfig } from '/@/stores/themeConfig'
+import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes'
 import mittBus from '/@/utils/mitt'
 import logoMini from '/@/assets/logo-mini.svg'
 
@@ -62,8 +63,10 @@ const columnsAsideOffsetTopRefs = ref<RefType>([])
 const columnsAsideActiveRef = ref()
 const stores = useRoutesList()
 const storesThemeConfig = useThemeConfig()
+const storesTagsViewRoutes = useTagsViewRoutes()
 const { routesList, isColumnsMenuHover, isColumnsNavHover } = storeToRefs(stores)
 const { themeConfig } = storeToRefs(storesThemeConfig)
+const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes)
 const route = useRoute()
 const router = useRouter()
 const state = reactive<ColumnsAsideState>({

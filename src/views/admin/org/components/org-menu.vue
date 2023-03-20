@@ -1,9 +1,9 @@
 <template>
-  <el-card shadow="never" style="margin-top: 8px">
+  <el-card shadow="never" style="margin-top: 8px" body-style="padding:0px;" class="my-fill">
     <template #header>
       <el-input v-model="state.filterText" placeholder="筛选部门" clearable />
     </template>
-    <div v-loading="state.loading">
+    <el-scrollbar v-loading="state.loading" height="100%" max-height="100%" :always="false" wrap-style="padding:var(--el-card-padding)">
       <el-tree
         ref="orgMenuRef"
         :data="state.orgTreeData"
@@ -19,7 +19,7 @@
         @node-click="onNodeClick"
         @check-change="onCheckChange"
       />
-    </div>
+    </el-scrollbar>
   </el-card>
 </template>
 

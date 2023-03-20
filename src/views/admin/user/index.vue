@@ -1,13 +1,13 @@
 <template>
-  <div style="padding: 0px 0px 8px 8px">
-    <el-row :gutter="8" style="width: 100%">
-      <el-col :xs="24" :sm="8" :md="8" :lg="6" :xl="4">
-        <div class="my-flex-column h100">
-          <org-menu @node-click="onOrgNodeClick" class="my-flex-fill" select-first-node></org-menu>
-        </div>
-      </el-col>
-      <el-col :xs="24" :sm="16" :md="16" :lg="18" :xl="20">
-        <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
+  <my-layout>
+    <pane size="20" min-size="20" max-size="35">
+      <div class="my-flex-column w100 h100">
+        <org-menu @node-click="onOrgNodeClick" select-first-node></org-menu>
+      </div>
+    </pane>
+    <pane>
+      <div class="my-flex-column w100 h100">
+        <el-card class="mt8" shadow="never" :body-style="{ paddingBottom: '0' }">
           <el-form @submit.stop.prevent style="max-width: 640px">
             <el-row :gutter="35">
               <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
@@ -25,7 +25,7 @@
           </el-form>
         </el-card>
 
-        <el-card shadow="never" style="margin-top: 8px">
+        <el-card class="my-fill mt8" shadow="never">
           <el-table v-loading="state.loading" :data="state.userListData" row-key="id" style="width: 100%">
             <el-table-column prop="userName" label="账号" width="120" show-overflow-tooltip />
             <el-table-column prop="name" label="姓名" width="120" show-overflow-tooltip>
@@ -88,11 +88,11 @@
             />
           </div>
         </el-card>
-      </el-col>
-    </el-row>
 
-    <user-form ref="userFormRef" :title="state.userFormTitle"></user-form>
-  </div>
+        <user-form ref="userFormRef" :title="state.userFormTitle"></user-form>
+      </div>
+    </pane>
+  </my-layout>
 </template>
 
 <script lang="ts" setup name="admin/user">
@@ -101,12 +101,14 @@ import { UserGetPageOutput, PageInputUserGetPageDto, OrgListOutput, UserSetManag
 import { UserApi } from '/@/api/admin/User'
 import eventBus from '/@/utils/mitt'
 import { auth } from '/@/utils/authFunction'
+import { Pane } from 'splitpanes'
 
 // 引入组件
 const UserForm = defineAsyncComponent(() => import('./components/user-form.vue'))
 const OrgMenu = defineAsyncComponent(() => import('/@/views/admin/org/components/org-menu.vue'))
 const MyDropdownMore = defineAsyncComponent(() => import('/@/components/my-dropdown-more/index.vue'))
 const MySelectInput = defineAsyncComponent(() => import('/@/components/my-select-input/index.vue'))
+const MyLayout = defineAsyncComponent(() => import('/@/components/my-layout/index.vue'))
 
 const { proxy } = getCurrentInstance() as any
 

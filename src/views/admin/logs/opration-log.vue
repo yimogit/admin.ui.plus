@@ -1,6 +1,6 @@
 <template>
-  <div style="padding: 0px 0px 8px 8px">
-    <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
+  <div class="my-layout">
+    <el-card class="mt8" shadow="never" :body-style="{ paddingBottom: '0' }">
       <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
         <el-form-item prop="name">
           <el-input v-model="state.filterModel.createdUserName" placeholder="操作账号" @keyup.enter="onQuery" />
@@ -11,7 +11,7 @@
       </el-form>
     </el-card>
 
-    <el-card shadow="never" style="margin-top: 8px">
+    <el-card class="my-fill mt8" shadow="never">
       <el-table v-loading="state.loading" :data="state.oprationLogListData" row-key="id" style="width: 100%">
         <el-table-column prop="createdUserName" label="操作账号" width="100">
           <template #default="{ row }"> {{ row.createdUserName }}<br />{{ row.nickName }} </template>
