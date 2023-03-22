@@ -179,7 +179,7 @@ const syncApi = async (swaggerResource: any) => {
 
 const onSync = () => {
   state.syncLoading = true
-  const swaggerResources = ['/swagger-resources']
+  const swaggerResources = ['/admin/swagger-resources']
   const lastSwaggerResourcesIndex = swaggerResources.length - 1
   swaggerResources.forEach(async (swaggerResource, swaggerResourcesIndex) => {
     const resSwaggerResources = await new ApiExtApi().getSwaggerResources(swaggerResource, { showErrorMessage: false }).catch(() => {

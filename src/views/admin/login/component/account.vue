@@ -1,6 +1,6 @@
 <template>
-  <el-form size="large" class="login-content-form">
-    <el-form-item class="login-animation1">
+  <el-form ref="formRef" :model="state.ruleForm" size="large" class="login-content-form">
+    <el-form-item class="login-animation1" prop="userName" :rules="[{ required: true, message: '请输入用户名', trigger: ['blur', 'change'] }]">
       <el-input
         text
         :placeholder="$t('message.account.accountPlaceholder1')"
@@ -14,7 +14,7 @@
         </template>
       </el-input>
     </el-form-item>
-    <el-form-item class="login-animation2">
+    <el-form-item class="login-animation2" prop="password" :rules="[{ required: true, message: '请输入密码', trigger: ['blur', 'change'] }]">
       <el-input
         :type="state.isShowPassword ? 'text' : 'password'"
         :placeholder="$t('message.account.accountPlaceholder2')"
@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts" name="loginAccount">
-import { reactive, computed } from 'vue'
+import { reactive, computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
@@ -86,6 +86,7 @@ const { t } = useI18n()
 // const { themeConfig } = storeToRefs(storesThemeConfig)
 const route = useRoute()
 const router = useRouter()
+const formRef = ref()
 const state = reactive({
   isShowPassword: false,
   ruleForm: {
@@ -104,21 +105,25 @@ const currentTime = computed(() => {
 })
 // 登录
 const onSignIn = async () => {
-  state.loading.signIn = true
-  const res = await new AuthApi().login(state.ruleForm).catch(() => {
-    state.loading.signIn = false
-  })
-  if (!res?.success) {
-    state.loading.signIn = false
-    return
-  }
+  formRef.value.validate(async (valid: boolean) => {
+    if (!valid) return
 
-  const token = res.data?.token
-  useUserInfo().setToken(token)
-  // 添加完动态路由，再进行 router 跳转，否则可能报错 No match found for location with path "/"
-  const isNoPower = await initBackEndControlRoutes()
-  // 执行完 initBackEndControlRoutes，再执行 signInSuccess
-  signInSuccess(isNoPower)
+    state.loading.signIn = true
+    const res = await new AuthApi().login(state.ruleForm).catch(() => {
+      state.loading.signIn = false
+    })
+    if (!res?.success) {
+      state.loading.signIn = false
+      return
+    }
+
+    const token = res.data?.token
+    useUserInfo().setToken(token)
+    // 添加完动态路由，再进行 router 跳转，否则可能报错 No match found for location with path "/"
+    const isNoPower = await initBackEndControlRoutes()
+    // 执行完 initBackEndControlRoutes，再执行 signInSuccess
+    signInSuccess(isNoPower)
+  })
 }
 // 登录成功后的跳转
 const signInSuccess = (isNoPower: boolean | undefined) => {

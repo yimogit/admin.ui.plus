@@ -305,6 +305,12 @@ export interface AuthUserProfileDto {
   avatar?: string | null
 }
 
+export interface CaptchaData {
+  id?: string | null
+  backgroundImage?: string | null
+  sliderImage?: string | null
+}
+
 export interface CaptchaInput {
   /** 校验唯一标识 */
   token?: string | null
@@ -2106,6 +2112,17 @@ export interface ResultOutputAuthUserProfileDto {
 }
 
 /** 结果输出 */
+export interface ResultOutputCaptchaData {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  data?: CaptchaData
+}
+
+/** 结果输出 */
 export interface ResultOutputCaptchaOutput {
   /** 是否成功标记 */
   success?: boolean
@@ -2634,6 +2651,17 @@ export interface ResultOutputUserGetOutput {
 }
 
 /** 结果输出 */
+export interface ResultOutputValidateResult {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  data?: ValidateResult
+}
+
+/** 结果输出 */
 export interface ResultOutputViewGetOutput {
   /** 是否成功标记 */
   success?: boolean
@@ -2900,6 +2928,24 @@ export interface RoleUpdateInput {
  * @format int32
  */
 export type Sex = 0 | 1 | 2
+
+export interface SlideTrack {
+  /** @format int32 */
+  backgroundImageWidth?: number
+  /** @format int32 */
+  backgroundImageHeight?: number
+  /** @format int32 */
+  sliderImageWidth?: number
+  /** @format int32 */
+  sliderImageHeight?: number
+  /** @format date-time */
+  startTime?: string
+  /** @format date-time */
+  endTime?: string
+  tracks?: Track[] | null
+  /** @format float */
+  percent?: number
+}
 
 /** 员工添加 */
 export interface StaffAddInput {
@@ -3300,6 +3346,15 @@ export interface TenantUpdateInput {
    * @format int64
    */
   id: number
+}
+
+export interface Track {
+  /** @format int32 */
+  x?: number
+  /** @format int32 */
+  y?: number
+  /** @format int32 */
+  t?: number
 }
 
 /** 添加 */
@@ -3777,6 +3832,18 @@ export interface UserUpdateMemberInput {
    */
   id: number
 }
+
+export interface ValidateResult {
+  /** Success=0,ValidateFail=1,Timeout=2 */
+  result?: ValidateResultType
+  message?: string | null
+}
+
+/**
+ * Success=0,ValidateFail=1,Timeout=2
+ * @format int32
+ */
+export type ValidateResultType = 0 | 1 | 2
 
 /** 添加 */
 export interface ViewAddInput {

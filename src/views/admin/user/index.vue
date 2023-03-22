@@ -5,7 +5,7 @@
         <org-menu @node-click="onOrgNodeClick" select-first-node></org-menu>
       </div>
     </pane>
-    <pane>
+    <pane size="80">
       <div class="my-flex-column w100 h100">
         <el-card class="mt8" shadow="never" :body-style="{ paddingBottom: '0' }">
           <el-form @submit.stop.prevent style="max-width: 640px">

@@ -5,7 +5,7 @@ const path = require('path')
 const apis = [
   {
     output: path.resolve(__dirname, '../src/api/admin'),
-    url: 'http://localhost:8000/swagger/admin/swagger.json',
+    url: 'http://localhost:8000/admin/swagger/admin/swagger.json',
   },
 ]
 

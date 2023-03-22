@@ -34,4 +34,8 @@ onBeforeMount(() => {
 :deep(.splitpanes.default-theme .splitpanes__pane) {
   background-color: transparent;
 }
+
+:deep(.splitpanes__pane) {
+  transition: none;
+}
 </style>
