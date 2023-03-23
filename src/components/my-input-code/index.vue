@@ -22,27 +22,16 @@
         />
       </template>
     </el-input>
-    <el-dialog ref="dialogRef" v-model="state.showDialog" class="my-captcha" title="请完成安全验证" draggable append-to-body width="380px">
-      <MySlideCaptcha
-        ref="slideCaptchaRef"
-        :fail-tip="state.failTip"
-        :success-tip="state.successTip"
-        width="100%"
-        height="auto"
-        @refresh="onRefresh"
-        @finish="onFinish"
-      />
-    </el-dialog>
+    <MyCaptchaDialog ref="myCaptchaDialogRef" v-model="state.showDialog" @ok="onOk" />
   </div>
 </template>
 
 <script lang="ts" setup name="my-input-code">
-import { ref, reactive, defineAsyncComponent } from 'vue'
-import { CaptchaApi } from '/@/api/admin/Captcha'
+import { reactive, defineAsyncComponent, ref } from 'vue'
 import { isMobile } from '/@/utils/test'
 import { ElMessage } from 'element-plus'
 
-const MySlideCaptcha = defineAsyncComponent(() => import('/@/components/my-slide-captcha/index.vue'))
+const MyCaptchaDialog = defineAsyncComponent(() => import('/@/components/my-captcha/dialog.vue'))
 
 const props = defineProps({
   seconds: {
@@ -71,8 +60,7 @@ const props = defineProps({
   },
 })
 
-const slideCaptchaRef = ref()
-const dialogRef = ref()
+const myCaptchaDialogRef = ref()
 
 const state = reactive({
   status: 'ready',
@@ -83,8 +71,6 @@ const state = reactive({
 
   showDialog: false,
   requestId: '',
-  failTip: '',
-  successTip: '',
 })
 
 const startCountdown = () => {
@@ -106,40 +92,11 @@ const onChange = (value: number) => {
   if (value < 1000) state.status = 'finish'
 }
 
-//刷新滑块验证码
-const onRefresh = async () => {
-  slideCaptchaRef.value.startRequestGenerate()
-  const res = await new CaptchaApi().generate({ captchaId: state.requestId }).catch(() => {
-    slideCaptchaRef.value.endRequestGenerate(null, null)
-  })
-  if (res?.success && res.data) {
-    state.requestId = res.data.id || ''
-    slideCaptchaRef.value.endRequestGenerate(res.data.backgroundImage, res.data.sliderImage)
-  }
-}
-
-//验证滑块验证码
-const onFinish = async (data: any) => {
-  slideCaptchaRef.value.startRequestVerify()
-  const res = await new CaptchaApi().check(data, { id: state.requestId }).catch(() => {
-    state.failTip = '服务异常，请稍后重试'
-    slideCaptchaRef.value.endRequestVerify(false)
-  })
-  if (res?.success && res.data) {
-    let success = res.data.result === 0
-    state.failTip = res.data.result == 1 ? '验证未通过，拖动滑块将悬浮图像正确合并' : '验证超时, 请重新操作'
-    state.successTip = '验证通过'
-    slideCaptchaRef.value.endRequestVerify(success)
-    if (success) {
-      state.showDialog = false
-      startCountdown()
-      //发送短信验证码
-    } else {
-      setTimeout(() => {
-        onRefresh()
-      }, 1000)
-    }
-  }
+//验证通过 data: any
+const onOk = () => {
+  state.showDialog = false
+  startCountdown()
+  //发送短信验证码
 }
 
 //获得验证码
@@ -151,8 +108,8 @@ const onGetCode = () => {
   }
 
   state.showDialog = true
-  //刷新验证码
-  slideCaptchaRef.value?.handleRefresh()
+  //刷新滑块拼图
+  myCaptchaDialogRef.value?.refresh()
 }
 </script>
 

@@ -244,7 +244,10 @@ export interface AuthLoginInput {
   password: string
   /** 密码键 */
   passwordKey?: string | null
-  captcha?: CaptchaInput
+  /** 验证码Id */
+  captchaId?: string | null
+  /** 验证码数据 */
+  captchaData?: string | null
 }
 
 export interface AuthUserMenuDto {
@@ -309,25 +312,6 @@ export interface CaptchaData {
   id?: string | null
   backgroundImage?: string | null
   sliderImage?: string | null
-}
-
-export interface CaptchaInput {
-  /** 校验唯一标识 */
-  token?: string | null
-  /** 缓存键 */
-  captchaKey?: string | null
-  /** 删除缓存 */
-  deleteCache?: boolean
-  /** 数据 */
-  data?: string | null
-}
-
-/** 验证数据 */
-export interface CaptchaOutput {
-  /** 校验唯一标识 */
-  token?: string | null
-  /** 数据 */
-  data?: any
 }
 
 /**
@@ -2112,6 +2096,18 @@ export interface ResultOutputAuthUserProfileDto {
 }
 
 /** 结果输出 */
+export interface ResultOutputBoolean {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  /** 数据 */
+  data?: boolean
+}
+
+/** 结果输出 */
 export interface ResultOutputCaptchaData {
   /** 是否成功标记 */
   success?: boolean
@@ -2120,18 +2116,6 @@ export interface ResultOutputCaptchaData {
   /** 消息 */
   msg?: string | null
   data?: CaptchaData
-}
-
-/** 结果输出 */
-export interface ResultOutputCaptchaOutput {
-  /** 是否成功标记 */
-  success?: boolean
-  /** 编码 */
-  code?: string | null
-  /** 消息 */
-  msg?: string | null
-  /** 验证数据 */
-  data?: CaptchaOutput
 }
 
 /** 结果输出 */

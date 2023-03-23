@@ -9,14 +9,13 @@
  * ---------------------------------------------------------------
  */
 
-import { AxiosResponse } from 'axios'
 import {
   AuthLoginInput,
   ResultOutputAuthGetPasswordEncryptKeyOutput,
   ResultOutputAuthGetUserInfoOutput,
   ResultOutputAuthGetUserPermissionsOutput,
   ResultOutputAuthUserProfileDto,
-  ResultOutputCaptchaOutput,
+  ResultOutputBoolean,
   ResultOutputListAuthUserMenuDto,
   ResultOutputObject,
 } from './data-contracts'
@@ -155,46 +154,17 @@ export class AuthApi<SecurityDataType = unknown> extends HttpClient<SecurityData
    * No description
    *
    * @tags auth
-   * @name GetCaptcha
-   * @summary 获取验证数据
-   * @request GET:/api/admin/auth/get-captcha
+   * @name IsCaptcha
+   * @summary 是否开启验证码
+   * @request GET:/api/admin/auth/is-captcha
    * @secure
    */
-  getCaptcha = (params: RequestParams = {}) =>
-    this.request<ResultOutputCaptchaOutput, any>({
-      path: `/api/admin/auth/get-captcha`,
+  isCaptcha = (params: RequestParams = {}) =>
+    this.request<ResultOutputBoolean, any>({
+      path: `/api/admin/auth/is-captcha`,
       method: 'GET',
       secure: true,
       format: 'json',
-      ...params,
-    })
-  /**
-   * No description
-   *
-   * @tags auth
-   * @name CheckCaptcha
-   * @summary 检查验证数据
-   * @request GET:/api/admin/auth/check-captcha
-   * @secure
-   */
-  checkCaptcha = (
-    query?: {
-      /** 校验唯一标识 */
-      Token?: string
-      /** 缓存键 */
-      CaptchaKey?: string
-      /** 删除缓存 */
-      DeleteCache?: boolean
-      /** 数据 */
-      Data?: string
-    },
-    params: RequestParams = {}
-  ) =>
-    this.request<AxiosResponse, any>({
-      path: `/api/admin/auth/check-captcha`,
-      method: 'GET',
-      query: query,
-      secure: true,
       ...params,
     })
 }

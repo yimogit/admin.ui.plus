@@ -24,6 +24,7 @@ export class CaptchaApi<SecurityDataType = unknown> extends HttpClient<SecurityD
    */
   generate = (
     query?: {
+      /** 验证码id */
       captchaId?: string
     },
     params: RequestParams = {}
@@ -48,7 +49,8 @@ export class CaptchaApi<SecurityDataType = unknown> extends HttpClient<SecurityD
   check = (
     data: SlideTrack,
     query?: {
-      id?: string
+      /** 验证码id */
+      captchaId?: string
     },
     params: RequestParams = {}
   ) =>
