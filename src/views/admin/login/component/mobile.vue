@@ -10,6 +10,7 @@
         ]"
       >
         <el-input
+          ref="phoneRef"
           text
           :placeholder="$t('message.mobile.placeholder1')"
           maxlength="11"
@@ -44,6 +45,7 @@ import { testMobile } from '/@/utils/test'
 const MyInputCode = defineAsyncComponent(() => import('/@/components/my-input-code/index.vue'))
 
 const formRef = ref()
+const phoneRef = ref()
 // 定义变量内容
 const state = reactive({
   ruleForm: {
@@ -59,6 +61,7 @@ const state = reactive({
 const validate = (callback: Function) => {
   formRef.value.validateField('mobile', (isValid: boolean) => {
     if (!isValid) {
+      phoneRef.value?.focus()
       return
     }
     callback?.()

@@ -77,7 +77,6 @@
             fill-rule="nonzero"
           ></path>
         </svg>
-        <!-- <span class="captcha__action__text">刷新</span> -->
       </a>
     </div>
   </div>
@@ -494,6 +493,11 @@ defineExpose({
   right: 0px;
   opacity: 0.8;
   background: rgba(0, 0, 0, 0.12);
+  padding: 0px 4px;
+  &:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.2);
+  }
 }
 
 .captcha__action__text {

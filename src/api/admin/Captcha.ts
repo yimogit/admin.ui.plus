@@ -22,10 +22,16 @@ export class CaptchaApi<SecurityDataType = unknown> extends HttpClient<SecurityD
    * @request POST:/api/admin/captcha/generate
    * @secure
    */
-  generate = (params: RequestParams = {}) =>
+  generate = (
+    query?: {
+      captchaId?: string
+    },
+    params: RequestParams = {}
+  ) =>
     this.request<ResultOutputCaptchaData, any>({
       path: `/api/admin/captcha/generate`,
       method: 'POST',
+      query: query,
       secure: true,
       format: 'json',
       ...params,

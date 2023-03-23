@@ -5,9 +5,14 @@
         <el-icon class="el-input__icon"><ele-Message /></el-icon>
       </template>
       <template #suffix>
-        <el-link type="primary" :underline="false" v-show="state.status !== 'countdown'" :disabled="state.status === 'countdown'" @click="onClick">{{
-          state.status === 'ready' ? state.startText : state.endText
-        }}</el-link>
+        <el-link
+          type="primary"
+          :underline="false"
+          v-show="state.status !== 'countdown'"
+          :disabled="state.status === 'countdown'"
+          @click.prevent.stop="onClick"
+          >{{ state.status === 'ready' ? state.startText : state.endText }}</el-link
+        >
         <el-countdown
           v-show="state.status === 'countdown'"
           :format="state.changeText"
@@ -104,7 +109,7 @@ const onChange = (value: number) => {
 //刷新滑块验证码
 const onRefresh = async () => {
   slideCaptchaRef.value.startRequestGenerate()
-  const res = await new CaptchaApi().generate().catch(() => {
+  const res = await new CaptchaApi().generate({ captchaId: state.requestId }).catch(() => {
     slideCaptchaRef.value.endRequestGenerate(null, null)
   })
   if (res?.success && res.data) {
