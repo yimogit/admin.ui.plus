@@ -10,7 +10,7 @@
           :underline="false"
           v-show="state.status !== 'countdown'"
           :disabled="state.status === 'countdown'"
-          @click.prevent.stop="onClick"
+          @click.prevent.stop="onGetCode"
           >{{ text }}</el-link
         >
         <el-countdown
@@ -61,13 +61,14 @@ const props = defineProps({
 })
 
 const myCaptchaDialogRef = ref()
+const countdown = Date.now()
 
 const state = reactive({
   status: 'ready',
   startText: props.startText,
   changeText: props.changeText,
   endText: props.endText,
-  countdown: Date.now(),
+  countdown: countdown,
 
   showDialog: false,
   requestId: '',
@@ -77,23 +78,26 @@ const text = computed(() => {
   return state.status === 'ready' ? state.startText : state.endText
 })
 
+//开始倒计时
 const startCountdown = () => {
   state.status = 'countdown'
   state.countdown = Date.now() + (props.seconds + 1) * 1000
 }
 
-const onClick = () => {
+//点击获取验证码
+const onGetCode = () => {
   if (state.status !== 'countdown') {
     if (props.validate) {
-      props.validate(onGetCode)
+      props.validate(getCode)
     } else {
-      onGetCode()
+      getCode()
     }
   }
 }
 
+//监听倒计时
 const onChange = (value: number) => {
-  if (value > 0 && value < 1000) state.status = 'finish'
+  if (state.countdown != countdown && value < 1000) state.status = 'finish'
 }
 
 //验证通过 data: any
@@ -104,7 +108,7 @@ const onOk = () => {
 }
 
 //获得验证码
-const onGetCode = () => {
+const getCode = () => {
   //验证手机号
   if (!isMobile(props.mobile)) {
     ElMessage.warning({ message: '请输入正确的手机号码', grouping: true })

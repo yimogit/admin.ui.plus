@@ -280,7 +280,7 @@ const removeEventListeners = () => {
   window.removeEventListener('mousemove', handleDragMoving)
   window.removeEventListener('mouseup', handleDragFinish)
 }
-
+//开始拖拽
 const handleDragStart = (e: any) => {
   if (!state.isPassing && state.src && state.sliderSrc && !state.isFinish) {
     window.addEventListener('touchmove', handleDragMoving)
@@ -295,7 +295,7 @@ const handleDragStart = (e: any) => {
     state.width = dragVerify.value.clientWidth
   }
 }
-
+//拖拽中
 const handleDragMoving = (e: any) => {
   if (state.isMoving && !state.isPassing && state.src && state.sliderSrc && !state.isFinish) {
     var _x = (e.pageX || e.touches[0].pageX) - state.x
@@ -322,7 +322,7 @@ const handleDragMoving = (e: any) => {
     }
   }
 }
-
+//拖拽结束
 const handleDragFinish = () => {
   if (state.isMoving && !state.isPassing && state.src && state.sliderSrc && !state.isFinish) {
     state.isMoving = false
@@ -343,12 +343,12 @@ const handleDragFinish = () => {
     }
   }
 }
-
+//刷新
 const handleRefresh = () => {
   reset()
   emits('refresh')
 }
-
+//导出方法
 defineExpose({
   startRequestGenerate,
   endRequestGenerate,

@@ -11,6 +11,7 @@ const MyCaptcha = defineAsyncComponent(() => import('./index.vue'))
 
 const myCaptchaRef = ref()
 
+//刷新滑块验证码
 const refresh = () => {
   myCaptchaRef.value?.refresh()
 }
