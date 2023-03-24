@@ -11,7 +11,7 @@
           v-show="state.status !== 'countdown'"
           :disabled="state.status === 'countdown'"
           @click.prevent.stop="onClick"
-          >{{ state.status === 'ready' ? state.startText : state.endText }}</el-link
+          >{{ text }}</el-link
         >
         <el-countdown
           v-show="state.status === 'countdown'"
@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts" setup name="my-input-code">
-import { reactive, defineAsyncComponent, ref } from 'vue'
+import { reactive, defineAsyncComponent, ref, computed } from 'vue'
 import { isMobile } from '/@/utils/test'
 import { ElMessage } from 'element-plus'
 
@@ -36,7 +36,7 @@ const MyCaptchaDialog = defineAsyncComponent(() => import('/@/components/my-capt
 const props = defineProps({
   seconds: {
     type: Number,
-    default: 60,
+    default: 10,
   },
   startText: {
     type: String,
@@ -73,6 +73,10 @@ const state = reactive({
   requestId: '',
 })
 
+const text = computed(() => {
+  return state.status === 'ready' ? state.startText : state.endText
+})
+
 const startCountdown = () => {
   state.status = 'countdown'
   state.countdown = Date.now() + (props.seconds + 1) * 1000
@@ -89,7 +93,7 @@ const onClick = () => {
 }
 
 const onChange = (value: number) => {
-  if (value < 1000) state.status = 'finish'
+  if (value > 0 && value < 1000) state.status = 'finish'
 }
 
 //验证通过 data: any
