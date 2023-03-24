@@ -15,11 +15,10 @@
 import { defineAsyncComponent, ref, reactive } from 'vue'
 import { CaptchaApi } from '/@/api/admin/Captcha'
 
-const emits = defineEmits(['ok'])
-
 const SlideCaptcha = defineAsyncComponent(() => import('./slide-captcha.vue'))
 
 const slideCaptchaRef = ref()
+const emits = defineEmits(['ok'])
 
 const state = reactive({
   requestId: '',
@@ -53,7 +52,7 @@ const onFinish = async (data: any) => {
     slideCaptchaRef.value.endRequestVerify(success)
     if (success) {
       //验证成功
-      emits('ok', { captchaId: state.requestId, captchaData: data })
+      emits('ok', { captchaId: state.requestId, track: data })
     } else {
       setTimeout(() => {
         onGenerate()

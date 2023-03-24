@@ -1,17 +1,18 @@
 <template>
   <div class="w100">
-    <el-input text maxlength="4" placeholder="请输入验证码" autocomplete="off" v-bind="$attrs">
+    <el-input text :maxlength="props.maxlength" placeholder="请输入验证码" autocomplete="off" v-bind="$attrs">
       <template #prefix>
         <el-icon class="el-input__icon"><ele-Message /></el-icon>
       </template>
       <template #suffix>
-        <el-link
-          type="primary"
-          :underline="false"
+        <el-button
           v-show="state.status !== 'countdown'"
+          :loading="state.loading.getCode"
+          type="primary"
+          link
           :disabled="state.status === 'countdown'"
           @click.prevent.stop="onGetCode"
-          >{{ text }}</el-link
+          >{{ text }}</el-button
         >
         <el-countdown
           v-show="state.status === 'countdown'"
@@ -30,13 +31,20 @@
 import { reactive, defineAsyncComponent, ref, computed } from 'vue'
 import { isMobile } from '/@/utils/test'
 import { ElMessage } from 'element-plus'
+import { CaptchaApi } from '/@/api/admin/Captcha'
 
 const MyCaptchaDialog = defineAsyncComponent(() => import('/@/components/my-captcha/dialog.vue'))
 
+const emits = defineEmits(['send'])
+
 const props = defineProps({
+  maxlength: {
+    type: Number,
+    default: 6,
+  },
   seconds: {
     type: Number,
-    default: 10,
+    default: 60,
   },
   startText: {
     type: String,
@@ -44,11 +52,11 @@ const props = defineProps({
   },
   changeText: {
     type: String,
-    default: 's秒重新获取',
+    default: 's秒后重发',
   },
   endText: {
     type: String,
-    default: '重新获取',
+    default: '重新发送验证码',
   },
   mobile: {
     type: String,
@@ -71,9 +79,13 @@ const state = reactive({
   countdown: countdown,
 
   showDialog: false,
-  requestId: '',
+  codeId: '',
+  loading: {
+    getCode: false,
+  },
 })
 
+//获取验证码文本
 const text = computed(() => {
   return state.status === 'ready' ? state.startText : state.endText
 })
@@ -100,11 +112,29 @@ const onChange = (value: number) => {
   if (state.countdown != countdown && value < 1000) state.status = 'finish'
 }
 
-//验证通过 data: any
-const onOk = () => {
+//验证通过
+const onOk = async (data: any) => {
   state.showDialog = false
-  startCountdown()
+
   //发送短信验证码
+  state.loading.getCode = true
+  const res = await new CaptchaApi()
+    .sendSmsCode({
+      mobile: props.mobile,
+      captchaId: data.captchaId,
+      track: data.track,
+      codeId: state.codeId,
+    })
+    .catch(() => {})
+    .finally(() => {
+      state.loading.getCode = false
+    })
+
+  if (res?.success && res.data) {
+    state.codeId = res.data
+    emits('send', res.data)
+    startCountdown()
+  }
 }
 
 //获得验证码

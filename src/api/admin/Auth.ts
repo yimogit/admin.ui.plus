@@ -11,6 +11,7 @@
 
 import {
   AuthLoginInput,
+  AuthMobileLoginInput,
   ResultOutputAuthGetPasswordEncryptKeyOutput,
   ResultOutputAuthGetUserInfoOutput,
   ResultOutputAuthGetUserPermissionsOutput,
@@ -119,6 +120,25 @@ export class AuthApi<SecurityDataType = unknown> extends HttpClient<SecurityData
   login = (data: AuthLoginInput, params: RequestParams = {}) =>
     this.request<ResultOutputObject, any>({
       path: `/api/admin/auth/login`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: 'json',
+      ...params,
+    })
+  /**
+   * No description
+   *
+   * @tags auth
+   * @name MobileLogin
+   * @summary 手机号登录
+   * @request POST:/api/admin/auth/mobile-login
+   * @secure
+   */
+  mobileLogin = (data: AuthMobileLoginInput, params: RequestParams = {}) =>
+    this.request<ResultOutputObject, any>({
+      path: `/api/admin/auth/mobile-login`,
       method: 'POST',
       body: data,
       secure: true,

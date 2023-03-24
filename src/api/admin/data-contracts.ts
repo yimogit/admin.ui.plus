@@ -250,6 +250,25 @@ export interface AuthLoginInput {
   captchaData?: string | null
 }
 
+/** 手机号登录信息 */
+export interface AuthMobileLoginInput {
+  /**
+   * 手机号
+   * @minLength 1
+   */
+  mobile: string
+  /**
+   * 验证码
+   * @minLength 1
+   */
+  code: string
+  /**
+   * 验证码Id
+   * @minLength 1
+   */
+  codeId: string
+}
+
 export interface AuthUserMenuDto {
   /**
    * 权限Id
@@ -2905,6 +2924,23 @@ export interface RoleUpdateInput {
    * @format int64
    */
   id: number
+}
+
+/** 发送短信验证码 */
+export interface SendSmsCodeInput {
+  /**
+   * 手机号
+   * @minLength 1
+   */
+  mobile: string
+  /** 验证码Id */
+  codeId?: string | null
+  /**
+   * 验证码Id
+   * @minLength 1
+   */
+  captchaId: string
+  track: SlideTrack
 }
 
 /**

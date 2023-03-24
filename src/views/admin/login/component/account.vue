@@ -127,7 +127,7 @@ const onOk = (data: any) => {
   state.showDialog = false
   //开始登录
   state.ruleForm.captchaId = data.captchaId
-  state.ruleForm.captchaData = JSON.stringify(data.captchaData)
+  state.ruleForm.captchaData = JSON.stringify(data.track)
   login()
 }
 
