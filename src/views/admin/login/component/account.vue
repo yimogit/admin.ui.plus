@@ -100,6 +100,8 @@ const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const formRef = ref()
+const myCaptchaDialogRef = ref()
+
 const state = reactive({
   showDialog: false,
   isShowPassword: false,
@@ -165,8 +167,11 @@ const onSignIn = async () => {
       })
 
     if (res?.success) {
-      if (res.data) state.showDialog = true
-      else login()
+      if (res.data) {
+        state.showDialog = true
+        //刷新滑块拼图
+        myCaptchaDialogRef.value?.refresh()
+      } else login()
     }
   })
 }
