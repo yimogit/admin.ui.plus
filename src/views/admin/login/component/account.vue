@@ -164,10 +164,9 @@ const onSignIn = async () => {
         state.disabled.signIn = false
       })
 
-    if (res?.success && res.data) {
-      state.showDialog = true
-    } else {
-      login()
+    if (res?.success) {
+      if (res.data) state.showDialog = true
+      else login()
     }
   })
 }
