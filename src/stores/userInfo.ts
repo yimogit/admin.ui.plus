@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { AuthApi } from '/@/api/admin/Auth'
 import { merge } from 'lodash-es'
 import { Local } from '/@/utils/storage'
+// import { Session } from '/@/utils/storage'
 
 export const adminTokenKey = 'admin-token'
 
@@ -22,6 +23,13 @@ export const useUserInfo = defineStore('userInfo', {
   }),
   actions: {
     async setUserInfos() {
+      // if (Session.get('userInfo')) {
+      //   const userInfos: any = Session.get('userInfo')
+      //   merge(this.userInfos, userInfos)
+      // } else {
+      //   const userInfos: any = await this.getApiUserInfo().catch(() => {})
+      //   merge(this.userInfos, userInfos)
+      // }
       const userInfos: any = await this.getApiUserInfo().catch(() => {})
       merge(this.userInfos, userInfos)
     },
@@ -50,7 +58,7 @@ export const useUserInfo = defineStore('userInfo', {
       window.requests = []
       window.location.reload()
     },
-    // 模拟接口数据
+    //查询用户信息
     async getApiUserInfo() {
       return new Promise((resolve, reject) => {
         new AuthApi()
@@ -65,6 +73,7 @@ export const useUserInfo = defineStore('userInfo', {
                 roles: [],
                 authBtnList: res.data?.permissions,
               }
+              // Session.set('userInfo', userInfos)
               resolve(userInfos)
             } else {
               this.clear()

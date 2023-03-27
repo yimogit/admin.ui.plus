@@ -581,9 +581,9 @@ onBeforeRouteUpdate(async (to) => {
 })
 // 监听路由的变化，动态赋值给 tagsView
 watch(
-  pinia.state,
+  () => tagsViewRoutes.value,
   (val) => {
-    if (val.tagsViewRoutes.tagsViewRoutes.length === state.tagsViewRoutesList.length) return false
+    if (val.length === state.tagsViewRoutesList.length) return false
     getTagsViewRoutes()
   },
   {

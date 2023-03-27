@@ -47,18 +47,18 @@ const viteConfig = defineConfig(({ mode, command }: ConfigEnv) => {
       },
     },
     build: {
+      chunkSizeWarningLimit: 1500,
       outDir: 'dist',
       sourcemap: false,
-      chunkSizeWarningLimit: 1500,
       rollupOptions: {
         output: {
-          entryFileNames: `assets/[name].[hash].js`,
-          chunkFileNames: `assets/[name].[hash].js`,
-          assetFileNames: `assets/[name].[hash].[ext]`,
-          compact: true,
-          manualChunks: {
-            vue: ['vue', 'vue-router', 'pinia'],
-            echarts: ['echarts'],
+          assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+          chunkFileNames: 'assets/js/[name]-[hash].js',
+          entryFileNames: 'assets/js/[name]-[hash].js',
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return id.toString().split('node_modules/')[1].split('/')[0].toString()
+            }
           },
         },
       },
