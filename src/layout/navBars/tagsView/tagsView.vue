@@ -190,6 +190,9 @@ const singleAddTagsView = (path: string, to?: RouteToFrom) => {
 }
 // 1、添加 tagsView：未设置隐藏（isHide）也添加到在 tagsView 中（可开启多标签详情，单标签详情）
 const addTagsView = (path: string, to?: RouteToFrom) => {
+  if (to?.meta?.isDir) {
+    return
+  }
   // 防止拿取不到路由信息
   nextTick(async () => {
     let item: RouteItem
@@ -383,9 +386,13 @@ const onTagsClick = (v: RouteItem, k: number) => {
   state.tagsRefsIndex = k
   router.push(v)
   // 分栏布局时，收起/展开菜单
+  // if (getThemeConfig.value.layout === 'columns') {
+  //   const item: RouteItem = routesList.value.find((r: RouteItem) => r.path.indexOf(`/${v.path.split('/')[1]}`) > -1)
+  //   !item.children ? (getThemeConfig.value.isCollapse = true) : (getThemeConfig.value.isCollapse = false)
+  // }
   if (getThemeConfig.value.layout === 'columns') {
     const item: RouteItem = routesList.value.find((r: RouteItem) => r.path.indexOf(`/${v.path.split('/')[1]}`) > -1)
-    !item.children ? (getThemeConfig.value.isCollapse = true) : (getThemeConfig.value.isCollapse = false)
+    item.meta?.isHide ? (getThemeConfig.value.isCollapse = true) : (getThemeConfig.value.isCollapse = false)
   }
 }
 // 处理 url，地址栏链接有参数时，tagsview 右键菜单刷新功能失效问题，感谢 @ZzZz-RIPPER、@dejavuuuuu

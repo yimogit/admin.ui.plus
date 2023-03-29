@@ -123,7 +123,9 @@ onBeforeMount(() => {
     let { layout, isClassicSplitMenu } = themeConfig.value
     if (layout === 'classic' && isClassicSplitMenu) {
       // 经典布局分割菜单只有一项子级时，收起左侧导航菜单
-      res.children.length <= 1 ? (themeConfig.value.isCollapse = true) : (themeConfig.value.isCollapse = false)
+      // res.children.length <= 1 ? (themeConfig.value.isCollapse = true) : (themeConfig.value.isCollapse = false)
+      // 经典布局分割菜单无子级时，收起左侧导航菜单
+      !res.children || res.children.length < 1 ? (themeConfig.value.isCollapse = true) : (themeConfig.value.isCollapse = false)
       state.menuList = []
       state.menuList = res.children
     }

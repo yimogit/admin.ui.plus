@@ -134,6 +134,7 @@ export async function getBackEndControlRoutes() {
           status: 1,
           remark: null,
           order: menu.sort,
+          isDir: !menu.viewPath,
         },
       })
     })
