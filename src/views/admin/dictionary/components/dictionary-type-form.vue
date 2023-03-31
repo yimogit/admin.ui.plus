@@ -35,7 +35,7 @@
   </div>
 </template>
 
-<script lang="ts" setup name="admin/dictionaryType/typeForm">
+<script lang="ts" setup name="admin/dictType/form">
 import { reactive, toRefs, getCurrentInstance, ref } from 'vue'
 import { DictionaryTypeAddInput, DictionaryTypeUpdateInput } from '/@/api/admin/data-contracts'
 import { DictionaryTypeApi } from '/@/api/admin/DictionaryType'

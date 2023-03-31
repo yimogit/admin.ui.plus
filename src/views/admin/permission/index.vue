@@ -108,7 +108,7 @@
 </template>
 
 <script lang="ts" setup name="admin/permission">
-import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
+import { ref, reactive, onMounted, getCurrentInstance, onBeforeMount, defineAsyncComponent } from 'vue'
 import { PermissionListOutput } from '/@/api/admin/data-contracts'
 import { PermissionApi } from '/@/api/admin/Permission'
 import { listToTree, treeToList, filterTree } from '/@/utils/tree'
@@ -144,12 +144,13 @@ onMounted(async () => {
   state.expandRowKeys = treeToList(cloneDeep(state.permissionTreeData))
     .filter((a: PermissionListOutput) => a.opened === true)
     .map((a: PermissionListOutput) => a.id + '') as string[]
+  eventBus.off('refreshPermission')
   eventBus.on('refreshPermission', async () => {
     onQuery()
   })
 })
 
-onUnmounted(() => {
+onBeforeMount(() => {
   eventBus.off('refreshPermission')
 })
 

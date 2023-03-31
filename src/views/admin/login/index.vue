@@ -84,8 +84,8 @@ onMounted(() => {
 }
 .login-container {
   height: 100%;
-  background: var(--el-color-white);
   min-height: 500px;
+  background: var(--el-color-white);
   .login-left {
     flex: 1;
     position: relative;

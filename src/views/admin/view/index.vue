@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts" setup name="admin/view">
-import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
+import { ref, reactive, onMounted, getCurrentInstance, onBeforeMount, defineAsyncComponent } from 'vue'
 import { ViewListOutput } from '/@/api/admin/data-contracts'
 import { ViewApi } from '/@/api/admin/View'
 import { listToTree, filterTree } from '/@/utils/tree'
@@ -71,12 +71,13 @@ const state = reactive({
 
 onMounted(() => {
   onQuery()
+  eventBus.off('refreshView')
   eventBus.on('refreshView', async () => {
     onQuery()
   })
 })
 
-onUnmounted(() => {
+onBeforeMount(() => {
   eventBus.off('refreshView')
 })
 

@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts" setup name="admin/tenant">
-import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
+import { ref, reactive, onMounted, getCurrentInstance, onBeforeMount, defineAsyncComponent } from 'vue'
 import { TenantListOutput, PageInputTenantGetPageDto } from '/@/api/admin/data-contracts'
 import { TenantApi } from '/@/api/admin/Tenant'
 import eventBus from '/@/utils/mitt'
@@ -106,12 +106,13 @@ const state = reactive({
 
 onMounted(() => {
   onQuery()
+  eventBus.off('refreshTenant')
   eventBus.on('refreshTenant', async () => {
     onQuery()
   })
 })
 
-onUnmounted(() => {
+onBeforeMount(() => {
   eventBus.off('refreshTenant')
 })
 

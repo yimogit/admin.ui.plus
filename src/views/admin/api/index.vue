@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts" setup name="admin/api">
-import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
+import { ref, reactive, onMounted, getCurrentInstance, onBeforeMount, defineAsyncComponent } from 'vue'
 import { ApiListOutput } from '/@/api/admin/data-contracts'
 import { ApiApi } from '/@/api/admin/Api'
 import { ApiApi as ApiExtApi } from '/@/api/admin.extend/Api'
@@ -82,12 +82,13 @@ onMounted(async () => {
   state.expandRowKeys = treeToList(cloneDeep(state.apiTreeData))
     .filter((a: ApiListOutput) => a.parentId === 0)
     .map((a: ApiListOutput) => a.id + '') as string[]
+  eventBus.off('refreshApi')
   eventBus.on('refreshApi', async () => {
     onQuery()
   })
 })
 
-onUnmounted(() => {
+onBeforeMount(() => {
   eventBus.off('refreshApi')
 })
 

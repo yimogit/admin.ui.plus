@@ -93,7 +93,7 @@
 </template>
 
 <script lang="ts" setup name="admin/file">
-import { ref, reactive, onMounted, onUnmounted, defineAsyncComponent, computed, getCurrentInstance } from 'vue'
+import { ref, reactive, onMounted, onBeforeMount, defineAsyncComponent, computed, getCurrentInstance } from 'vue'
 import { PageInputFileGetPageDto, FileGetPageOutput } from '/@/api/admin/data-contracts'
 import { FileApi } from '/@/api/admin/File'
 import dayjs from 'dayjs'
@@ -136,12 +136,13 @@ const previewImglist = computed(() => {
 
 onMounted(() => {
   onQuery()
+  eventBus.off('refreshFile')
   eventBus.on('refreshFile', async () => {
     onQuery()
   })
 })
 
-onUnmounted(() => {
+onBeforeMount(() => {
   eventBus.off('refreshFile')
 })
 

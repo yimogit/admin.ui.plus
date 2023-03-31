@@ -61,7 +61,7 @@
 </template>
 
 <script lang="ts" setup name="admin/org">
-import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, defineAsyncComponent } from 'vue'
+import { ref, reactive, onMounted, getCurrentInstance, onBeforeMount, defineAsyncComponent } from 'vue'
 import { OrgListOutput } from '/@/api/admin/data-contracts'
 import { OrgApi } from '/@/api/admin/Org'
 import { listToTree, filterTree } from '/@/utils/tree'
@@ -86,12 +86,13 @@ const state = reactive({
 
 onMounted(() => {
   onQuery()
+  eventBus.off('refreshOrg')
   eventBus.on('refreshOrg', () => {
     onQuery()
   })
 })
 
-onUnmounted(() => {
+onBeforeMount(() => {
   eventBus.off('refreshOrg')
 })
 

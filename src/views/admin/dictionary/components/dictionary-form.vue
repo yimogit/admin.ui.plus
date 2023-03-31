@@ -9,12 +9,12 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-form-item label="编码" prop="code" :rules="[{ required: true, message: '请输入编码', trigger: ['blur', 'change'] }]">
+            <el-form-item label="编码">
               <el-input v-model="form.code" autocomplete="off" />
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-form-item label="字典值" prop="value" :rules="[{ required: true, message: '请输入字典值', trigger: ['blur', 'change'] }]">
+            <el-form-item label="字典值">
               <el-input v-model="form.value" autocomplete="off" />
             </el-form-item>
           </el-col>
@@ -31,20 +31,26 @@
         </el-row>
       </el-form>
       <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="onCancel" size="default">取 消</el-button>
-          <el-button type="primary" @click="onSure" size="default" :loading="state.sureLoading">确 定</el-button>
+        <span class="dialog-footer my-flex my-flex-y-center my-flex-between">
+          <div>
+            <el-checkbox v-if="!(state.form?.id > 0)" v-model="state.contiAdd">连续新增</el-checkbox>
+          </div>
+          <div>
+            <el-button @click="onCancel" size="default">取 消</el-button>
+            <el-button type="primary" @click="onSure" size="default" :loading="state.sureLoading">确 定</el-button>
+          </div>
         </span>
       </template>
     </el-dialog>
   </div>
 </template>
 
-<script lang="ts" setup name="admin/dictionary/form">
+<script lang="ts" setup name="admin/dict/form">
 import { reactive, toRefs, getCurrentInstance, ref } from 'vue'
 import { DictionaryAddInput, DictionaryUpdateInput } from '/@/api/admin/data-contracts'
 import { DictionaryApi } from '/@/api/admin/Dictionary'
 import eventBus from '/@/utils/mitt'
+import { FormInstance } from 'element-plus'
 
 defineProps({
   title: {
@@ -55,17 +61,19 @@ defineProps({
 
 const { proxy } = getCurrentInstance() as any
 
-const formRef = ref()
+const formRef = ref<FormInstance>()
 const state = reactive({
   showDialog: false,
   sureLoading: false,
   form: {} as DictionaryAddInput & DictionaryUpdateInput,
+  contiAdd: true,
 })
 const { form } = toRefs(state)
 
 // 打开对话框
 const open = async (row: any = {}) => {
   if (row.id > 0) {
+    state.contiAdd = false
     const res = await new DictionaryApi().get({ id: row.id }, { loading: true }).catch(() => {
       proxy.$modal.closeLoading()
     })
@@ -86,7 +94,7 @@ const onCancel = () => {
 
 // 确定
 const onSure = () => {
-  formRef.value.validate(async (valid: boolean) => {
+  formRef.value!.validate(async (valid: boolean) => {
     if (!valid) return
 
     state.sureLoading = true
@@ -103,8 +111,11 @@ const onSure = () => {
     state.sureLoading = false
 
     if (res?.success) {
+      if (state.contiAdd) {
+        formRef.value!.resetFields()
+      }
       eventBus.emit('refreshDict')
-      state.showDialog = false
+      state.showDialog = state.contiAdd
     }
   })
 }

@@ -1,61 +1,67 @@
 <template>
-  <el-card class="mt8" shadow="never" :body-style="{ paddingBottom: '0' }">
-    <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
-      <el-form-item prop="name">
-        <el-input v-model="state.filterModel.name" placeholder="名称或编码" @keyup.enter="onQuery" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
-        <el-button v-auth="'api:admin:dictionary:add'" type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
-      </el-form-item>
-    </el-form>
-  </el-card>
+  <div class="my-flex-column w100 h100">
+    <el-card class="mt8" shadow="never" :body-style="{ paddingBottom: '0' }">
+      <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
+        <el-form-item prop="name">
+          <el-input v-model="state.filterModel.name" placeholder="名称或编码" @keyup.enter="onQuery" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
+          <el-button v-auth="'api:admin:dictionary:add'" type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
 
-  <el-card class="my-fill mt8" shadow="never">
-    <el-table
-      ref="tableRef"
-      v-loading="state.loading"
-      :data="state.dictionaryTypeListData"
-      row-key="id"
-      highlight-current-row
-      style="width: 100%"
-      @current-change="onTableCurrentChange"
-    >
-      <el-table-column prop="name" label="名称" min-width="120" show-overflow-tooltip />
-      <el-table-column prop="code" label="编码" min-width="120" show-overflow-tooltip />
-      <el-table-column label="状态" width="80" align="center" show-overflow-tooltip>
-        <template #default="{ row }">
-          <el-tag type="success" v-if="row.enabled">启用</el-tag>
-          <el-tag type="danger" v-else>禁用</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="140" fixed="right" header-align="center" align="center">
-        <template #default="{ row }">
-          <el-button v-auth="'api:admin:dictionary:update'" icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
-          <el-button v-auth="'api:admin:dictionary:delete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <div class="my-flex my-flex-end" style="margin-top: 20px">
-      <el-pagination
-        v-model:currentPage="state.pageInput.currentPage"
-        v-model:page-size="state.pageInput.pageSize"
-        :total="state.total"
-        :page-sizes="[10, 20, 50, 100]"
-        small
-        background
-        @size-change="onSizeChange"
-        @current-change="onCurrentChange"
-        layout="total, sizes, prev, pager, next, jumper"
-      />
-    </div>
-  </el-card>
+    <el-card class="my-fill mt8" shadow="never">
+      <el-table
+        ref="tableRef"
+        v-loading="state.loading"
+        :data="state.dictionaryTypeListData"
+        row-key="id"
+        highlight-current-row
+        style="width: 100%"
+        @current-change="onTableCurrentChange"
+      >
+        <el-table-column prop="name" label="名称" min-width="120" show-overflow-tooltip />
+        <el-table-column prop="code" label="编码" min-width="120" show-overflow-tooltip />
+        <el-table-column label="状态" width="80" align="center" show-overflow-tooltip>
+          <template #default="{ row }">
+            <el-tag type="success" v-if="row.enabled">启用</el-tag>
+            <el-tag type="danger" v-else>禁用</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="140" fixed="right" header-align="center" align="center">
+          <template #default="{ row }">
+            <el-button v-auth="'api:admin:dictionary:update'" icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)"
+              >编辑</el-button
+            >
+            <el-button v-auth="'api:admin:dictionary:delete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)"
+              >删除</el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+      <div class="my-flex my-flex-end" style="margin-top: 20px">
+        <el-pagination
+          v-model:currentPage="state.pageInput.currentPage"
+          v-model:page-size="state.pageInput.pageSize"
+          :total="state.total"
+          :page-sizes="[10, 20, 50, 100]"
+          small
+          background
+          @size-change="onSizeChange"
+          @current-change="onCurrentChange"
+          layout="total, sizes, prev, pager, next, jumper"
+        />
+      </div>
+    </el-card>
 
-  <dictionary-type-form ref="dictionaryTypeFormRef" :title="state.dictionaryTypeFormTitle"></dictionary-type-form>
+    <dictionary-type-form ref="dictionaryTypeFormRef" :title="state.dictionaryTypeFormTitle"></dictionary-type-form>
+  </div>
 </template>
 
 <script lang="ts" setup name="'admin/dictType'">
-import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, nextTick, defineAsyncComponent } from 'vue'
+import { ref, reactive, onMounted, getCurrentInstance, onBeforeMount, nextTick, defineAsyncComponent } from 'vue'
 import { DictionaryTypeListOutput, PageInputDictionaryTypeGetPageDto } from '/@/api/admin/data-contracts'
 import { DictionaryTypeApi } from '/@/api/admin/DictionaryType'
 import eventBus from '/@/utils/mitt'
@@ -67,6 +73,8 @@ const { proxy } = getCurrentInstance() as any
 
 const tableRef = ref()
 const dictionaryTypeFormRef = ref()
+
+const emits = defineEmits(['change'])
 
 const state = reactive({
   loading: false,
@@ -80,16 +88,18 @@ const state = reactive({
     pageSize: 20,
   } as PageInputDictionaryTypeGetPageDto,
   dictionaryTypeListData: [] as Array<DictionaryTypeListOutput>,
+  lastCurrentRow: {} as DictionaryTypeListOutput,
 })
 
 onMounted(() => {
   onQuery()
+  eventBus.off('refreshDictType')
   eventBus.on('refreshDictType', () => {
     onQuery()
   })
 })
 
-onUnmounted(() => {
+onBeforeMount(() => {
   eventBus.off('refreshDictType')
 })
 
@@ -140,7 +150,10 @@ const onCurrentChange = (val: number) => {
 }
 
 const onTableCurrentChange = (currentRow: DictionaryTypeListOutput) => {
-  eventBus.emit('refreshDict', currentRow)
+  if (state.lastCurrentRow?.id != currentRow?.id) {
+    state.lastCurrentRow = currentRow
+    emits('change', currentRow)
+  }
 }
 </script>
 

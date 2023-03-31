@@ -112,7 +112,7 @@
 </template>
 
 <script lang="ts" setup name="admin/role">
-import { ref, reactive, onMounted, getCurrentInstance, onUnmounted, nextTick, defineAsyncComponent } from 'vue'
+import { ref, reactive, onMounted, getCurrentInstance, onBeforeMount, nextTick, defineAsyncComponent } from 'vue'
 import { RoleGetListOutput, UserGetRoleUserListOutput, UserGetPageOutput, RoleAddRoleUserListInput, RoleType } from '/@/api/admin/data-contracts'
 import { RoleApi } from '/@/api/admin/Role'
 import { listToTree, filterTree } from '/@/utils/tree'
@@ -156,12 +156,13 @@ const state = reactive({
 
 onMounted(() => {
   onQuery()
+  eventBus.off('refreshRole')
   eventBus.on('refreshRole', async () => {
     onQuery()
   })
 })
 
-onUnmounted(() => {
+onBeforeMount(() => {
   eventBus.off('refreshRole')
 })
 

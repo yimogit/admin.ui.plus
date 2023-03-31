@@ -115,6 +115,7 @@ import { listToTree, treeToList } from '/@/utils/tree'
 import { cloneDeep } from 'lodash-es'
 import { isMobile, testMobile, testEmail } from '/@/utils/test'
 import eventBus from '/@/utils/mitt'
+import { FormInstance } from 'element-plus'
 
 // 引入组件
 const MySelectUser = defineAsyncComponent(() => import('./my-select-user.vue'))
@@ -129,7 +130,7 @@ defineProps({
 const { proxy } = getCurrentInstance() as any
 
 const orgTreeSelectRef = ref()
-const formRef = ref()
+const formRef = ref<FormInstance>()
 const state = reactive({
   showDialog: false,
   sureLoading: false,
@@ -248,7 +249,7 @@ const onCancel = () => {
 
 // 确定
 const onSure = () => {
-  formRef.value.validate(async (valid: boolean) => {
+  formRef.value!.validate(async (valid: boolean) => {
     if (!valid) return
 
     state.sureLoading = true
