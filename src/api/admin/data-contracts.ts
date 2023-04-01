@@ -345,15 +345,18 @@ export type DataScope = 1 | 2 | 3 | 4 | 5
  */
 export type DataType = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24
 
-/** 添加 */
-export interface DictionaryAddInput {
+/** 添加字典 */
+export interface DictAddInput {
   /**
    * 字典类型Id
    * @format int64
    */
-  dictionaryTypeId?: number
-  /** 字典名称 */
-  name?: string | null
+  dictTypeId?: number
+  /**
+   * 字典名称
+   * @minLength 1
+   */
+  name: string
   /** 字典编码 */
   code?: string | null
   /** 字典值 */
@@ -362,16 +365,40 @@ export interface DictionaryAddInput {
   description?: string | null
   /** 启用 */
   enabled?: boolean
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
 }
 
-export interface DictionaryGetOutput {
+export interface DictGetListDto {
+  /** 字典类型编码 */
+  dictTypeCode?: string | null
+  /**
+   * 主键Id
+   * @format int64
+   */
+  id?: number
+  /** 字典名称 */
+  name?: string | null
+  /** 字典编码 */
+  code?: string | null
+  /** 字典值 */
+  value?: string | null
+}
+
+export interface DictGetOutput {
   /**
    * 字典类型Id
    * @format int64
    */
-  dictionaryTypeId?: number
-  /** 字典名称 */
-  name?: string | null
+  dictTypeId?: number
+  /**
+   * 字典名称
+   * @minLength 1
+   */
+  name: string
   /** 字典编码 */
   code?: string | null
   /** 字典值 */
@@ -380,6 +407,11 @@ export interface DictionaryGetOutput {
   description?: string | null
   /** 启用 */
   enabled?: boolean
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
   /**
    * 主键Id
    * @format int64
@@ -387,17 +419,17 @@ export interface DictionaryGetOutput {
   id: number
 }
 
-export interface DictionaryGetPageDto {
+export interface DictGetPageDto {
   /**
    * 字典类型Id
    * @format int64
    */
-  dictionaryTypeId?: number
+  dictTypeId?: number
   /** 字典名称 */
   name?: string | null
 }
 
-export interface DictionaryListOutput {
+export interface DictGetPageOutput {
   /**
    * 主键Id
    * @format int64
@@ -411,29 +443,50 @@ export interface DictionaryListOutput {
   value?: string | null
   /** 启用 */
   enabled?: boolean
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
 }
 
-/** 添加 */
-export interface DictionaryTypeAddInput {
-  /** 字典名称 */
-  name?: string | null
-  /** 字典编码 */
+/** 添加字典类型 */
+export interface DictTypeAddInput {
+  /**
+   * 字典类型名称
+   * @minLength 1
+   */
+  name: string
+  /** 字典类型编码 */
   code?: string | null
   /** 描述 */
   description?: string | null
   /** 启用 */
   enabled?: boolean
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
 }
 
-export interface DictionaryTypeGetOutput {
-  /** 字典名称 */
-  name?: string | null
-  /** 字典编码 */
+export interface DictTypeGetOutput {
+  /**
+   * 字典类型名称
+   * @minLength 1
+   */
+  name: string
+  /** 字典类型编码 */
   code?: string | null
   /** 描述 */
   description?: string | null
   /** 启用 */
   enabled?: boolean
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
   /**
    * 主键Id
    * @format int64
@@ -441,12 +494,12 @@ export interface DictionaryTypeGetOutput {
   id: number
 }
 
-export interface DictionaryTypeGetPageDto {
+export interface DictTypeGetPageDto {
   /** 字典名称 */
   name?: string | null
 }
 
-export interface DictionaryTypeListOutput {
+export interface DictTypeGetPageOutput {
   /**
    * 主键Id
    * @format int64
@@ -458,18 +511,31 @@ export interface DictionaryTypeListOutput {
   code?: string | null
   /** 启用 */
   enabled?: boolean
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
 }
 
 /** 修改 */
-export interface DictionaryTypeUpdateInput {
-  /** 字典名称 */
-  name?: string | null
-  /** 字典编码 */
+export interface DictTypeUpdateInput {
+  /**
+   * 字典类型名称
+   * @minLength 1
+   */
+  name: string
+  /** 字典类型编码 */
   code?: string | null
   /** 描述 */
   description?: string | null
   /** 启用 */
   enabled?: boolean
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
   /**
    * 主键Id
    * @format int64
@@ -478,14 +544,17 @@ export interface DictionaryTypeUpdateInput {
 }
 
 /** 修改 */
-export interface DictionaryUpdateInput {
+export interface DictUpdateInput {
   /**
    * 字典类型Id
    * @format int64
    */
-  dictionaryTypeId?: number
-  /** 字典名称 */
-  name?: string | null
+  dictTypeId?: number
+  /**
+   * 字典名称
+   * @minLength 1
+   */
+  name: string
   /** 字典编码 */
   code?: string | null
   /** 字典值 */
@@ -494,6 +563,11 @@ export interface DictionaryUpdateInput {
   description?: string | null
   /** 启用 */
   enabled?: boolean
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
   /**
    * 主键Id
    * @format int64
@@ -1196,7 +1270,7 @@ export interface PageInputApiGetPageDto {
 }
 
 /** 分页信息输入 */
-export interface PageInputDictionaryGetPageDto {
+export interface PageInputDictGetPageDto {
   /**
    * 当前页标
    * @format int32
@@ -1208,11 +1282,11 @@ export interface PageInputDictionaryGetPageDto {
    */
   pageSize?: number
   dynamicFilter?: DynamicFilterInfo
-  filter?: DictionaryGetPageDto
+  filter?: DictGetPageDto
 }
 
 /** 分页信息输入 */
-export interface PageInputDictionaryTypeGetPageDto {
+export interface PageInputDictTypeGetPageDto {
   /**
    * 当前页标
    * @format int32
@@ -1224,7 +1298,7 @@ export interface PageInputDictionaryTypeGetPageDto {
    */
   pageSize?: number
   dynamicFilter?: DynamicFilterInfo
-  filter?: DictionaryTypeGetPageDto
+  filter?: DictTypeGetPageDto
 }
 
 /** 分页信息输入 */
@@ -1352,25 +1426,25 @@ export interface PageOutputApiEntity {
 }
 
 /** 分页信息输出 */
-export interface PageOutputDictionaryListOutput {
+export interface PageOutputDictGetPageOutput {
   /**
    * 数据总数
    * @format int64
    */
   total?: number
   /** 数据 */
-  list?: DictionaryListOutput[] | null
+  list?: DictGetPageOutput[] | null
 }
 
 /** 分页信息输出 */
-export interface PageOutputDictionaryTypeListOutput {
+export interface PageOutputDictTypeGetPageOutput {
   /**
    * 数据总数
    * @format int64
    */
   total?: number
   /** 数据 */
-  list?: DictionaryTypeListOutput[] | null
+  list?: DictTypeGetPageOutput[] | null
 }
 
 /** 分页信息输出 */
@@ -2138,25 +2212,37 @@ export interface ResultOutputCaptchaData {
 }
 
 /** 结果输出 */
-export interface ResultOutputDictionaryGetOutput {
+export interface ResultOutputDictGetOutput {
   /** 是否成功标记 */
   success?: boolean
   /** 编码 */
   code?: string | null
   /** 消息 */
   msg?: string | null
-  data?: DictionaryGetOutput
+  data?: DictGetOutput
 }
 
 /** 结果输出 */
-export interface ResultOutputDictionaryTypeGetOutput {
+export interface ResultOutputDictTypeGetOutput {
   /** 是否成功标记 */
   success?: boolean
   /** 编码 */
   code?: string | null
   /** 消息 */
   msg?: string | null
-  data?: DictionaryTypeGetOutput
+  data?: DictTypeGetOutput
+}
+
+/** 结果输出 */
+export interface ResultOutputDictionaryStringListDictGetListDto {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  /** 数据 */
+  data?: Record<string, DictGetListDto[] | null>
 }
 
 /** 结果输出 */
@@ -2423,7 +2509,7 @@ export interface ResultOutputPageOutputApiEntity {
 }
 
 /** 结果输出 */
-export interface ResultOutputPageOutputDictionaryListOutput {
+export interface ResultOutputPageOutputDictGetPageOutput {
   /** 是否成功标记 */
   success?: boolean
   /** 编码 */
@@ -2431,11 +2517,11 @@ export interface ResultOutputPageOutputDictionaryListOutput {
   /** 消息 */
   msg?: string | null
   /** 分页信息输出 */
-  data?: PageOutputDictionaryListOutput
+  data?: PageOutputDictGetPageOutput
 }
 
 /** 结果输出 */
-export interface ResultOutputPageOutputDictionaryTypeListOutput {
+export interface ResultOutputPageOutputDictTypeGetPageOutput {
   /** 是否成功标记 */
   success?: boolean
   /** 编码 */
@@ -2443,7 +2529,7 @@ export interface ResultOutputPageOutputDictionaryTypeListOutput {
   /** 消息 */
   msg?: string | null
   /** 分页信息输出 */
-  data?: PageOutputDictionaryTypeListOutput
+  data?: PageOutputDictTypeGetPageOutput
 }
 
 /** 结果输出 */
@@ -2980,6 +3066,8 @@ export interface StaffAddInput {
    * @format date-time
    */
   entryTime?: string | null
+  /** 企业微信名片 */
+  workWeChatCard?: string | null
   /** 个人简介 */
   introduce?: string | null
 }
@@ -3380,6 +3468,11 @@ export interface Track {
 /** 添加 */
 export interface UserAddInput {
   /**
+   * 用户Id
+   * @format int64
+   */
+  id?: number
+  /**
    * 账号
    * @minLength 1
    */
@@ -3418,6 +3511,11 @@ export interface UserAddInput {
 
 /** 添加会员 */
 export interface UserAddMemberInput {
+  /**
+   * 会员Id
+   * @format int64
+   */
+  id?: number
   /**
    * 账号
    * @minLength 1
@@ -3765,6 +3863,8 @@ export interface UserStaffEntity {
    * @format date-time
    */
   entryTime?: string | null
+  /** 企业微信名片 */
+  workWeChatCard?: string | null
   /** 个人简介 */
   introduce?: string | null
 }

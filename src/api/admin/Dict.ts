@@ -11,23 +11,24 @@
 
 import { AxiosResponse } from 'axios'
 import {
-  DictionaryAddInput,
-  DictionaryUpdateInput,
-  PageInputDictionaryGetPageDto,
-  ResultOutputDictionaryGetOutput,
+  DictAddInput,
+  DictUpdateInput,
+  PageInputDictGetPageDto,
+  ResultOutputDictGetOutput,
+  ResultOutputDictionaryStringListDictGetListDto,
   ResultOutputInt64,
-  ResultOutputPageOutputDictionaryListOutput,
+  ResultOutputPageOutputDictGetPageOutput,
 } from './data-contracts'
 import { ContentType, HttpClient, RequestParams } from './http-client'
 
-export class DictionaryApi<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
+export class DictApi<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
    * No description
    *
-   * @tags dictionary
+   * @tags dict
    * @name Get
    * @summary 查询
-   * @request GET:/api/admin/dictionary/get
+   * @request GET:/api/admin/dict/get
    * @secure
    */
   get = (
@@ -37,8 +38,8 @@ export class DictionaryApi<SecurityDataType = unknown> extends HttpClient<Securi
     },
     params: RequestParams = {}
   ) =>
-    this.request<ResultOutputDictionaryGetOutput, any>({
-      path: `/api/admin/dictionary/get`,
+    this.request<ResultOutputDictGetOutput, any>({
+      path: `/api/admin/dict/get`,
       method: 'GET',
       query: query,
       secure: true,
@@ -48,15 +49,15 @@ export class DictionaryApi<SecurityDataType = unknown> extends HttpClient<Securi
   /**
    * No description
    *
-   * @tags dictionary
+   * @tags dict
    * @name GetPage
    * @summary 查询分页
-   * @request POST:/api/admin/dictionary/get-page
+   * @request POST:/api/admin/dict/get-page
    * @secure
    */
-  getPage = (data: PageInputDictionaryGetPageDto, params: RequestParams = {}) =>
-    this.request<ResultOutputPageOutputDictionaryListOutput, any>({
-      path: `/api/admin/dictionary/get-page`,
+  getPage = (data: PageInputDictGetPageDto, params: RequestParams = {}) =>
+    this.request<ResultOutputPageOutputDictGetPageOutput, any>({
+      path: `/api/admin/dict/get-page`,
       method: 'POST',
       body: data,
       secure: true,
@@ -67,15 +68,34 @@ export class DictionaryApi<SecurityDataType = unknown> extends HttpClient<Securi
   /**
    * No description
    *
-   * @tags dictionary
+   * @tags dict
+   * @name GetList
+   * @summary 查询列表
+   * @request POST:/api/admin/dict/get-list
+   * @secure
+   */
+  getList = (data: string[], params: RequestParams = {}) =>
+    this.request<ResultOutputDictionaryStringListDictGetListDto, any>({
+      path: `/api/admin/dict/get-list`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: 'json',
+      ...params,
+    })
+  /**
+   * No description
+   *
+   * @tags dict
    * @name Add
    * @summary 新增
-   * @request POST:/api/admin/dictionary/add
+   * @request POST:/api/admin/dict/add
    * @secure
    */
-  add = (data: DictionaryAddInput, params: RequestParams = {}) =>
+  add = (data: DictAddInput, params: RequestParams = {}) =>
     this.request<ResultOutputInt64, any>({
-      path: `/api/admin/dictionary/add`,
+      path: `/api/admin/dict/add`,
       method: 'POST',
       body: data,
       secure: true,
@@ -86,15 +106,15 @@ export class DictionaryApi<SecurityDataType = unknown> extends HttpClient<Securi
   /**
    * No description
    *
-   * @tags dictionary
+   * @tags dict
    * @name Update
    * @summary 修改
-   * @request PUT:/api/admin/dictionary/update
+   * @request PUT:/api/admin/dict/update
    * @secure
    */
-  update = (data: DictionaryUpdateInput, params: RequestParams = {}) =>
+  update = (data: DictUpdateInput, params: RequestParams = {}) =>
     this.request<AxiosResponse, any>({
-      path: `/api/admin/dictionary/update`,
+      path: `/api/admin/dict/update`,
       method: 'PUT',
       body: data,
       secure: true,
@@ -104,10 +124,10 @@ export class DictionaryApi<SecurityDataType = unknown> extends HttpClient<Securi
   /**
    * No description
    *
-   * @tags dictionary
+   * @tags dict
    * @name Delete
    * @summary 彻底删除
-   * @request DELETE:/api/admin/dictionary/delete
+   * @request DELETE:/api/admin/dict/delete
    * @secure
    */
   delete = (
@@ -118,7 +138,7 @@ export class DictionaryApi<SecurityDataType = unknown> extends HttpClient<Securi
     params: RequestParams = {}
   ) =>
     this.request<AxiosResponse, any>({
-      path: `/api/admin/dictionary/delete`,
+      path: `/api/admin/dict/delete`,
       method: 'DELETE',
       query: query,
       secure: true,
@@ -127,15 +147,15 @@ export class DictionaryApi<SecurityDataType = unknown> extends HttpClient<Securi
   /**
    * No description
    *
-   * @tags dictionary
+   * @tags dict
    * @name BatchDelete
    * @summary 批量彻底删除
-   * @request PUT:/api/admin/dictionary/batch-delete
+   * @request PUT:/api/admin/dict/batch-delete
    * @secure
    */
   batchDelete = (data: number[], params: RequestParams = {}) =>
     this.request<AxiosResponse, any>({
-      path: `/api/admin/dictionary/batch-delete`,
+      path: `/api/admin/dict/batch-delete`,
       method: 'PUT',
       body: data,
       secure: true,
@@ -145,10 +165,10 @@ export class DictionaryApi<SecurityDataType = unknown> extends HttpClient<Securi
   /**
    * No description
    *
-   * @tags dictionary
+   * @tags dict
    * @name SoftDelete
    * @summary 删除
-   * @request DELETE:/api/admin/dictionary/soft-delete
+   * @request DELETE:/api/admin/dict/soft-delete
    * @secure
    */
   softDelete = (
@@ -159,7 +179,7 @@ export class DictionaryApi<SecurityDataType = unknown> extends HttpClient<Securi
     params: RequestParams = {}
   ) =>
     this.request<AxiosResponse, any>({
-      path: `/api/admin/dictionary/soft-delete`,
+      path: `/api/admin/dict/soft-delete`,
       method: 'DELETE',
       query: query,
       secure: true,
@@ -168,15 +188,15 @@ export class DictionaryApi<SecurityDataType = unknown> extends HttpClient<Securi
   /**
    * No description
    *
-   * @tags dictionary
+   * @tags dict
    * @name BatchSoftDelete
    * @summary 批量删除
-   * @request PUT:/api/admin/dictionary/batch-soft-delete
+   * @request PUT:/api/admin/dict/batch-soft-delete
    * @secure
    */
   batchSoftDelete = (data: number[], params: RequestParams = {}) =>
     this.request<AxiosResponse, any>({
-      path: `/api/admin/dictionary/batch-soft-delete`,
+      path: `/api/admin/dict/batch-soft-delete`,
       method: 'PUT',
       body: data,
       secure: true,

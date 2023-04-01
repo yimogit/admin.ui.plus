@@ -131,6 +131,24 @@ export class UserApi<SecurityDataType = unknown> extends HttpClient<SecurityData
    * No description
    *
    * @tags user
+   * @name Update
+   * @summary 修改用户
+   * @request PUT:/api/admin/user/update
+   * @secure
+   */
+  update = (data: UserUpdateInput, params: RequestParams = {}) =>
+    this.request<AxiosResponse, any>({
+      path: `/api/admin/user/update`,
+      method: 'PUT',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    })
+  /**
+   * No description
+   *
+   * @tags user
    * @name AddMember
    * @summary 新增会员
    * @request POST:/api/admin/user/add-member
@@ -158,24 +176,6 @@ export class UserApi<SecurityDataType = unknown> extends HttpClient<SecurityData
   updateMember = (data: UserUpdateMemberInput, params: RequestParams = {}) =>
     this.request<AxiosResponse, any>({
       path: `/api/admin/user/update-member`,
-      method: 'PUT',
-      body: data,
-      secure: true,
-      type: ContentType.Json,
-      ...params,
-    })
-  /**
-   * No description
-   *
-   * @tags user
-   * @name Update
-   * @summary 修改用户
-   * @request PUT:/api/admin/user/update
-   * @secure
-   */
-  update = (data: UserUpdateInput, params: RequestParams = {}) =>
-    this.request<AxiosResponse, any>({
-      path: `/api/admin/user/update`,
       method: 'PUT',
       body: data,
       secure: true,
