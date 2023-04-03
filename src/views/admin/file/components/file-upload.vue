@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog v-model="state.showDialog" :title="title" draggable width="600px">
+    <el-dialog v-model="state.showDialog" :title="title" draggable :close-on-click-modal="false" :close-on-press-escape="false" width="600px">
       <div class="mb15">
         <el-row :gutter="35">
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">

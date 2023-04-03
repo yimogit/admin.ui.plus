@@ -1,6 +1,14 @@
 <template>
   <div>
-    <el-dialog v-model="state.showDialog" destroy-on-close :title="title" draggable width="600px">
+    <el-dialog
+      v-model="state.showDialog"
+      destroy-on-close
+      :title="title"
+      draggable
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      width="600px"
+    >
       <el-form :model="form" ref="formRef" size="default" label-width="80px">
         <el-row :gutter="35">
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">

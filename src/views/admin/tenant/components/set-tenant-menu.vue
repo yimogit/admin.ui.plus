@@ -1,5 +1,14 @@
 <template>
-  <el-dialog v-model="state.showDialog" destroy-on-close :title="innerTitle" append-to-body draggable width="780px">
+  <el-dialog
+    v-model="state.showDialog"
+    destroy-on-close
+    :title="innerTitle"
+    append-to-body
+    draggable
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+    width="780px"
+  >
     <div>
       <el-tree
         ref="permissionTreeRef"
