@@ -34,7 +34,6 @@
                 :data="state.apiTreeData"
                 node-key="id"
                 :props="{ label: 'path' }"
-                default-expand-all
                 render-after-expand
                 fit-input-width
                 clearable
@@ -44,6 +43,7 @@
                 collapse-tags-tooltip
                 :filter-node-method="onApiFilterNode"
                 class="w100"
+                :default-expanded-keys="state.expandRowKeys"
                 @current-change="onApiCurrentChange"
               >
                 <template #default="{ data }">
@@ -99,9 +99,9 @@ import { reactive, toRefs, getCurrentInstance, ref, PropType } from 'vue'
 import { PermissionListOutput, PermissionUpdateDotInput, ApiListOutput } from '/@/api/admin/data-contracts'
 import { PermissionApi } from '/@/api/admin/Permission'
 import { ApiApi } from '/@/api/admin/Api'
-import { listToTree } from '/@/utils/tree'
+import { listToTree, treeToList } from '/@/utils/tree'
 import eventBus from '/@/utils/mitt'
-import { trimStart, replace } from 'lodash-es'
+import { trimStart, replace, cloneDeep } from 'lodash-es'
 
 defineProps({
   title: {
@@ -122,6 +122,7 @@ const state = reactive({
   sureLoading: false,
   form: { enabled: true } as PermissionUpdateDotInput,
   apiTreeData: [] as ApiListOutput[],
+  expandRowKeys: [] as number[],
 })
 
 const { form } = toRefs(state)
@@ -140,6 +141,10 @@ const open = async (row: any = {}) => {
   proxy.$modal.loading()
 
   await getApis()
+
+  state.expandRowKeys = treeToList(cloneDeep(state.apiTreeData))
+    .filter((a: ApiListOutput) => a.parentId === 0)
+    .map((a: ApiListOutput) => a.id) as number[]
 
   if (row.id > 0) {
     const res = await new PermissionApi().getDot({ id: row.id }).catch(() => {

@@ -375,6 +375,8 @@ export interface DictAddInput {
 export interface DictGetListDto {
   /** 字典类型编码 */
   dictTypeCode?: string | null
+  /** 字典类型名称 */
+  dictTypeName?: string | null
   /**
    * 主键Id
    * @format int64
@@ -1334,6 +1336,22 @@ export interface PageInputLogGetPageDto {
 }
 
 /** 分页信息输入 */
+export interface PageInputPkgGetPageDto {
+  /**
+   * 当前页标
+   * @format int32
+   */
+  currentPage?: number
+  /**
+   * 每页大小
+   * @format int32
+   */
+  pageSize?: number
+  dynamicFilter?: DynamicFilterInfo
+  filter?: PkgGetPageDto
+}
+
+/** 分页信息输入 */
 export interface PageInputRoleGetPageDto {
   /**
    * 当前页标
@@ -1478,6 +1496,17 @@ export interface PageOutputOprationLogListOutput {
   total?: number
   /** 数据 */
   list?: OprationLogListOutput[] | null
+}
+
+/** 分页信息输出 */
+export interface PageOutputPkgGetPageOutput {
+  /**
+   * 数据总数
+   * @format int64
+   */
+  total?: number
+  /** 数据 */
+  list?: PkgGetPageOutput[] | null
 }
 
 /** 分页信息输出 */
@@ -2132,6 +2161,160 @@ export interface PermissionUpdateMenuInput {
   id: number
 }
 
+/** 添加 */
+export interface PkgAddInput {
+  /**
+   * 父级Id
+   * @format int64
+   */
+  parentId?: number
+  /** 名称 */
+  name?: string | null
+  /** 编码 */
+  code?: string | null
+  /** 说明 */
+  description?: string | null
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
+  /** 启用 */
+  enabled?: boolean
+}
+
+/** 添加套餐租户列表 */
+export interface PkgAddPkgTenantListInput {
+  /**
+   * 套餐
+   * @format int64
+   */
+  pkgId: number
+  /** 租户列表 */
+  tenantIds?: number[] | null
+}
+
+export interface PkgGetListOutput {
+  /**
+   * 主键
+   * @format int64
+   */
+  id?: number
+  /**
+   * 父级Id
+   * @format int64
+   */
+  parentId?: number
+  /** 名称 */
+  name?: string | null
+  /** 编码 */
+  code?: string | null
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
+  /** 描述 */
+  description?: string | null
+}
+
+export interface PkgGetOutput {
+  /**
+   * 父级Id
+   * @format int64
+   */
+  parentId?: number
+  /** 名称 */
+  name?: string | null
+  /** 编码 */
+  code?: string | null
+  /** 说明 */
+  description?: string | null
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
+  /** 启用 */
+  enabled?: boolean
+  /**
+   * 套餐Id
+   * @format int64
+   */
+  id: number
+}
+
+export interface PkgGetPageDto {
+  /** 名称 */
+  name?: string | null
+}
+
+export interface PkgGetPageOutput {
+  /**
+   * 主键
+   * @format int64
+   */
+  id?: number
+  /** 名称 */
+  name?: string | null
+  /** 编码 */
+  code?: string | null
+  /** 说明 */
+  description?: string | null
+  /** 启用 */
+  enabled?: boolean
+  /**
+   * 创建时间
+   * @format date-time
+   */
+  createdTime?: string | null
+}
+
+export interface PkgGetPkgTenantListOutput {
+  /**
+   * 主键Id
+   * @format int64
+   */
+  id?: number
+  /** 租户名 */
+  name?: string | null
+  /** 租户编码 */
+  code?: string | null
+}
+
+export interface PkgSetPkgPermissionsInput {
+  /** @format int64 */
+  pkgId: number
+  permissionIds: number[]
+}
+
+/** 修改 */
+export interface PkgUpdateInput {
+  /**
+   * 父级Id
+   * @format int64
+   */
+  parentId?: number
+  /** 名称 */
+  name?: string | null
+  /** 编码 */
+  code?: string | null
+  /** 说明 */
+  description?: string | null
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
+  /** 启用 */
+  enabled?: boolean
+  /**
+   * 套餐Id
+   * @format int64
+   */
+  id: number
+}
+
 /** 结果输出 */
 export interface ResultOutputApiGetOutput {
   /** 是否成功标记 */
@@ -2426,6 +2609,30 @@ export interface ResultOutputListPermissionListOutput {
 }
 
 /** 结果输出 */
+export interface ResultOutputListPkgGetListOutput {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  /** 数据 */
+  data?: PkgGetListOutput[] | null
+}
+
+/** 结果输出 */
+export interface ResultOutputListPkgGetPkgTenantListOutput {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  /** 数据 */
+  data?: PkgGetPkgTenantListOutput[] | null
+}
+
+/** 结果输出 */
 export interface ResultOutputListRoleGetListOutput {
   /** 是否成功标记 */
   success?: boolean
@@ -2438,6 +2645,18 @@ export interface ResultOutputListRoleGetListOutput {
 }
 
 /** 结果输出 */
+export interface ResultOutputListRoleGetRoleUserListOutput {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  /** 数据 */
+  data?: RoleGetRoleUserListOutput[] | null
+}
+
+/** 结果输出 */
 export interface ResultOutputListString {
   /** 是否成功标记 */
   success?: boolean
@@ -2447,18 +2666,6 @@ export interface ResultOutputListString {
   msg?: string | null
   /** 数据 */
   data?: string[] | null
-}
-
-/** 结果输出 */
-export interface ResultOutputListUserGetRoleUserListOutput {
-  /** 是否成功标记 */
-  success?: boolean
-  /** 编码 */
-  code?: string | null
-  /** 消息 */
-  msg?: string | null
-  /** 数据 */
-  data?: UserGetRoleUserListOutput[] | null
 }
 
 /** 结果输出 */
@@ -2569,6 +2776,18 @@ export interface ResultOutputPageOutputOprationLogListOutput {
 }
 
 /** 结果输出 */
+export interface ResultOutputPageOutputPkgGetPageOutput {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  /** 分页信息输出 */
+  data?: PageOutputPkgGetPageOutput
+}
+
+/** 结果输出 */
 export interface ResultOutputPageOutputRoleGetPageOutput {
   /** 是否成功标记 */
   success?: boolean
@@ -2670,6 +2889,17 @@ export interface ResultOutputPermissionGetMenuOutput {
   /** 消息 */
   msg?: string | null
   data?: PermissionGetMenuOutput
+}
+
+/** 结果输出 */
+export interface ResultOutputPkgGetOutput {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  data?: PkgGetOutput
 }
 
 /** 结果输出 */
@@ -2958,6 +3188,18 @@ export interface RoleGetPageOutput {
    * @format date-time
    */
   createdTime?: string | null
+}
+
+export interface RoleGetRoleUserListOutput {
+  /**
+   * 主键Id
+   * @format int64
+   */
+  id?: number
+  /** 姓名 */
+  name?: string | null
+  /** 手机号 */
+  mobile?: string | null
 }
 
 /** 设置数据范围 */
@@ -3751,18 +3993,6 @@ export interface UserGetRoleDto {
   /** @format int64 */
   id?: number
   name?: string | null
-}
-
-export interface UserGetRoleUserListOutput {
-  /**
-   * 主键Id
-   * @format int64
-   */
-  id?: number
-  /** 姓名 */
-  name?: string | null
-  /** 手机号 */
-  mobile?: string | null
 }
 
 export interface UserPermissionsOutput {

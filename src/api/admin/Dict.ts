@@ -88,6 +88,25 @@ export class DictApi<SecurityDataType = unknown> extends HttpClient<SecurityData
    * No description
    *
    * @tags dict
+   * @name GetListByNames
+   * @summary 根据字典类型名称列表查询字典列表
+   * @request POST:/api/admin/dict/get-list-by-names
+   * @secure
+   */
+  getListByNames = (data: string[], params: RequestParams = {}) =>
+    this.request<ResultOutputDictionaryStringListDictGetListDto, any>({
+      path: `/api/admin/dict/get-list-by-names`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: 'json',
+      ...params,
+    })
+  /**
+   * No description
+   *
+   * @tags dict
    * @name Add
    * @summary 新增
    * @request POST:/api/admin/dict/add

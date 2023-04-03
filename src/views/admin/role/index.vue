@@ -105,7 +105,13 @@
     </pane>
 
     <role-form ref="roleFormRef" :title="state.roleFormTitle" :role-tree-data="state.roleFormTreeData"></role-form>
-    <user-select ref="userSelectRef" title="添加员工" multiple :sure-loading="state.sureLoading" @sure="onSureUser"></user-select>
+    <user-select
+      ref="userSelectRef"
+      :title="`添加【${state.roleName}】员工`"
+      multiple
+      :sure-loading="state.sureLoading"
+      @sure="onSureUser"
+    ></user-select>
     <set-role-menu ref="setRoleMenuRef"></set-role-menu>
     <set-role-data-scope ref="setRoleDataScopeRef"></set-role-data-scope>
   </my-layout>
@@ -113,7 +119,7 @@
 
 <script lang="ts" setup name="admin/role">
 import { ref, reactive, onMounted, getCurrentInstance, onBeforeMount, nextTick, defineAsyncComponent } from 'vue'
-import { RoleGetListOutput, UserGetRoleUserListOutput, UserGetPageOutput, RoleAddRoleUserListInput, RoleType } from '/@/api/admin/data-contracts'
+import { RoleGetListOutput, RoleGetRoleUserListOutput, UserGetPageOutput, RoleAddRoleUserListInput, RoleType } from '/@/api/admin/data-contracts'
 import { RoleApi } from '/@/api/admin/Role'
 import { listToTree, filterTree } from '/@/utils/tree'
 import { ElTable } from 'element-plus'
@@ -150,8 +156,9 @@ const state = reactive({
   },
   roleTreeData: [] as any,
   roleFormTreeData: [] as any,
-  userListData: [] as UserGetRoleUserListOutput[],
+  userListData: [] as RoleGetRoleUserListOutput[],
   roleId: undefined as number | undefined,
+  roleName: '' as string | null | undefined,
 })
 
 onMounted(() => {
@@ -254,11 +261,12 @@ const onCurrentChange = (currentRow: RoleGetListOutput, oldCurrentRow: RoleGetLi
 
   if ((currentRow?.parentId as number) !== 0 && (oldCurrentRow?.parentId as number) !== 0 && (currentRow?.id as number) > 0) {
     state.roleId = currentRow.id
+    state.roleName = currentRow.name
     onGetRoleUserList()
   }
 }
 
-const onUserRowClick = (row: UserGetRoleUserListOutput) => {
+const onUserRowClick = (row: RoleGetRoleUserListOutput) => {
   // TODO: improvement typing when refactor table
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
