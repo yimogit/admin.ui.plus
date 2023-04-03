@@ -209,7 +209,7 @@ const getRoles = async () => {
 }
 
 // 打开对话框
-const open = async (row: any = {}) => {
+const open = async (row: UserUpdateInput & UserUpdateInput) => {
   proxy.$modal.loading()
 
   await getOrgs()
@@ -225,8 +225,9 @@ const open = async (row: any = {}) => {
     }
   } else {
     state.form = {
-      orgIds: [] as any,
-      roleIds: [] as any,
+      orgIds: row.orgIds,
+      orgId: row.orgId,
+      roleIds: [] as number[],
       staff: {},
     } as UserAddInput & UserUpdateInput
   }

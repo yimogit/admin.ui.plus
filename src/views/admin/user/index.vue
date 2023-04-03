@@ -180,7 +180,10 @@ const onQuery = async () => {
 
 const onAdd = () => {
   state.userFormTitle = '新增用户'
-  userFormRef.value.open()
+  userFormRef.value.open({
+    orgIds: state.pageInput.filter?.orgId && state.pageInput.filter.orgId > 0 ? [state.pageInput.filter?.orgId] : [],
+    orgId: state.pageInput.filter?.orgId,
+  })
 }
 
 const onEdit = (row: UserGetPageOutput) => {
