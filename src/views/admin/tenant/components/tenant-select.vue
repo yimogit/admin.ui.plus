@@ -11,9 +11,9 @@
   >
     <div style="padding: 0px 0px 8px 8px; background-color: var(--ba-bg-color)">
       <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-        <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
-          <el-form-item label="租户名" prop="name">
-            <el-input v-model="state.filterModel.name" placeholder="租户名" @keyup.enter="onQuery" />
+        <el-form :model="state.filter" :inline="true" @submit.stop.prevent>
+          <el-form-item label="企业名" prop="name">
+            <el-input v-model="state.filter.name" placeholder="企业名" @keyup.enter="onQuery" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
@@ -35,8 +35,8 @@
           @row-dblclick="onRowDbClick"
         >
           <el-table-column v-if="multiple" type="selection" width="55" />
-          <el-table-column prop="name" label="租户名" min-width="80" show-overflow-tooltip />
-          <el-table-column prop="code" label="租户编码" min-width="120" show-overflow-tooltip />
+          <el-table-column prop="name" label="企业名" min-width="80" show-overflow-tooltip />
+          <el-table-column prop="code" label="企业编码" min-width="120" show-overflow-tooltip />
           <!-- <el-table-column prop="email" label="邮箱" min-width="120" show-overflow-tooltip /> -->
         </el-table>
         <div class="my-flex my-flex-end" style="margin-top: 20px">
@@ -91,13 +91,16 @@ const tenantTableRef = ref<InstanceType<typeof ElTable>>()
 const state = reactive({
   showDialog: false,
   loading: false,
-  filterModel: {
+  filter: {
     name: '',
   },
   total: 0,
   pageInput: {
     currentPage: 1,
     pageSize: 20,
+    filter: {
+      name: '',
+    },
   } as PageInputTenantGetPageDto,
   tenantListData: [] as Array<TenantListOutput>,
 })
@@ -116,6 +119,7 @@ const close = () => {
 
 const onQuery = async () => {
   state.loading = true
+  state.pageInput.filter = state.filter
   const res = await new TenantApi().getPage(state.pageInput).catch(() => {
     state.loading = false
   })

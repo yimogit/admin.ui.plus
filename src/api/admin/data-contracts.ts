@@ -1352,6 +1352,22 @@ export interface PageInputPkgGetPageDto {
 }
 
 /** 分页信息输入 */
+export interface PageInputPkgGetPkgTenantListInput {
+  /**
+   * 当前页标
+   * @format int32
+   */
+  currentPage?: number
+  /**
+   * 每页大小
+   * @format int32
+   */
+  pageSize?: number
+  dynamicFilter?: DynamicFilterInfo
+  filter?: PkgGetPkgTenantListInput
+}
+
+/** 分页信息输入 */
 export interface PageInputRoleGetPageDto {
   /**
    * 当前页标
@@ -1507,6 +1523,17 @@ export interface PageOutputPkgGetPageOutput {
   total?: number
   /** 数据 */
   list?: PkgGetPageOutput[] | null
+}
+
+/** 分页信息输出 */
+export interface PageOutputPkgGetPkgTenantListOutput {
+  /**
+   * 数据总数
+   * @format int64
+   */
+  total?: number
+  /** 数据 */
+  list?: PkgGetPkgTenantListOutput[] | null
 }
 
 /** 分页信息输出 */
@@ -2216,6 +2243,13 @@ export interface PkgGetListOutput {
   sort?: number
   /** 描述 */
   description?: string | null
+  /** 启用 */
+  enabled?: boolean
+  /**
+   * 创建时间
+   * @format date-time
+   */
+  createdTime?: string | null
 }
 
 export interface PkgGetOutput {
@@ -2261,6 +2295,11 @@ export interface PkgGetPageOutput {
   code?: string | null
   /** 说明 */
   description?: string | null
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
   /** 启用 */
   enabled?: boolean
   /**
@@ -2268,6 +2307,16 @@ export interface PkgGetPageOutput {
    * @format date-time
    */
   createdTime?: string | null
+}
+
+export interface PkgGetPkgTenantListInput {
+  /** 租户名 */
+  tenantName?: string | null
+  /**
+   * 套餐Id
+   * @format int64
+   */
+  pkgId?: number | null
 }
 
 export interface PkgGetPkgTenantListOutput {
@@ -2785,6 +2834,18 @@ export interface ResultOutputPageOutputPkgGetPageOutput {
   msg?: string | null
   /** 分页信息输出 */
   data?: PageOutputPkgGetPageOutput
+}
+
+/** 结果输出 */
+export interface ResultOutputPageOutputPkgGetPkgTenantListOutput {
+  /** 是否成功标记 */
+  success?: boolean
+  /** 编码 */
+  code?: string | null
+  /** 消息 */
+  msg?: string | null
+  /** 分页信息输出 */
+  data?: PageOutputPkgGetPkgTenantListOutput
 }
 
 /** 结果输出 */

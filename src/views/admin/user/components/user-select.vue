@@ -18,9 +18,9 @@
         </el-col>
         <el-col :xs="24" :sm="15">
           <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
-            <el-form :model="state.filterModel" :inline="true" @submit.stop.prevent>
+            <el-form :model="state.filter" :inline="true" @submit.stop.prevent>
               <el-form-item label="姓名" prop="name">
-                <el-input v-model="state.filterModel.name" placeholder="姓名" @keyup.enter="onQuery" />
+                <el-input v-model="state.filter.name" placeholder="姓名" @keyup.enter="onQuery" />
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
@@ -103,7 +103,7 @@ const userTableRef = ref<InstanceType<typeof ElTable>>()
 const state = reactive({
   showDialog: false,
   loading: false,
-  filterModel: {
+  filter: {
     name: '',
   },
   total: 0,
@@ -134,6 +134,11 @@ const close = () => {
 
 const onQuery = async () => {
   state.loading = true
+  state.pageInput.dynamicFilter = {
+    field: 'name',
+    operator: 0,
+    value: state.filter.name,
+  }
   const res = await new UserApi().getPage(state.pageInput).catch(() => {
     state.loading = false
   })

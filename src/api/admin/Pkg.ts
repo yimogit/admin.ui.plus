@@ -12,6 +12,7 @@
 import { AxiosResponse } from 'axios'
 import {
   PageInputPkgGetPageDto,
+  PageInputPkgGetPkgTenantListInput,
   PkgAddInput,
   PkgAddPkgTenantListInput,
   PkgSetPkgPermissionsInput,
@@ -21,6 +22,7 @@ import {
   ResultOutputListPkgGetListOutput,
   ResultOutputListPkgGetPkgTenantListOutput,
   ResultOutputPageOutputPkgGetPageOutput,
+  ResultOutputPageOutputPkgGetPkgTenantListOutput,
   ResultOutputPkgGetOutput,
 } from './data-contracts'
 import { ContentType, HttpClient, RequestParams } from './http-client'
@@ -126,6 +128,25 @@ export class PkgApi<SecurityDataType = unknown> extends HttpClient<SecurityDataT
    * No description
    *
    * @tags pkg
+   * @name GetPkgTenantPage
+   * @summary 查询套餐租户分页
+   * @request POST:/api/admin/pkg/get-pkg-tenant-page
+   * @secure
+   */
+  getPkgTenantPage = (data: PageInputPkgGetPkgTenantListInput, params: RequestParams = {}) =>
+    this.request<ResultOutputPageOutputPkgGetPkgTenantListOutput, any>({
+      path: `/api/admin/pkg/get-pkg-tenant-page`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: 'json',
+      ...params,
+    })
+  /**
+   * No description
+   *
+   * @tags pkg
    * @name GetPkgPermissionList
    * @summary 查询套餐权限列表
    * @request GET:/api/admin/pkg/get-pkg-permission-list
@@ -208,7 +229,7 @@ export class PkgApi<SecurityDataType = unknown> extends HttpClient<SecurityDataT
    *
    * @tags pkg
    * @name Add
-   * @summary 添加
+   * @summary 新增
    * @request POST:/api/admin/pkg/add
    * @secure
    */

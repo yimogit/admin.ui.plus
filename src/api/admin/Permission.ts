@@ -161,7 +161,7 @@ export class PermissionApi<SecurityDataType = unknown> extends HttpClient<Securi
    *
    * @tags permission
    * @name GetPermissionList
-   * @summary 查询角色权限-权限列表
+   * @summary 查询授权权限列表
    * @request GET:/api/admin/permission/get-permission-list
    * @secure
    */

@@ -162,7 +162,7 @@ export class RoleApi<SecurityDataType = unknown> extends HttpClient<SecurityData
    *
    * @tags role
    * @name Add
-   * @summary 添加
+   * @summary 新增
    * @request POST:/api/admin/role/add
    * @secure
    */

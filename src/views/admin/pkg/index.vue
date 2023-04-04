@@ -4,8 +4,8 @@
       <div class="my-flex-column w100 h100">
         <el-card class="mt8" shadow="never" :body-style="{ paddingBottom: '0' }">
           <el-form :inline="true" @submit.stop.prevent>
-            <el-form-item label="套餐名称">
-              <el-input v-model="state.filter.pkgName" placeholder="套餐名称" @keyup.enter="onQuery" />
+            <el-form-item label="套餐名">
+              <el-input v-model="state.filter.pkgName" placeholder="套餐名" @keyup.enter="onQuery" />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
@@ -18,15 +18,13 @@
           <el-table
             ref="pkgTableRef"
             v-loading="state.loading"
-            :data="state.pkgTreeData"
-            row-key="id"
+            :data="state.pkgData"
             default-expand-all
-            :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
             highlight-current-row
             style="width: 100%"
-            @current-change="onCurrentChange"
+            @current-change="onTableCurrentChange"
           >
-            <el-table-column prop="name" label="套餐名称" min-width="120" show-overflow-tooltip />
+            <el-table-column prop="name" label="套餐名" min-width="120" show-overflow-tooltip />
             <el-table-column prop="sort" label="排序" width="80" align="center" show-overflow-tooltip />
             <el-table-column label="操作" width="100" fixed="right" header-align="center" align="center">
               <template #default="{ row }">
@@ -45,6 +43,19 @@
               </template>
             </el-table-column>
           </el-table>
+          <div class="my-flex my-flex-end" style="margin-top: 20px">
+            <el-pagination
+              v-model:currentPage="state.pageInput.currentPage"
+              v-model:page-size="state.pageInput.pageSize"
+              :total="state.total"
+              :page-sizes="[10, 20, 50, 100]"
+              small
+              background
+              @size-change="onSizeChange"
+              @current-change="onCurrentChange"
+              layout="total, sizes, prev, pager, next, jumper"
+            />
+          </div>
         </el-card>
       </div>
     </pane>
@@ -52,13 +63,13 @@
       <div class="my-flex-column w100 h100">
         <el-card class="mt8" shadow="never" :body-style="{ paddingBottom: '0' }">
           <el-form :inline="true" @submit.stop.prevent>
-            <el-form-item label="租户名">
-              <el-input v-model="state.filter.name" placeholder="租户名" @keyup.enter="onGetPkgTenantList" />
+            <el-form-item label="企业名">
+              <el-input v-model="state.filter.name" placeholder="企业名" @keyup.enter="onGetPkgTenantList" />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="ele-Search" @click="onGetPkgTenantList"> 查询 </el-button>
-              <el-button v-auth="'api:admin:pkg:add-pkg-tenant'" type="primary" icon="ele-Plus" @click="onAddTenant"> 添加租户 </el-button>
-              <el-button v-auth="'api:admin:pkg:remove-pkg-tenant'" type="danger" icon="ele-Delete" @click="onRemoveTenant"> 移除租户 </el-button>
+              <el-button v-auth="'api:admin:pkg:add-pkg-tenant'" type="primary" icon="ele-Plus" @click="onAddTenant"> 添加企业 </el-button>
+              <el-button v-auth="'api:admin:pkg:remove-pkg-tenant'" type="danger" icon="ele-Delete" @click="onRemoveTenant"> 移除企业 </el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -67,23 +78,36 @@
           <el-table
             ref="tenantTableRef"
             v-loading="state.tenantListLoading"
-            :data="state.tenantListData"
+            :data="state.tenantData"
             row-key="id"
             style="width: 100%"
             @row-click="onTenantRowClick"
           >
             <el-table-column type="selection" width="55" />
-            <el-table-column prop="name" label="租户名" min-width="120" show-overflow-tooltip />
-            <el-table-column prop="code" label="租户编码" min-width="120" show-overflow-tooltip />
+            <el-table-column prop="name" label="企业名" min-width="120" show-overflow-tooltip />
+            <el-table-column prop="code" label="企业编码" min-width="120" show-overflow-tooltip />
           </el-table>
+          <div class="my-flex my-flex-end" style="margin-top: 20px">
+            <el-pagination
+              v-model:currentPage="state.pageInput.currentPage"
+              v-model:page-size="state.pageInput.pageSize"
+              :total="state.tenantTotal"
+              :page-sizes="[10, 20, 50, 100]"
+              small
+              background
+              @size-change="onTenantSizeChange"
+              @current-change="onTenantCurrentChange"
+              layout="total, sizes, prev, pager, next, jumper"
+            />
+          </div>
         </el-card>
       </div>
     </pane>
 
-    <pkg-form ref="pkgFormRef" :title="state.pkgFormTitle" :pkg-tree-data="state.pkgFormTreeData"></pkg-form>
+    <pkg-form ref="pkgFormRef" :title="state.pkgFormTitle"></pkg-form>
     <tenant-select
       ref="tenantSelectRef"
-      :title="`添加【${state.pkgName}】租户`"
+      :title="`添加【${state.pkgName}】企业`"
       multiple
       :sure-loading="state.sureLoading"
       @sure="onSureTenant"
@@ -94,11 +118,15 @@
 
 <script lang="ts" setup name="admin/pkg">
 import { ref, reactive, onMounted, getCurrentInstance, onBeforeMount, nextTick, defineAsyncComponent } from 'vue'
-import { PkgGetListOutput, PkgGetPkgTenantListOutput, PkgGetPageOutput, PkgAddPkgTenantListInput } from '/@/api/admin/data-contracts'
+import {
+  PageInputPkgGetPageDto,
+  PkgGetPkgTenantListOutput,
+  PkgGetPageOutput,
+  PkgAddPkgTenantListInput,
+  PageInputPkgGetPkgTenantListInput,
+} from '/@/api/admin/data-contracts'
 import { PkgApi } from '/@/api/admin/Pkg'
-import { listToTree, filterTree } from '/@/utils/tree'
 import { ElTable } from 'element-plus'
-import { cloneDeep } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
 import { auth } from '/@/utils/authFunction'
 import { Pane } from 'splitpanes'
@@ -127,9 +155,25 @@ const state = reactive({
     name: '',
     pkgName: '',
   },
-  pkgTreeData: [] as any,
-  pkgFormTreeData: [] as any,
-  tenantListData: [] as PkgGetPkgTenantListOutput[],
+  total: 0,
+  pageInput: {
+    currentPage: 1,
+    pageSize: 20,
+    filter: {
+      name: '',
+    },
+  } as PageInputPkgGetPageDto,
+  pkgData: [] as any,
+  tenantPageInput: {
+    currentPage: 1,
+    pageSize: 20,
+    filter: {
+      pkgId: null,
+      tenantName: '',
+    },
+  } as PageInputPkgGetPkgTenantListInput,
+  tenantData: [] as PkgGetPkgTenantListOutput[],
+  tenantTotal: 0,
   pkgId: undefined as number | undefined,
   pkgName: '' as string | null | undefined,
 })
@@ -148,36 +192,52 @@ onBeforeMount(() => {
 
 const onQuery = async () => {
   state.loading = true
-  const res = await new PkgApi().getList().catch(() => {
+  if (state.pageInput.filter) state.pageInput.filter.name = state.filter.pkgName
+  const res = await new PkgApi().getPage(state.pageInput).catch(() => {
     state.loading = false
   })
-  if (res && res.data && res.data.length > 0) {
-    state.pkgTreeData = filterTree(listToTree(cloneDeep(res.data)), state.filter.pkgName)
-    state.pkgFormTreeData = listToTree(cloneDeep(res.data).filter((a) => a.parentId === 0))
-    if (state.pkgTreeData.length > 0) {
-      nextTick(() => {
-        pkgTableRef.value!.setCurrentRow(state.pkgTreeData[0])
-      })
-    }
-  } else {
-    state.pkgTreeData = []
-    state.pkgFormTreeData = []
-  }
+
+  state.pkgData = res?.data?.list ?? []
+  state.total = res?.data?.total ?? 0
+
+  nextTick(() => {
+    pkgTableRef.value!.setCurrentRow(state.pkgData[0])
+  })
 
   state.loading = false
 }
 
-const onAdd = (row: PkgGetListOutput | undefined = undefined) => {
-  state.pkgFormTitle = '新增套餐'
-  pkgFormRef.value.open({ parentId: row?.id })
+const onSizeChange = (val: number) => {
+  state.pageInput.pageSize = val
+  onQuery()
 }
 
-const onEdit = (row: PkgGetListOutput) => {
+const onCurrentChange = (val: number) => {
+  state.pageInput.currentPage = val
+  onQuery()
+}
+
+const onTableCurrentChange = (currentRow: PkgGetPageOutput) => {
+  if (!currentRow) {
+    return
+  }
+
+  state.pkgId = currentRow.id
+  state.pkgName = currentRow.name
+  onGetPkgTenantList()
+}
+
+const onAdd = () => {
+  state.pkgFormTitle = '新增套餐'
+  pkgFormRef.value.open({ enabled: true })
+}
+
+const onEdit = (row: PkgGetPageOutput) => {
   state.pkgFormTitle = '编辑套餐'
   pkgFormRef.value.open(row)
 }
 
-const onDelete = (row: PkgGetListOutput) => {
+const onDelete = (row: PkgGetPageOutput) => {
   proxy.$modal
     .confirmDelete(`确定要删除套餐【${row.name}】?`)
     .then(async () => {
@@ -189,26 +249,24 @@ const onDelete = (row: PkgGetListOutput) => {
 
 const onGetPkgTenantList = async () => {
   state.tenantListLoading = true
-  const res = await new PkgApi().getPkgTenantList({ PkgId: state.pkgId, TenantName: state.filter.name }).catch(() => {
+  state.tenantPageInput.filter = { pkgId: state.pkgId, tenantName: state.filter.name }
+  const res = await new PkgApi().getPkgTenantPage(state.tenantPageInput).catch(() => {
     state.tenantListLoading = false
   })
   state.tenantListLoading = false
   if (res?.success) {
-    if (res.data && res.data.length > 0) {
-      state.tenantListData = res.data
-    } else {
-      state.tenantListData = []
-    }
+    state.tenantData = res?.data?.list ?? []
+    state.tenantTotal = res?.data?.total ?? 0
   }
 }
 
-const onCurrentChange = (currentRow: PkgGetListOutput) => {
-  if (!currentRow) {
-    return
-  }
+const onTenantSizeChange = (val: number) => {
+  state.tenantPageInput.pageSize = val
+  onGetPkgTenantList()
+}
 
-  state.pkgId = currentRow.id
-  state.pkgName = currentRow.name
+const onTenantCurrentChange = (val: number) => {
+  state.tenantPageInput.currentPage = val
   onGetPkgTenantList()
 }
 
@@ -268,7 +326,7 @@ const onSureTenant = async (tenants: PkgGetPageOutput[]) => {
   onGetPkgTenantList()
 }
 
-const onSetPkgMenu = (pkg: PkgGetListOutput) => {
+const onSetPkgMenu = (pkg: PkgGetPageOutput) => {
   if (!((pkg?.id as number) > 0)) {
     proxy.$modal.msgWarning('请选择套餐')
     return
