@@ -45,6 +45,7 @@
                 multiple
                 collapse-tags
                 collapse-tags-tooltip
+                filterable
                 class="w100"
               />
             </el-form-item>
@@ -92,6 +93,7 @@
                 multiple
                 collapse-tags
                 collapse-tags-tooltip
+                filterable
                 class="w100"
               />
             </el-form-item>

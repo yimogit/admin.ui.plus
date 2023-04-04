@@ -2221,6 +2221,71 @@ export interface PkgAddPkgTenantListInput {
   tenantIds?: number[] | null
 }
 
+/** 套餐 */
+export interface PkgEntity {
+  /**
+   * 主键Id
+   * @format int64
+   */
+  id?: number
+  /**
+   * 创建者Id
+   * @format int64
+   */
+  createdUserId?: number | null
+  /**
+   * 创建者
+   * @maxLength 50
+   */
+  createdUserName?: string | null
+  /**
+   * 创建时间
+   * @format date-time
+   */
+  createdTime?: string | null
+  /**
+   * 修改者Id
+   * @format int64
+   */
+  modifiedUserId?: number | null
+  /**
+   * 修改者
+   * @maxLength 50
+   */
+  modifiedUserName?: string | null
+  /**
+   * 修改时间
+   * @format date-time
+   */
+  modifiedTime?: string | null
+  /** 是否删除 */
+  isDeleted?: boolean
+  /**
+   * 父级Id
+   * @format int64
+   */
+  parentId?: number
+  /** 子级列表 */
+  childs?: PkgEntity[] | null
+  /** 名称 */
+  name?: string | null
+  /** 编码 */
+  code?: string | null
+  /** 说明 */
+  description?: string | null
+  /** 启用 */
+  enabled?: boolean
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number
+  /** 租户列表 */
+  tenants?: TenantEntity[] | null
+  /** 权限列表 */
+  permissions?: PermissionEntity[] | null
+}
+
 export interface PkgGetListOutput {
   /**
    * 主键
@@ -3526,6 +3591,8 @@ export interface TenantAddInput {
    * @minLength 1
    */
   code: string
+  /** 套餐Ids */
+  pkgIds?: number[] | null
   /**
    * 姓名
    * @minLength 1
@@ -3617,6 +3684,8 @@ export interface TenantEntity {
   enabled?: boolean
   /** 说明 */
   description?: string | null
+  /** 套餐列表 */
+  pkgs?: PkgEntity[] | null
 }
 
 export interface TenantGetOutput {
@@ -3659,6 +3728,10 @@ export interface TenantGetOutput {
    * @format int64
    */
   id: number
+  /** 套餐列表 */
+  pkgs?: PkgEntity[] | null
+  /** 套餐Ids */
+  pkgIds?: number[] | null
 }
 
 export interface TenantGetPageDto {
@@ -3676,6 +3749,9 @@ export interface TenantListOutput {
   name?: string | null
   /** 企业编码 */
   code?: string | null
+  pkgs?: PkgEntity[] | null
+  /** 套餐 */
+  pkgNames?: string[] | null
   /** 姓名 */
   realName?: string | null
   /** 账号 */
@@ -3728,6 +3804,8 @@ export interface TenantUpdateInput {
    * @minLength 1
    */
   code: string
+  /** 套餐Ids */
+  pkgIds?: number[] | null
   /**
    * 姓名
    * @minLength 1
@@ -4036,13 +4114,13 @@ export interface UserGetPageOutput {
   email?: string | null
   /** 用户类型:Member=0,DefaultUser=1,TenantAdmin=10,PlatformAdmin=100 */
   type?: UserType
+  roles?: RoleEntity[] | null
   /** 角色 */
   roleNames?: string[] | null
   /** 是否主管 */
   isManager?: boolean
   /** 启用 */
   enabled?: boolean
-  roles?: RoleEntity[] | null
   /**
    * 创建时间
    * @format date-time

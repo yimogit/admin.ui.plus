@@ -11,7 +11,7 @@
     >
       <el-form ref="formRef" :model="form" size="default" label-width="80px">
         <el-row :gutter="35">
-          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <el-form-item label="企业名称" prop="name" :rules="[{ required: true, message: '请输入企业名称', trigger: ['blur', 'change'] }]">
               <el-input v-model="form.name" autocomplete="off" />
             </el-form-item>
@@ -19,6 +19,23 @@
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
             <el-form-item label="企业编码" prop="code" :rules="[{ required: true, message: '请输入企业编码', trigger: ['blur', 'change'] }]">
               <el-input v-model="form.code" autocomplete="off" />
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+            <!-- :rules="[{ required: true, message: '请选择套餐', trigger: ['change'] }]" -->
+            <el-form-item label="套餐" prop="pkgIds">
+              <el-select
+                v-model="form.pkgIds"
+                placeholder="请选择套餐"
+                clearable
+                multiple
+                collapse-tags
+                collapse-tags-tooltip
+                filterable
+                class="w100"
+              >
+                <el-option v-for="item in state.pkgData" :key="item.id" :label="item.name" :value="item.id" />
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
@@ -67,8 +84,9 @@
 
 <script lang="ts" setup name="admin/tenant/form">
 import { reactive, toRefs, getCurrentInstance, ref } from 'vue'
-import { TenantAddInput, TenantUpdateInput } from '/@/api/admin/data-contracts'
+import { TenantAddInput, TenantUpdateInput, PkgGetListOutput } from '/@/api/admin/data-contracts'
 import { TenantApi } from '/@/api/admin/Tenant'
+import { PkgApi } from '/@/api/admin/Pkg'
 import { isMobile, testMobile, testEmail } from '/@/utils/test'
 import eventBus from '/@/utils/mitt'
 
@@ -85,12 +103,23 @@ const formRef = ref()
 const state = reactive({
   showDialog: false,
   sureLoading: false,
+  pkgData: [] as PkgGetListOutput[],
   form: {} as TenantAddInput & TenantUpdateInput,
 })
 const { form } = toRefs(state)
 
+const getPkgs = async () => {
+  const res = await new PkgApi().getList().catch(() => {
+    state.pkgData = []
+  })
+
+  state.pkgData = res?.data ?? []
+}
+
 // 打开对话框
 const open = async (row: any = {}) => {
+  await getPkgs()
+
   if (row.id > 0) {
     const res = await new TenantApi().get({ id: row.id }, { loading: true }).catch(() => {
       proxy.$modal.closeLoading()
@@ -100,7 +129,7 @@ const open = async (row: any = {}) => {
       state.form = res.data as TenantAddInput & TenantUpdateInput
     }
   } else {
-    state.form = { enabled: true } as TenantAddInput & TenantUpdateInput
+    state.form = { pkgIds: [] as number[], enabled: true } as TenantAddInput & TenantUpdateInput
   }
   state.showDialog = true
 }

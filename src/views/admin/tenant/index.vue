@@ -2,8 +2,8 @@
   <div class="my-layout">
     <el-card class="mt8" shadow="never" :body-style="{ paddingBottom: '0' }">
       <el-form :inline="true" @submit.stop.prevent>
-        <el-form-item label="姓名">
-          <el-input v-model="state.filter.name" placeholder="姓名" @keyup.enter="onQuery" />
+        <el-form-item label="企业名称">
+          <el-input v-model="state.filter.name" placeholder="企业名称" @keyup.enter="onQuery" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
@@ -16,9 +16,14 @@
       <el-table v-loading="state.loading" :data="state.tenantListData" row-key="id" height="'100%'" style="width: 100%; height: 100%">
         <el-table-column prop="name" label="企业名称" min-width="120" show-overflow-tooltip />
         <el-table-column prop="code" label="企业编码" width="120" show-overflow-tooltip />
+        <el-table-column prop="pkgNames" label="套餐" width="140" show-overflow-tooltip>
+          <template #default="{ row }">
+            {{ row.pkgNames ? row.pkgNames.join(',') : '' }}
+          </template>
+        </el-table-column>
         <el-table-column prop="realName" label="姓名" width="120" show-overflow-tooltip />
         <el-table-column prop="phone" label="手机号" width="120" show-overflow-tooltip />
-        <el-table-column prop="email" label="邮箱" min-width="180" show-overflow-tooltip />
+        <!-- <el-table-column prop="email" label="邮箱" min-width="180" show-overflow-tooltip /> -->
         <el-table-column label="状态" width="80" align="center" fixed="right">
           <template #default="{ row }">
             <el-switch
