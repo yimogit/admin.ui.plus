@@ -96,10 +96,11 @@ const onColumnsAsideMenuClick = async (v: RouteItem) => {
   let { path, redirect } = v
   if (redirect) router.push(redirect)
   else router.push(path)
+
   // 一个路由设置自动收起菜单
   // if (!v.children) themeConfig.value.isCollapse = true
   // else if (v.children.length > 1) themeConfig.value.isCollapse = false
-  !v.children || v.children.length < 1 ? (themeConfig.value.isCollapse = true) : (themeConfig.value.isCollapse = false)
+  // !v.children || v.children.length < 1 ? (themeConfig.value.isCollapse = true) : (themeConfig.value.isCollapse = false)
 }
 // 鼠标移入时，显示当前的子级菜单
 const onColumnsAsideMenuMouseenter = (v: RouteRecordRaw, k: number) => {
