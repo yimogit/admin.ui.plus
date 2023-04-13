@@ -46,10 +46,9 @@
         <el-table-column label="操作" width="140" header-align="center" align="center" fixed="right">
           <template #default="{ row }">
             <el-button v-auth="'api:admin:tenant:update'" icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
-            <my-dropdown-more v-auths="['api:admin:permission:assign', 'api:admin:tenant:delete']">
+            <my-dropdown-more v-auths="['api:admin:tenant:delete']">
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item v-if="auth('api:admin:permission:assign')" @click="onSetTenantMenu(row)">菜单权限</el-dropdown-item>
                   <el-dropdown-item v-if="auth('api:admin:tenant:delete')" @click="onDelete(row)">删除租户</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
@@ -74,7 +73,6 @@
     </el-card>
 
     <tenant-form ref="tenantFormRef" :title="state.tenantFormTitle"></tenant-form>
-    <set-tenant-menu ref="setTenantMenuRef"></set-tenant-menu>
   </div>
 </template>
 
@@ -88,12 +86,10 @@ import { auth } from '/@/utils/authFunction'
 // 引入组件
 const TenantForm = defineAsyncComponent(() => import('./components/tenant-form.vue'))
 const MyDropdownMore = defineAsyncComponent(() => import('/@/components/my-dropdown-more/index.vue'))
-const SetTenantMenu = defineAsyncComponent(() => import('./components/set-tenant-menu.vue'))
 
 const { proxy } = getCurrentInstance() as any
 
 const tenantFormRef = ref()
-const setTenantMenuRef = ref()
 
 const state = reactive({
   loading: false,
@@ -187,13 +183,5 @@ const onSizeChange = (val: number) => {
 const onCurrentChange = (val: number) => {
   state.pageInput.currentPage = val
   onQuery()
-}
-
-const onSetTenantMenu = (tenant: TenantListOutput) => {
-  if (!((tenant?.id as number) > 0)) {
-    proxy.$modal.msgWarning('请选择租户')
-    return
-  }
-  setTenantMenuRef.value.open(tenant)
 }
 </script>
