@@ -12,7 +12,7 @@
     </el-card>
 
     <el-card class="my-fill mt8" shadow="never">
-      <el-table v-loading="state.loading" :data="state.oprationLogListData" row-key="id" style="width: 100%">
+      <el-table ref="tableRef" v-loading="state.loading" :data="state.oprationLogListData" row-key="id" style="width: 100%">
         <el-table-column prop="createdUserName" label="操作账号" width="100">
           <template #default="{ row }"> {{ row.createdUserName }}<br />{{ row.nickName }} </template>
         </el-table-column>
@@ -46,10 +46,13 @@
 </template>
 
 <script lang="ts" setup name="admin/oprationLog">
-import { reactive, onMounted } from 'vue'
+import { reactive, onMounted, ref } from 'vue'
 import { OprationLogListOutput, PageInputLogGetPageDto } from '/@/api/admin/data-contracts'
 import { OprationLogApi } from '/@/api/admin/OprationLog'
 import dayjs from 'dayjs'
+import type { TableInstance } from 'element-plus'
+
+const tableRef = ref<TableInstance>()
 
 const state = reactive({
   loading: false,
@@ -91,9 +94,10 @@ const onSizeChange = (val: number) => {
   onQuery()
 }
 
-const onCurrentChange = (val: number) => {
+const onCurrentChange = async (val: number) => {
   state.pageInput.currentPage = val
-  onQuery()
+  await onQuery()
+  tableRef.value?.setScrollTop(0)
 }
 </script>
 
