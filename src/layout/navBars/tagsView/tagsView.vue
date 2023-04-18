@@ -590,7 +590,10 @@ onBeforeRouteUpdate(async (to) => {
 watch(
   () => tagsViewRoutes.value,
   (val) => {
-    if (val.length === state.tagsViewRoutesList.length) return false
+    if (val.length === state.tagsViewRoutesList.length) {
+      tagsViewmoveToCurrentTag()
+      return false
+    }
     getTagsViewRoutes()
   },
   {
