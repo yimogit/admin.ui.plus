@@ -123,7 +123,7 @@ export const useThemeConfig = defineStore('themeConfig', {
 
       /**
        * 布局切换
-       * 注意：为了演示，切换布局时，颜色会被还原成默认，代码位置：/@/layout/navBars/breadcrumb/setings.vue
+       * 注意：为了演示，切换布局时，颜色会被还原成默认，代码位置：/@/layout/navBars/topBar/setings.vue
        * 中的 `initSetLayoutChange(设置布局切换，重置主题样式)` 方法
        */
       // 布局切换：可选值"<默认 defaults | 经典 classic | 横向 transverse | 分栏 columns>"，默认 defaults

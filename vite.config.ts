@@ -30,9 +30,7 @@ const viteConfig = defineConfig(({ mode, command }: ConfigEnv) => {
     resolve: { alias },
     base: command === 'serve' ? './' : env.VITE_PUBLIC_PATH,
     hmr: true,
-    optimizeDeps: {
-      include: ['element-plus/lib/locale/lang/zh-cn', 'element-plus/lib/locale/lang/en', 'element-plus/lib/locale/lang/zh-tw'],
-    },
+    optimizeDeps: { exclude: ['vue-demi'] },
     server: {
       host: '0.0.0.0',
       port: env.VITE_PORT,
@@ -47,17 +45,17 @@ const viteConfig = defineConfig(({ mode, command }: ConfigEnv) => {
       },
     },
     build: {
-      chunkSizeWarningLimit: 1500,
       outDir: 'dist',
+      chunkSizeWarningLimit: 1500,
       sourcemap: false,
       rollupOptions: {
         output: {
-          assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
           chunkFileNames: 'assets/js/[name]-[hash].js',
           entryFileNames: 'assets/js/[name]-[hash].js',
+          assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
           manualChunks(id) {
             if (id.includes('node_modules')) {
-              return id.toString().split('node_modules/')[1].split('/')[0].toString()
+              return id.toString().match(/\/node_modules\/(?!.pnpm)(?<moduleName>[^\/]*)\//)?.groups!.moduleName ?? 'vender'
             }
           },
         },

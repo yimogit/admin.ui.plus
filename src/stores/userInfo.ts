@@ -23,14 +23,7 @@ export const useUserInfo = defineStore('userInfo', {
   }),
   actions: {
     async setUserInfos() {
-      // if (Session.get('userInfo')) {
-      //   const userInfos: any = Session.get('userInfo')
-      //   merge(this.userInfos, userInfos)
-      // } else {
-      //   const userInfos: any = await this.getApiUserInfo().catch(() => {})
-      //   merge(this.userInfos, userInfos)
-      // }
-      const userInfos: any = await this.getApiUserInfo().catch(() => {})
+      const userInfos = <UserInfos>await this.getApiUserInfo().catch(() => {})
       merge(this.userInfos, userInfos)
     },
     setUserName(userName: string) {
