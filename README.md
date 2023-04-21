@@ -8,8 +8,8 @@
 	    <a href="https://element-plus.gitee.io/#/zh-CN/component/changelog" target="_blank">
 	        <img src="https://img.shields.io/badge/element--plus-%3E1.0.0-blue" alt="element plus">
 	    </a>
-		<a href="https://www.tslang.cn/" target="_blank">
-	        <img src="https://img.shields.io/badge/typescript-%3E4.0.0-blue" alt="typescript">
+		<a href="https://github.com/rivenfx/Mapster-docs" target="_blank">
+	        <img src="https://img.shields.io/badge/Mapster-7.x-yellowgreen" alt="Mapster">
 	    </a>
 		<a href="https://vitejs.dev/" target="_blank">
 		    <img src="https://img.shields.io/badge/vite-%3E2.0.0-yellow" alt="vite">
@@ -23,7 +23,7 @@
 
 #### 🌈 介绍
 
-基于 vue3.x + CompositionAPI setup 语法糖 + typescript + vite + element plus + vue-router-next + pinia 技术，适配手机、平板、pc 的后台权限管理框架，希望减少工作量，帮助大家实现快速开发。
+基于 vue3.x + CompositionAPI setup 语法糖 + typescript + vite + element plus + vue-router-next + pinia 技术，内置支持一键生成微服务接口，适配手机、平板、pc 的后台权限管理框架，希望减少工作量，帮助大家实现快速开发。
 
 #### ⛱️ 线上预览
 
@@ -71,7 +71,7 @@ cnpm run build
 
 #### 📚 开发文档
 
-- 查看开发文档：<a href="https://www.zhontai.net" target="_blank">zhontai.net</a>
+- 查看开发文档：<a href="https://www.zhontai.net" target="_blank">https://zhontai.net</a>
 
 #### 💯 学习交流加 QQ 群
 
