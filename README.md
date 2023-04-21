@@ -1,5 +1,6 @@
 <div align="center">
-	<h2>中台admin.ui.plus</h2>
+	<h2>中台admin</h2>
+	<h3>前后端分离后台权限管理系统</h3>
 	<p align="center">
 	    <a href="https://v3.vuejs.org/" target="_blank">
 	        <img src="https://img.shields.io/badge/vue.js-vue3.x-green" alt="vue">
@@ -26,7 +27,7 @@
 
 #### ⛱️ 线上预览
 
-- vue3.x 版本预览（admin.ui.plus）<a href="https://admin.zhontai.net/login" target="_blank">https://admin.zhontai.net/login</a>
+- vue3.x 版本预览（admin.ui.plus）<a href="https://admin.zhontai.net/login" target="_blank">https://admin.zhontai.net</a>
 
 #### 💒 代码仓库
 
@@ -70,7 +71,7 @@ cnpm run build
 
 #### 📚 开发文档
 
-- 查看开发文档：<a href="https://www.zhontai.net" target="_blank">admin.ui.plus.doc</a>
+- 查看开发文档：<a href="https://www.zhontai.net" target="_blank">zhontai.net</a>
 
 #### 💯 学习交流加 QQ 群
 
@@ -81,6 +82,10 @@ cnpm run build
   <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=99e2f5cbf895d14aa61f4d038f3cfcb4a778f69e04e529394ada1bb307e6ded4">
   	<img src="https://www.zhontai.net/imgs/qq-group-1058693879.png" width="220" height="220" alt="中台admin 开发群" title="中台admin 开发群"/>
   </a>
+
+#### 💕 特别感谢
+
+- <a href="https://github.com/lyt-Top/vue-next-admin" target="_blank">vue-next-admin</a>
 
 #### ❤️ 鸣谢列表
 
@@ -109,10 +114,6 @@ cnpm run build
 - <a href="https://github.com/antoniandre/splitpanes" target="_blank">splitpanes</a>
 - <a href="https://github.com/jsplumb/jsplumb" target="_blank">jsplumb</a>
 - <a href="https://github.com/hxj9102/table2excel" target="_blank">js-table2excel</a>
-
-#### 💕 特别感谢
-
-- <a href="https://github.com/lyt-Top/vue-next-admin" target="_blank">vue-next-admin</a>
 
 #### 💌 支持作者
 
