@@ -92,7 +92,7 @@ const initData = async () => {
   state.loading = false
   if (res?.success && res.data && res.data.length > 0) {
     state.orgTreeData = listToTree(res.data)
-    if (props.selectFirstNode) {
+    if (state.orgTreeData.length > 0 && props.selectFirstNode) {
       nextTick(() => {
         const firstNode = state.orgTreeData[0]
         orgMenuRef.value?.setCurrentKey(firstNode.id)

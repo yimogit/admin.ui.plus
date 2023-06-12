@@ -202,7 +202,7 @@ const onAdd = (type: RoleType, row: RoleGetListOutput | undefined = undefined) =
       break
     case 2:
       state.roleFormTitle = '新增角色'
-      roleFormRef.value.open({ type: 2, parentId: row?.id })
+      roleFormRef.value.open({ type: 2, parentId: row?.id, dataScope: 1 })
       break
   }
 }
