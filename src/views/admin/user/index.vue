@@ -68,6 +68,7 @@
                       >
                       <el-dropdown-item v-if="auth('api:admin:user:reset-password')" @click="onResetPwd(row)">重置密码</el-dropdown-item>
                       <el-dropdown-item v-if="auth('api:admin:user:delete')" @click="onDelete(row)">删除用户</el-dropdown-item>
+                      <el-dropdown-item v-if="auth('api:admin:user:one-click-login')" @click="onOneClickLogin(row)">一键登录</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </my-dropdown-more>
@@ -102,6 +103,8 @@ import { UserApi } from '/@/api/admin/User'
 import eventBus from '/@/utils/mitt'
 import { auth } from '/@/utils/authFunction'
 import { Pane } from 'splitpanes'
+import { useUserInfo } from '/@/stores/userInfo'
+import { Session } from '/@/utils/storage'
 
 // 引入组件
 const UserForm = defineAsyncComponent(() => import('./components/user-form.vue'))
@@ -113,6 +116,8 @@ const MyLayout = defineAsyncComponent(() => import('/@/components/my-layout/inde
 const { proxy } = getCurrentInstance() as any
 
 const userFormRef = ref()
+
+const storesUseUserInfo = useUserInfo()
 
 const state = reactive({
   loading: false,
@@ -255,6 +260,22 @@ const onSetEnable = (row: UserGetPageOutput & { loading: boolean }) => {
         reject(new Error('Cancel'))
       })
   })
+}
+
+const onOneClickLogin = (row: UserGetPageOutput) => {
+  proxy.$modal
+    .confirmDelete(`确定要一键登录【${row.name}】?`)
+    .then(async () => {
+      const res = await new UserApi().oneClickLogin({ userName: row.userName || '' }, { loading: true })
+      if (res?.success) {
+        proxy.$modal.msgSuccess('一键登录成功')
+        window.requests = []
+        Session.remove('tagsViewList')
+        storesUseUserInfo.setToken(res.data.token)
+        window.location.href = '/'
+      }
+    })
+    .catch(() => {})
 }
 
 const onSizeChange = (val: number) => {

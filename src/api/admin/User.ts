@@ -14,6 +14,7 @@ import {
   PageInputUserGetPageDto,
   ResultOutputIListUserPermissionsOutput,
   ResultOutputInt64,
+  ResultOutputObject,
   ResultOutputPageOutputUserGetPageOutput,
   ResultOutputString,
   ResultOutputUserGetBasicOutput,
@@ -387,6 +388,29 @@ export class UserApi<SecurityDataType = unknown> extends HttpClient<SecurityData
       body: data,
       secure: true,
       type: ContentType.FormData,
+      format: 'json',
+      ...params,
+    })
+  /**
+   * No description
+   *
+   * @tags user
+   * @name OneClickLogin
+   * @summary 一键登录用户
+   * @request GET:/api/admin/user/one-click-login
+   * @secure
+   */
+  oneClickLogin = (
+    query: {
+      userName: string
+    },
+    params: RequestParams = {}
+  ) =>
+    this.request<ResultOutputObject, any>({
+      path: `/api/admin/user/one-click-login`,
+      method: 'GET',
+      query: query,
+      secure: true,
       format: 'json',
       ...params,
     })

@@ -222,7 +222,9 @@ onMounted(() => {
   align-items: center;
   justify-content: flex-end;
   &-link {
-    height: 100%;
+    height: 50px;
+    line-height: 50px;
+    cursor: pointer;
     display: flex;
     align-items: center;
     white-space: nowrap;
