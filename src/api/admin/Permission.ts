@@ -207,6 +207,7 @@ export class PermissionApi<SecurityDataType = unknown> extends HttpClient<Securi
    * @name GetTenantPermissionList
    * @summary 查询租户权限列表
    * @request GET:/api/admin/permission/get-tenant-permission-list
+   * @deprecated
    * @secure
    */
   getTenantPermissionList = (
@@ -443,6 +444,7 @@ export class PermissionApi<SecurityDataType = unknown> extends HttpClient<Securi
    * @name SaveTenantPermissions
    * @summary 保存租户权限
    * @request POST:/api/admin/permission/save-tenant-permissions
+   * @deprecated
    * @secure
    */
   saveTenantPermissions = (data: PermissionSaveTenantPermissionsInput, params: RequestParams = {}) =>
