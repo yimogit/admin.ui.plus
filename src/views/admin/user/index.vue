@@ -60,7 +60,9 @@
             <el-table-column label="操作" width="140" header-align="center" align="center" fixed="right">
               <template #default="{ row }">
                 <el-button v-auth="'api:admin:user:update'" icon="ele-EditPen" size="small" text type="primary" @click="onEdit(row)">编辑</el-button>
-                <my-dropdown-more v-auths="['api:admin:user:set-manager', 'api:admin:user:reset-password', 'api:admin:user:delete']">
+                <my-dropdown-more
+                  v-auths="['api:admin:user:set-manager', 'api:admin:user:reset-password', 'api:admin:user:delete', 'api:admin:user:one-click-login']"
+                >
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item v-if="auth('api:admin:user:set-manager')" @click="onSetManager(row)"
