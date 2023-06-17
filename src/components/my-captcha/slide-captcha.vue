@@ -1,7 +1,7 @@
 <template>
   <div class="captcha">
     <div class="captcha__main" :style="imgWrapperStyle">
-      <img v-if="state.src" :src="state.src" class="captcha_background" alt="background" ref="background" />
+      <img v-if="state.src" :src="state.src" class="captcha_background" alt="background" ref="backgroundRef" />
       <img
         v-if="state.sliderSrc"
         :src="state.sliderSrc"
@@ -9,6 +9,8 @@
         alt="slider"
         ref="slider"
         :class="{ goFirst: state.isOk, goKeep: state.isKeep }"
+        @mousedown="handleDragStart"
+        @touchstart="handleDragStart"
       />
       <div class="captcha_message" v-if="state.showVerifyTip">
         <div class="captcha_message__icon">
@@ -142,7 +144,7 @@ const props = defineProps({
 
 const emits = defineEmits(['finish', 'refresh'])
 
-const background = ref()
+const backgroundRef = ref()
 const slider = ref()
 const dragVerify = ref()
 const progressBar = ref()
@@ -282,6 +284,7 @@ const removeEventListeners = () => {
 }
 //开始拖拽
 const handleDragStart = (e: any) => {
+  e?.preventDefault()
   if (!state.isPassing && state.src && state.sliderSrc && !state.isFinish) {
     window.addEventListener('touchmove', handleDragMoving)
     window.addEventListener('touchend', handleDragFinish)
@@ -290,17 +293,18 @@ const handleDragStart = (e: any) => {
 
     state.isMoving = true
     state.startSlidingTime = new Date()
-    state.x = e.pageX || e.touches[0].pageX
-    state.y = e.pageY || e.touches[0].pageY
+    state.x = e.touches ? e.touches[0].pageX : e.clientX
+    state.y = e.touches ? e.touches[0].pageY : e.clientY
     state.width = dragVerify.value.clientWidth
   }
 }
 //拖拽中
 const handleDragMoving = (e: any) => {
+  e?.preventDefault()
   if (state.isMoving && !state.isPassing && state.src && state.sliderSrc && !state.isFinish) {
-    var _x = (e.pageX || e.touches[0].pageX) - state.x
+    var _x = (e.touches ? e.touches[0].pageX : e.clientX) - state.x
     if (_x > 0 && _x <= state.width - props.barHeight) {
-      var _y = (e.pageY || e.touches[0].pageY) - state.y
+      var _y = (e.touches ? e.touches[0].pageY : e.clientY) - state.y
 
       handler.value.style.left = _x + 'px'
       progressBar.value.style.width = _x + props.barHeight / 2 + 'px'
@@ -323,15 +327,16 @@ const handleDragMoving = (e: any) => {
   }
 }
 //拖拽结束
-const handleDragFinish = () => {
+const handleDragFinish = (e: any) => {
+  e?.preventDefault()
   if (state.isMoving && !state.isPassing && state.src && state.sliderSrc && !state.isFinish) {
     state.isMoving = false
     state.isFinish = true
     removeEventListeners()
     if (state.tracks.length > 0) {
       emits('finish', {
-        backgroundImageWidth: background.value.offsetWidth,
-        backgroundImageHeight: background.value.offsetHeight,
+        backgroundImageWidth: backgroundRef.value.offsetWidth,
+        backgroundImageHeight: backgroundRef.value.offsetHeight,
         sliderImageWidth: slider.value.offsetWidth,
         sliderImageHeight: slider.value.offsetHeight,
         startTime: state.startSlidingTime,
