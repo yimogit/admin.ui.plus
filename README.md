@@ -8,15 +8,12 @@
 	    <a href="https://element-plus.gitee.io/#/zh-CN/component/changelog" target="_blank">
 	        <img src="https://img.shields.io/badge/element--plus-%3E1.0.0-blue" alt="element plus">
 	    </a>
-		<a href="https://github.com/rivenfx/Mapster-docs" target="_blank">
-	        <img src="https://img.shields.io/badge/Mapster-7.x-yellowgreen" alt="Mapster">
-	    </a>
-		<a href="https://vitejs.dev/" target="_blank">
-		    <img src="https://img.shields.io/badge/vite-%3E2.0.0-yellow" alt="vite">
-		</a>
-		<a href="https://github.com/zhontai/admin.ui.plus/blob/master/LICENSE" target="_blank">
-		    <img src="https://img.shields.io/badge/license-MIT-success" alt="license">
-		</a>
+			<a href="https://vitejs.dev/" target="_blank">
+					<img src="https://img.shields.io/badge/vite-%3E2.0.0-yellow" alt="vite">
+			</a>
+			<a href="https://github.com/zhontai/admin.ui.plus/blob/master/LICENSE" target="_blank">
+					<img src="https://img.shields.io/badge/license-MIT-success" alt="license">
+			</a>
 	</p>
 	<p>&nbsp;</p>
 </div>
