@@ -24,7 +24,7 @@ jobs:
           node-version: 18.17.1
           cache: "npm"
       # 执行打包命令
-      - run: node -v && npm -v && npm install && npm run build
+      - run: node -v && npm -v && npm install && npm run build --VITE_API_URL ${{ secrets.API_HOST }}
       # 将dist复制到docker目录中
       - run: cp ./dist ./docker -rf
       # 使用 ssh 将dist文件拷贝到 linux
