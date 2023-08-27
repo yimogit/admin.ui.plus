@@ -27,8 +27,7 @@ jobs:
       - run: |
           if [ -n "${{ secrets.API_HOST }}" ]; then
             # 使用设置中的接口地址
-            echo -e "">>.env.production
-            echo VITE_API_URL=${{ secrets.API_HOST }} >> .env.production
+            echo -e "\nVITE_API_URL=${{ secrets.API_HOST }}" >> .env.production
           fi
       - run: node -v && npm -v && npm install && npm run build
       # 将dist复制到docker目录中
