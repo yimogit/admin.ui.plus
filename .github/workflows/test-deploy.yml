@@ -1,0 +1,53 @@
+# deploy.yml
+name: 前端直接部署
+# 手动构建
+# on: workflow_dispatch
+# 自动构建
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 拉取仓库文件
+      - name: 拉取master分支代码
+        uses: actions/checkout@v3
+        with:
+          # 默认当前分支
+          ref: "master"
+      # action命令，安装Node v18.17.1
+      - name: 安装 node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.17.1
+          cache: "npm"
+      # 执行打包命令
+      - run: node -v && npm -v && npm install && npm run build
+      # 将dist复制到docker目录中
+      - run: cp ./dist ./docker -rf
+      # 使用 ssh 将dist文件拷贝到 linux
+      - name: 使用ssh部署到服务器
+        uses: easingthemes/ssh-deploy@v4.1.8
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "docker"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}
+          EXCLUDE: "/node_modules/"
+          SCRIPT_BEFORE: |
+            mkdir ${{ secrets.REMOTE_TARGET }} -p
+          SCRIPT_AFTER: |
+            cd ${{ secrets.REMOTE_TARGET }}
+            cd docker
+            docker build --rm -f ./Dockerfile -t zhontai/adminui:latest .
+            # 检查容器是否存在
+            if docker container ls -a | grep -q "my-zhontai-adminui"; then
+                echo "容器已存在,停止并移除容器"
+                docker stop my-zhontai-adminui
+                docker rm my-zhontai-adminui
+            fi
+            docker run --name my-zhontai-adminui -d -p 9901:80 zhontai/adminui:latest
