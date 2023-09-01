@@ -89,8 +89,8 @@
           </el-table>
           <div class="my-flex my-flex-end" style="margin-top: 20px">
             <el-pagination
-              v-model:currentPage="state.pageInput.currentPage"
-              v-model:page-size="state.pageInput.pageSize"
+              v-model:currentPage="state.tenantPageInput.currentPage"
+              v-model:page-size="state.tenantPageInput.pageSize"
               :total="state.tenantTotal"
               :page-sizes="[10, 20, 50, 100]"
               small
