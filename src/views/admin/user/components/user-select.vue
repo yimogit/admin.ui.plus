@@ -40,6 +40,7 @@
               :highlight-current-row="!multiple"
               @row-click="onRowClick"
               @row-dblclick="onRowDbClick"
+              @current-change="onTableCurrentChange"
             >
               <el-table-column v-if="multiple" type="selection" width="55" />
               <el-table-column prop="name" label="姓名" min-width="80" show-overflow-tooltip />
@@ -178,6 +179,11 @@ const onRowDbClick = () => {
   }
 }
 
+const currentRow = ref()
+const onTableCurrentChange = (row: UserGetPageOutput) => {
+  currentRow.value = row
+}
+
 // 取消
 const onCancel = () => {
   state.showDialog = false
@@ -185,8 +191,12 @@ const onCancel = () => {
 
 // 确定
 const onSure = () => {
-  const selectionRows = userTableRef.value!.getSelectionRows() as UserGetPageOutput[]
-  emits('sure', props.multiple ? selectionRows : selectionRows.length > 0 ? selectionRows[0] : null)
+  if (props.multiple) {
+    const selectionRows = userTableRef.value!.getSelectionRows() as UserGetPageOutput[]
+    emits('sure', selectionRows)
+  } else {
+    emits('sure', currentRow.value)
+  }
 }
 
 defineExpose({
