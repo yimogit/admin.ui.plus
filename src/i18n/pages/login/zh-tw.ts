@@ -9,8 +9,8 @@ export default {
     two4: '友情連結',
   },
   account: {
-    accountPlaceholder1: '用戶名admin或user',
-    accountPlaceholder2: '密碼：111111',
+    accountPlaceholder1: '用戶名',
+    accountPlaceholder2: '密碼',
     accountPlaceholder3: '請輸入驗證碼',
     accountBtnText: '登入',
   },

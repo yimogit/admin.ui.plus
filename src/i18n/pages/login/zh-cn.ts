@@ -9,8 +9,8 @@ export default {
     two4: '友情链接',
   },
   account: {
-    accountPlaceholder1: '用户名 admin 或 user',
-    accountPlaceholder2: '密码：111111',
+    accountPlaceholder1: '用户名',
+    accountPlaceholder2: '密码',
     accountPlaceholder3: '请输入验证码',
     accountBtnText: '登 录',
   },
