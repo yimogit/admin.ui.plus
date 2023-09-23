@@ -62,7 +62,7 @@ const phoneRef = ref()
 // 定义变量内容
 const state = reactive({
   ruleForm: {
-    mobile: '13122223333',
+    mobile: '',
     code: '',
     codeId: '',
   } as AuthMobileLoginInput,
