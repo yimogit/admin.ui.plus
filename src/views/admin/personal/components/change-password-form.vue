@@ -38,7 +38,7 @@
                 { validator: testConfirmPassword, trigger: ['blur', 'change'] },
               ]"
             >
-              <el-input v-model="form.confirmPassword" show-password autocomplete="off" clearable @input="onInputconfirmPassword" />
+              <el-input v-model="form.confirmPassword" show-password autocomplete="off" clearable @input="onInputConfirmPassword" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -102,7 +102,7 @@ const onInputNewPassword = (val: string) => {
 }
 
 // 输入确认密码
-const onInputconfirmPassword = (val: string) => {
+const onInputConfirmPassword = (val: string) => {
   state.form.confirmPassword = verifyCnAndSpace(val)
 }
 
