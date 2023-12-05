@@ -827,7 +827,7 @@ export interface FileEntity {
   modifiedTime?: string | null
   /** 是否删除 */
   isDeleted?: boolean
-  /** Invalid=0,Minio=1,Aliyun=2,QCloud=3,Qiniu=4,HuaweiCloud=5 */
+  /** Invalid=0,Minio=1,Aliyun=2,QCloud=3,Qiniu=4,HuaweiCloud=5,BaiduCloud=6,Ctyun=7 */
   provider?: OSSProvider
   /** 存储桶名称 */
   bucketName?: string | null
@@ -982,10 +982,10 @@ export interface LoginLogListOutput {
 }
 
 /**
- * Invalid=0,Minio=1,Aliyun=2,QCloud=3,Qiniu=4,HuaweiCloud=5
+ * Invalid=0,Minio=1,Aliyun=2,QCloud=3,Qiniu=4,HuaweiCloud=5,BaiduCloud=6,Ctyun=7
  * @format int32
  */
-export type OSSProvider = 0 | 1 | 2 | 3 | 4 | 5
+export type OSSProvider = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
 
 /** 添加 */
 export interface OprationLogAddInput {
