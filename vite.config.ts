@@ -2,6 +2,7 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import { defineConfig, ConfigEnv } from 'vite'
 import compression from 'vite-plugin-compression'
+import vueSetupExtend from 'vite-plugin-vue-setup-extend-plus'
 import { loadEnv } from '/@/utils/vite'
 
 const pathResolve = (dir: string): any => {
@@ -18,6 +19,7 @@ const viteConfig = defineConfig(({ mode, command }: ConfigEnv) => {
   return {
     plugins: [
       vue(),
+      vueSetupExtend(),
       compression({
         threshold: 5121,
         disable: !env.VITE_COMPRESSION,
