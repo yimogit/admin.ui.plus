@@ -42,8 +42,8 @@
               size="small"
               text
               type="primary"
-              @click="onPause(row)"
-              >暂停</el-button
+              @click="onStart(row)"
+              >启动</el-button
             >
             <el-button
               v-if="row.status === 0 || row.status === 'Running'"
@@ -52,8 +52,8 @@
               size="small"
               text
               type="primary"
-              @click="onStart(row)"
-              >启动</el-button
+              @click="onPause(row)"
+              >暂停</el-button
             >
             <el-button v-auth="'api:admin:task:run'" icon="ele-Promotion" size="small" text type="primary" @click="onRun(row)">执行</el-button>
             <el-button v-auth="'api:admin:task:delete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button>
