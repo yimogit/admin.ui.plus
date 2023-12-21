@@ -13,7 +13,7 @@
         <el-table-column prop="exception" label="异常" min-width="180" />
 
         <el-table-column prop="createTime" label="创建时间" :formatter="formatterTime" width="160" />
-        <el-table-column prop="Remark" label="备注" min-width="180" />
+        <el-table-column prop="remark" label="备注" min-width="180" />
       </el-table>
       <div class="my-flex my-flex-end" style="margin-top: 20px">
         <el-pagination
