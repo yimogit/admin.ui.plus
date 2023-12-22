@@ -138,11 +138,11 @@ const formatterInterval = (row: any, column: any, cellValue: any) => {
       break
     case 12:
     case 'RunOnWeek':
-      label = '每星期几'
+      label = '每周几'
       break
     case 13:
     case 'RunOnMonth':
-      label = '每月第几天'
+      label = '每月第几日'
       break
     case 21:
     case 'Custom':

@@ -9,7 +9,7 @@
       :close-on-press-escape="false"
       width="600px"
     >
-      <el-form :model="form" ref="formRef" size="default" label-width="80px">
+      <el-form :model="form" ref="formRef" size="default" label-width="110px">
         <el-row :gutter="35">
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <el-form-item label="任务标题" prop="topic" :rules="[{ required: true, message: '请输入任务标题', trigger: ['blur', 'change'] }]">
@@ -22,7 +22,15 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-form-item label="执行轮数" prop="round" :rules="[{ required: true, message: '请输入执行轮数', trigger: ['blur', 'change'] }]">
+            <el-form-item prop="round" :rules="[{ required: true, message: '请输入执行轮数', trigger: ['blur', 'change'] }]">
+              <template #label>
+                <div class="my-flex-y-center">
+                  执行轮次<el-tooltip effect="dark" placement="top" hide-after="0">
+                    <template #content>循环多少次，-1为无限循环</template>
+                    <SvgIcon name="ele-InfoFilled" class="ml5" />
+                  </el-tooltip>
+                </div>
+              </template>
               <el-input-number v-model="form.round" :min="-1" />
             </el-form-item>
           </el-col>
@@ -39,7 +47,40 @@
               prop="intervalArgument"
               :rules="[{ required: true, message: '请输入定时参数', trigger: ['blur', 'change'] }]"
             >
-              <el-input v-model="form.intervalArgument" clearable />
+              <el-space fill>
+                <el-input v-model="form.intervalArgument" clearable />
+                <el-alert v-if="form.interval === 1" type="info" :closable="false">
+                  设置 5 则每5秒触发，执行N次
+                  <br />
+                  设置 5, 5, 10, 10, 60, 60 则每次按不同的间隔秒数触发，执行6次
+                </el-alert>
+                <el-alert v-else-if="form.interval === 11" type="info" :closable="false"> 设置 08:00:00 则每天 08:00:00 触发，执行N次 </el-alert>
+                <el-alert v-else-if="form.interval === 12" type="info" :closable="false">
+                  设置 1:08:00:00 则每周一 08:00:00 触发
+                  <br />
+                  设置 -0:08:00:00 则每周日 08:00:00 触发
+                </el-alert>
+                <el-alert v-else-if="form.interval === 13" type="info" :closable="false">
+                  设置 1:08:00:00 则每月1日 08:00:00 触发
+                  <br />
+                  设置 -1:08:00:00 则每月最后一日 08:00:00 触发
+                </el-alert>
+                <el-alert v-else-if="form.interval === 21" type="info" :closable="false">
+                  设置 0/10 * * * * ? 则从0秒开始每10秒执行一次
+                  <br />
+                  <pre style="line-height: 20px">
+new FreeSchedulerBuilder()
+...
+.UseCustomInterval(task =>
+{
+    //利用 cron 功能库解析 task.IntervalArgument 得到下一次执行时间
+    //与当前时间相减，得到 TimeSpan，若返回 null 则任务完成
+    return TimeSpan.FromSeconds(5);
+})
+.Build();
+                  </pre>
+                </el-alert>
+              </el-space>
             </el-form-item>
           </el-col>
         </el-row>
@@ -76,8 +117,8 @@ const state = reactive({
   intervals: [
     { label: '按秒触发', value: 1 },
     { label: '每天', value: 11 },
-    { label: '每星期几', value: 12 },
-    { label: '每月第几天', value: 13 },
+    { label: '每周几', value: 12 },
+    { label: '每月第几日', value: 13 },
     { label: 'Cron表达式', value: 21 },
   ],
 })
@@ -134,3 +175,9 @@ defineExpose({
   open,
 })
 </script>
+
+<style scoped lang="scss">
+.el-alert {
+  border-width: 0px !important;
+}
+</style>

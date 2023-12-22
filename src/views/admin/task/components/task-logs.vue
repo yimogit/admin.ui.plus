@@ -31,6 +31,7 @@
     </div>
     <template #footer>
       <div style="flex: auto; padding: 20px !important">
+        <el-button @click="onQuery" type="primary" size="default">刷 新</el-button>
         <el-button @click="onCancel" size="default">取 消</el-button>
       </div>
     </template>

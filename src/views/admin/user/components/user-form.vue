@@ -64,13 +64,14 @@
           </el-col>
           <el-col v-if="!isUpdate" :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
             <el-form-item prop="password" :rules="[{ validator: validatorPwd, trigger: ['blur', 'change'] }]">
-              <template #label
-                ><div class="my-flex-y-center">
+              <template #label>
+                <div class="my-flex-y-center">
                   密码<el-tooltip effect="dark" placement="top" hide-after="0">
                     <template #content>选填，不填则使用系统默认密码<br />字母+数字+可选特殊字符，长度在6-16之间</template>
                     <SvgIcon name="ele-InfoFilled" class="ml5" />
-                  </el-tooltip></div
-              ></template>
+                  </el-tooltip>
+                </div>
+              </template>
               <el-input
                 key="password"
                 v-model="form.password"
