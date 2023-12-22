@@ -21,6 +21,7 @@
  * @method refreshTenant 刷新租户
  * @method refreshUser 刷新用户
  * @method refreshView 刷新视图
+ * @method refreshTask 刷新任务
  */
 declare type MittType<T = any> = {
   openSetingsDrawer?: string
@@ -45,6 +46,7 @@ declare type MittType<T = any> = {
   refreshUser?: T
   refreshView?: T
   refreshFile?: T
+  refreshTask?: T
 }
 
 // mitt 参数类型定义

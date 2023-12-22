@@ -32,8 +32,7 @@ export class TaskApi<SecurityDataType = unknown> extends HttpClient<SecurityData
    */
   get = (
     query?: {
-      /** @format int64 */
-      id?: number
+      id?: string
     },
     params: RequestParams = {}
   ) =>

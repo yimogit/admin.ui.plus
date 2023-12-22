@@ -49,7 +49,7 @@ export class CaptchaApi<SecurityDataType = unknown> extends HttpClient<SecurityD
   check = (
     data: SlideTrack,
     query?: {
-      /** 验证码id */
+      /** 验证码Id */
       captchaId?: string
     },
     params: RequestParams = {}

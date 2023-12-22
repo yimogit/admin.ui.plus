@@ -3444,7 +3444,7 @@ export interface StaffAddInput {
 export interface TaskAddInput {
   /** 任务标题 */
   topic?: string | null
-  /** 任务数据 */
+  /** 任务参数 */
   body?: string | null
   /**
    * 任务执行多少轮，-1为永久循环
@@ -3453,14 +3453,16 @@ export interface TaskAddInput {
   round?: number
   /** SEC=1,RunOnDay=11,RunOnWeek=12,RunOnMonth=13,Custom=21 */
   interval?: TaskInterval
-  /** 定时参数值 60,60,60,120,120,1200,1200 */
+  /** 定时参数 60,60,60,120,120,1200,1200 */
   intervalArgument?: string | null
+  /** Running=0,Paused=1,Completed=2 */
+  status?: TaskStatus
 }
 
 export interface TaskGetOutput {
   /** 任务标题 */
   topic?: string | null
-  /** 任务数据 */
+  /** 任务参数 */
   body?: string | null
   /**
    * 任务执行多少轮，-1为永久循环
@@ -3469,8 +3471,10 @@ export interface TaskGetOutput {
   round?: number
   /** SEC=1,RunOnDay=11,RunOnWeek=12,RunOnMonth=13,Custom=21 */
   interval?: TaskInterval
-  /** 定时参数值 60,60,60,120,120,1200,1200 */
+  /** 定时参数 60,60,60,120,120,1200,1200 */
   intervalArgument?: string | null
+  /** Running=0,Paused=1,Completed=2 */
+  status?: TaskStatus
   /**
    * 任务Id
    * @minLength 1
@@ -3556,7 +3560,7 @@ export type TaskStatus = 0 | 1 | 2
 export interface TaskUpdateInput {
   /** 任务标题 */
   topic?: string | null
-  /** 任务数据 */
+  /** 任务参数 */
   body?: string | null
   /**
    * 任务执行多少轮，-1为永久循环
@@ -3565,8 +3569,10 @@ export interface TaskUpdateInput {
   round?: number
   /** SEC=1,RunOnDay=11,RunOnWeek=12,RunOnMonth=13,Custom=21 */
   interval?: TaskInterval
-  /** 定时参数值 60,60,60,120,120,1200,1200 */
+  /** 定时参数 60,60,60,120,120,1200,1200 */
   intervalArgument?: string | null
+  /** Running=0,Paused=1,Completed=2 */
+  status?: TaskStatus
   /**
    * 任务Id
    * @minLength 1

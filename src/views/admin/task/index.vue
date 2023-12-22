@@ -7,6 +7,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="ele-Search" @click="onQuery"> 查询 </el-button>
+          <el-button v-auth="'api:admin:task:add'" type="primary" icon="ele-Plus" @click="onAdd"> 新增 </el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -57,6 +58,7 @@
             >
             <el-button v-auth="'api:admin:task:run'" icon="ele-Promotion" size="small" text type="primary" @click="onRun(row)">执行</el-button>
             <el-button v-auth="'api:admin:task:delete'" icon="ele-Delete" size="small" text type="danger" @click="onDelete(row)">删除</el-button>
+            <el-button v-auth="'api:admin:task:update'" icon="ele-Edit" size="small" text type="primary" @click="onUpdate(row)">修改</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -76,21 +78,25 @@
     </el-card>
 
     <task-logs ref="taskLogsRef" :title="state.taskLogsTitle"></task-logs>
+    <task-form ref="taskFormRef" :title="state.taskFormTitle"></task-form>
   </div>
 </template>
 
 <script lang="ts" setup name="admin/task">
-import { ref, reactive, onMounted, getCurrentInstance, defineAsyncComponent } from 'vue'
+import { ref, reactive, onMounted, onBeforeMount, getCurrentInstance, defineAsyncComponent } from 'vue'
 import { TaskListOutput, PageInputTaskGetPageDto } from '/@/api/admin/data-contracts'
 import { TaskApi } from '/@/api/admin/Task'
 import dayjs from 'dayjs'
+import eventBus from '/@/utils/mitt'
 
 // 引入组件
 const TaskLogs = defineAsyncComponent(() => import('./components/task-logs.vue'))
+const TaskForm = defineAsyncComponent(() => import('./components/task-form.vue'))
 
 const { proxy } = getCurrentInstance() as any
 
 const taskLogsRef = ref()
+const taskFormRef = ref()
 
 const state = reactive({
   loading: false,
@@ -109,6 +115,14 @@ const state = reactive({
 
 onMounted(() => {
   onQuery()
+  eventBus.off('refreshTask')
+  eventBus.on('refreshTask', async () => {
+    onQuery()
+  })
+})
+
+onBeforeMount(() => {
+  eventBus.off('refreshTask')
 })
 
 const formatterInterval = (row: any, column: any, cellValue: any) => {
@@ -132,7 +146,7 @@ const formatterInterval = (row: any, column: any, cellValue: any) => {
       break
     case 21:
     case 'Custom':
-      label = '自定义'
+      label = 'Cron表达式'
       break
   }
   return label
@@ -152,6 +166,16 @@ const onQuery = async () => {
   state.taskListData = res?.data?.list ?? []
   state.total = res?.data?.total ?? 0
   state.loading = false
+}
+
+const onAdd = () => {
+  state.taskFormTitle = '新增任务'
+  taskFormRef.value.open()
+}
+
+const onUpdate = (row: TaskListOutput) => {
+  state.taskFormTitle = '修改任务'
+  taskFormRef.value.open(row)
 }
 
 // 查看日志
