@@ -31,12 +31,12 @@
                   </el-tooltip>
                 </div>
               </template>
-              <el-input-number v-model="form.round" :min="-1" />
+              <el-input-number v-model="form.round" :min="-1" :disabled="form.interval === 21" />
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <el-form-item label="定时类型" prop="interval" :rules="[{ required: true, message: '请选择定时类型', trigger: ['change'] }]">
-              <el-select v-model="form.interval" placeholder="请选择定时类型" style="width: 150px">
+              <el-select v-model="form.interval" placeholder="请选择定时类型" style="width: 150px" @change="onIntervalChange">
                 <el-option v-for="item in state.intervals" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
             </el-form-item>
@@ -169,6 +169,10 @@ const onSure = () => {
       state.showDialog = false
     }
   })
+}
+
+const onIntervalChange = () => {
+  if (state.form.interval === 21) state.form.round = -1
 }
 
 defineExpose({
