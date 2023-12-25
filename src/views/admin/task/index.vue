@@ -19,7 +19,7 @@
         <el-table-column prop="status" label="任务状态" width="80">
           <template #default="{ row }">
             <el-tag v-if="row.status === 0 || row.status === 'Running'" disable-transitions>运行中</el-tag>
-            <el-tag v-if="row.status === 1 || row.status === 'Paused'" type="info" disable-transitions>暂停</el-tag>
+            <el-tag v-if="row.status === 1 || row.status === 'Paused'" type="info" disable-transitions>停止</el-tag>
             <el-tag v-if="row.status === 2 || row.status === 'Completed'" type="success" disable-transitions>完成</el-tag>
           </template>
         </el-table-column>
@@ -54,7 +54,7 @@
               text
               type="primary"
               @click="onPause(row)"
-              >暂停</el-button
+              >停止</el-button
             >
             <el-button v-auth="'api:admin:task:run'" icon="ele-Promotion" size="small" text type="primary" @click="onRun(row)">执行</el-button>
             <el-button v-auth="'api:admin:task:update'" icon="ele-Edit" size="small" text type="primary" @click="onUpdate(row)">修改</el-button>
@@ -196,7 +196,7 @@ const onRun = (row: TaskListOutput) => {
 
 const onPause = (row: TaskListOutput) => {
   proxy.$modal
-    .confirmDelete(`确定要暂停【${row.topic}】任务?`)
+    .confirmDelete(`确定要停止【${row.topic}】任务?`)
     .then(async () => {
       await new TaskApi().pause({ id: row.id as string }, { loading: true, showSuccessMessage: true })
       onQuery()
