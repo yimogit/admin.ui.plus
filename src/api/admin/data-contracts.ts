@@ -3455,8 +3455,8 @@ export interface TaskAddInput {
   interval?: TaskInterval
   /** 定时参数 60,60,60,120,120,1200,1200 */
   intervalArgument?: string | null
-  /** Running=0,Paused=1,Completed=2 */
-  status?: TaskStatus
+  /** 报警邮件，多个邮件地址则逗号分隔 */
+  alarmEmail?: string | null
 }
 
 export interface TaskGetOutput {
@@ -3473,8 +3473,8 @@ export interface TaskGetOutput {
   interval?: TaskInterval
   /** 定时参数 60,60,60,120,120,1200,1200 */
   intervalArgument?: string | null
-  /** Running=0,Paused=1,Completed=2 */
-  status?: TaskStatus
+  /** 报警邮件，多个邮件地址则逗号分隔 */
+  alarmEmail?: string | null
   /**
    * 任务Id
    * @minLength 1
@@ -3571,8 +3571,8 @@ export interface TaskUpdateInput {
   interval?: TaskInterval
   /** 定时参数 60,60,60,120,120,1200,1200 */
   intervalArgument?: string | null
-  /** Running=0,Paused=1,Completed=2 */
-  status?: TaskStatus
+  /** 报警邮件，多个邮件地址则逗号分隔 */
+  alarmEmail?: string | null
   /**
    * 任务Id
    * @minLength 1
