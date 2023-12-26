@@ -18,7 +18,28 @@
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <el-form-item label="任务参数" prop="body">
+              <template #label>
+                <div class="my-flex-y-center">
+                  任务参数<el-tooltip effect="dark" placement="top" hide-after="0">
+                    <template #content>多个邮件地址则逗号分隔</template>
+                    <SvgIcon name="ele-InfoFilled" class="ml5" />
+                  </el-tooltip>
+                </div>
+              </template>
               <el-input v-model="form.body" clearable type="textarea" rows="6" />
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+            <el-form-item prop="alarmEmail">
+              <template #label>
+                <div class="my-flex-y-center">
+                  报警邮件<el-tooltip effect="dark" placement="top" hide-after="0">
+                    <template #content>多个邮件地址则逗号分隔</template>
+                    <SvgIcon name="ele-InfoFilled" class="ml5" />
+                  </el-tooltip>
+                </div>
+              </template>
+              <el-input v-model="form.alarmEmail" clearable placeholder="多个邮件地址则逗号分隔" />
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
