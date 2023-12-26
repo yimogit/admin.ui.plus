@@ -21,7 +21,7 @@
               <template #label>
                 <div class="my-flex-y-center">
                   任务参数<el-tooltip effect="dark" placement="top" hide-after="0">
-                    <template #content>多个邮件地址则逗号分隔</template>
+                    <template #content>可以设置Json数据格式</template>
                     <SvgIcon name="ele-InfoFilled" class="ml5" />
                   </el-tooltip>
                 </div>
