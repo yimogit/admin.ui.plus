@@ -39,7 +39,7 @@
                   </el-tooltip>
                 </div>
               </template>
-              <el-input v-model="form.alarmEmail" clearable placeholder="多个邮件地址则逗号分隔" />
+              <el-input v-model="form.alarmEmail" clearable placeholder="多个邮件地址用逗号分隔" />
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
@@ -63,33 +63,38 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-form-item
-              label="定时参数"
-              prop="intervalArgument"
-              :rules="[{ required: true, message: '请输入定时参数', trigger: ['blur', 'change'] }]"
-            >
-              <el-space fill>
-                <el-input v-model="form.intervalArgument" clearable />
-                <el-alert v-if="form.interval === 1" type="info" :closable="false">
-                  设置 5 则每5秒触发，执行N次
-                  <br />
-                  设置 5, 5, 10, 10, 60, 60 则每次按不同的间隔秒数触发，执行6次
-                </el-alert>
-                <el-alert v-else-if="form.interval === 11" type="info" :closable="false"> 设置 08:00:00 则每天 08:00:00 触发，执行N次 </el-alert>
-                <el-alert v-else-if="form.interval === 12" type="info" :closable="false">
-                  设置 1:08:00:00 则每周一 08:00:00 触发
-                  <br />
-                  设置 -0:08:00:00 则每周日 08:00:00 触发
-                </el-alert>
-                <el-alert v-else-if="form.interval === 13" type="info" :closable="false">
-                  设置 1:08:00:00 则每月1日 08:00:00 触发
-                  <br />
-                  设置 -1:08:00:00 则每月最后一日 08:00:00 触发
-                </el-alert>
-                <el-alert v-else-if="form.interval === 21" type="info" :closable="false">
-                  设置 0/10 * * * * ? 则从0秒开始每10秒执行一次
-                  <br />
-                  <pre style="line-height: 20px">
+            <el-space fill class="w100">
+              <el-form-item
+                label="定时参数"
+                prop="intervalArgument"
+                :rules="[{ required: true, message: '请输入定时参数', trigger: ['blur', 'change'] }]"
+              >
+                <el-input v-model="form.intervalArgument" clearable>
+                  <template #append v-if="form.interval === 21">
+                    <el-button icon="ele-Clock" @click="onOpenCronDialog" />
+                  </template>
+                </el-input>
+              </el-form-item>
+              <el-alert v-if="form.interval === 1" type="info" :closable="false">
+                设置 5 则每5秒触发，执行N次
+                <br />
+                设置 5, 5, 10, 10, 60, 60 则每次按不同的间隔秒数触发，执行6次
+              </el-alert>
+              <el-alert v-else-if="form.interval === 11" type="info" :closable="false"> 设置 08:00:00 则每天 08:00:00 触发，执行N次 </el-alert>
+              <el-alert v-else-if="form.interval === 12" type="info" :closable="false">
+                设置 1:08:00:00 则每周一 08:00:00 触发
+                <br />
+                设置 -0:08:00:00 则每周日 08:00:00 触发
+              </el-alert>
+              <el-alert v-else-if="form.interval === 13" type="info" :closable="false">
+                设置 1:08:00:00 则每月1日 08:00:00 触发
+                <br />
+                设置 -1:08:00:00 则每月最后一日 08:00:00 触发
+              </el-alert>
+              <el-alert v-else-if="form.interval === 21" type="info" :closable="false">
+                设置 0/10 * * * * ? 则从0秒开始每10秒执行一次
+                <br />
+                <pre style="line-height: 20px">
 new FreeSchedulerBuilder()
 ...
 .UseCustomInterval(task =>
@@ -99,10 +104,10 @@ new FreeSchedulerBuilder()
     return TimeSpan.FromSeconds(5);
 })
 .Build();
-                  </pre>
-                </el-alert>
-              </el-space>
-            </el-form-item>
+                  </pre
+                >
+              </el-alert>
+            </el-space>
           </el-col>
         </el-row>
       </el-form>
@@ -113,15 +118,19 @@ new FreeSchedulerBuilder()
         </span>
       </template>
     </el-dialog>
+
+    <MyCronDialog ref="myCronDialogRef" @fill="onCronFill"></MyCronDialog>
   </div>
 </template>
 
 <script lang="ts" setup name="admin/task/form">
-import { reactive, toRefs, ref } from 'vue'
+import { reactive, toRefs, ref, defineAsyncComponent } from 'vue'
 import { TaskUpdateInput } from '/@/api/admin/data-contracts'
 import { TaskApi } from '/@/api/admin/Task'
 import { cloneDeep } from 'lodash-es'
 import eventBus from '/@/utils/mitt'
+
+const MyCronDialog = defineAsyncComponent(() => import('/@/components/my-cron/dialog.vue'))
 
 defineProps({
   title: {
@@ -131,6 +140,7 @@ defineProps({
 })
 
 const formRef = ref()
+const myCronDialogRef = ref()
 const state = reactive({
   showDialog: false,
   sureLoading: false,
@@ -145,6 +155,14 @@ const state = reactive({
 })
 
 const { form } = toRefs(state)
+
+const onCronFill = (value: any) => {
+  form.value.intervalArgument = value
+}
+
+const onOpenCronDialog = () => {
+  myCronDialogRef.value.open()
+}
 
 // 打开对话框
 const open = async (row: TaskUpdateInput = { id: '' }) => {
@@ -193,6 +211,7 @@ const onSure = () => {
 }
 
 const onIntervalChange = () => {
+  state.form.intervalArgument = ''
   if (state.form.interval === 21) state.form.round = -1
 }
 
@@ -204,5 +223,7 @@ defineExpose({
 <style scoped lang="scss">
 .el-alert {
   border-width: 0px !important;
+  margin-left: 110px;
+  margin-top: 10px;
 }
 </style>
