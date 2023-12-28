@@ -43,7 +43,7 @@
   </el-form>
 </template>
 <script lang="ts" setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, nextTick } from 'vue'
 const emit = defineEmits(['update'])
 const props = defineProps({
   cron: {
@@ -98,7 +98,15 @@ watch([workday], () => {
 })
 watch(
   () => props.cron.day,
-  (value) => changeRadioValue(value)
+  (value) => {
+    nextTick(() => {
+      changeRadioValue(value)
+    })
+  },
+  {
+    deep: true,
+    immediate: true,
+  }
 )
 watch([radioValue, cycleTotal, averageTotal, workdayTotal, checkboxString], () => onRadioChange())
 const changeRadioValue = (value: any) => {

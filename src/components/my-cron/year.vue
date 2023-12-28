@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, nextTick } from 'vue'
 const emit = defineEmits(['update'])
 const props = defineProps({
   cron: {
@@ -84,7 +84,15 @@ watch([average01, average02], () => {
 })
 watch(
   () => props.cron.year,
-  (value) => changeRadioValue(value)
+  (value) => {
+    nextTick(() => {
+      changeRadioValue(value)
+    })
+  },
+  {
+    deep: true,
+    immediate: true,
+  }
 )
 watch([radioValue, cycleTotal, averageTotal, checkboxString], () => onRadioChange())
 function changeRadioValue(value: any) {

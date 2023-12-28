@@ -54,7 +54,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, nextTick } from 'vue'
 const emit = defineEmits(['update'])
 const props = defineProps({
   cron: {
@@ -118,7 +118,15 @@ watch([weekdayTotal], () => {
 })
 watch(
   () => props.cron.week,
-  (value) => changeRadioValue(value)
+  (value) => {
+    nextTick(() => {
+      changeRadioValue(value)
+    })
+  },
+  {
+    deep: true,
+    immediate: true,
+  }
 )
 watch([radioValue, cycleTotal, averageTotal, weekdayTotal, checkboxString], () => onRadioChange())
 const changeRadioValue = (value: any) => {

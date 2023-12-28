@@ -20,7 +20,7 @@
     </template>
   </el-dialog> -->
 
-  <el-drawer v-model="state.showDialog" :title="title" direction="rtl" size="620">
+  <el-drawer v-model="state.showDialog" :title="title" direction="rtl" destroy-on-close size="620">
     <div class="my-fill h100" style="padding: 20px">
       <MyCron ref="crontabRef" :expression="expression"></MyCron>
     </div>
@@ -55,7 +55,8 @@ const state = reactive({
 })
 
 // 打开对话框
-const open = () => {
+const open = (intervalArgument: string) => {
+  if (intervalArgument) expression.value = intervalArgument
   state.showDialog = true
 }
 

@@ -161,7 +161,7 @@ const onCronFill = (value: any) => {
 }
 
 const onOpenCronDialog = () => {
-  myCronDialogRef.value.open()
+  myCronDialogRef.value.open(state.form.intervalArgument)
 }
 
 // 打开对话框
