@@ -20,7 +20,7 @@
     </template>
   </el-dialog> -->
 
-  <el-drawer v-model="state.showDialog" :title="title" direction="rtl" size="780">
+  <el-drawer v-model="state.showDialog" :title="title" direction="rtl" size="620">
     <div class="my-fill h100" style="padding: 20px">
       <MyCron ref="crontabRef" :expression="expression"></MyCron>
     </div>
