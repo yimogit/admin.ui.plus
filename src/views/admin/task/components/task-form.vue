@@ -167,8 +167,8 @@ const onOpenCronDialog = () => {
 // 打开对话框
 const open = async (row: TaskUpdateInput = { id: '' }) => {
   let formData = cloneDeep(row) as TaskUpdateInput
-  if (row.id) {
-    const res = await new TaskApi().get({ id: row.id }, { loading: true })
+  if (row.topic) {
+    const res = await new TaskApi().get({ topic: row.topic }, { loading: true })
 
     if (res?.success) {
       formData = res.data as TaskUpdateInput

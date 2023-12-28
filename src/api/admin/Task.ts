@@ -25,6 +25,29 @@ export class TaskApi<SecurityDataType = unknown> extends HttpClient<SecurityData
    * No description
    *
    * @tags task
+   * @name GetAlerEmail
+   * @summary 查询报警邮件
+   * @request GET:/api/admin/task/get-aler-email
+   * @secure
+   */
+  getAlerEmail = (
+    query?: {
+      id?: string
+    },
+    params: RequestParams = {}
+  ) =>
+    this.request<ResultOutputString, any>({
+      path: `/api/admin/task/get-aler-email`,
+      method: 'GET',
+      query: query,
+      secure: true,
+      format: 'json',
+      ...params,
+    })
+  /**
+   * No description
+   *
+   * @tags task
    * @name Get
    * @summary 查询
    * @request GET:/api/admin/task/get
@@ -32,7 +55,7 @@ export class TaskApi<SecurityDataType = unknown> extends HttpClient<SecurityData
    */
   get = (
     query?: {
-      id?: string
+      topic?: string
     },
     params: RequestParams = {}
   ) =>

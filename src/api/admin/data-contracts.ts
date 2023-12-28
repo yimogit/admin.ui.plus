@@ -3483,8 +3483,22 @@ export interface TaskGetOutput {
 }
 
 export interface TaskGetPageDto {
-  /** 任务名称名称 */
+  /** 任务名称 */
   topic?: string | null
+  /** 集群Id */
+  clusterId?: string | null
+  /** Running=0,Paused=1,Completed=2 */
+  taskStatus?: TaskStatus
+  /**
+   * 创建开始时间
+   * @format date-time
+   */
+  startAddTime?: string | null
+  /**
+   * 创建结束时间
+   * @format date-time
+   */
+  endAddTime?: string | null
 }
 
 /**
