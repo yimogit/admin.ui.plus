@@ -39,7 +39,7 @@
             <el-button
               v-if="row.status === 1 || row.status === 'Paused'"
               v-auth="'api:admin:task:pause'"
-              icon="ele-VideoPause"
+              icon="ele-CaretRight"
               size="small"
               text
               type="primary"
@@ -49,7 +49,7 @@
             <el-button
               v-if="row.status === 0 || row.status === 'Running'"
               v-auth="'api:admin:task:resume'"
-              icon="ele-CaretRight"
+              icon="ele-VideoPause"
               size="small"
               text
               type="primary"
