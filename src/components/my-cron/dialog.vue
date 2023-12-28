@@ -1,5 +1,5 @@
 <template>
-  <el-dialog
+  <!-- <el-dialog
     title="Cron表达式生成器"
     v-model="state.showDialog"
     append-to-body
@@ -18,11 +18,31 @@
         <el-button type="primary" @click="onSure">确定</el-button>
       </span>
     </template>
-  </el-dialog>
+  </el-dialog> -->
+
+  <el-drawer v-model="state.showDialog" :title="title" direction="rtl" size="780">
+    <div class="my-fill h100" style="padding: 20px">
+      <MyCron ref="crontabRef" :expression="expression"></MyCron>
+    </div>
+    <template #footer>
+      <div style="flex: auto; padding: 20px !important">
+        <el-button @click="onCancel" size="default">取 消</el-button>
+        <el-button type="warning" @click="onReset">重置</el-button>
+        <el-button type="primary" @click="onSure">确定</el-button>
+      </div>
+    </template>
+  </el-drawer>
 </template>
 
 <script lang="ts" setup name="my-captcha-dialog">
 import { defineAsyncComponent, ref, reactive } from 'vue'
+
+defineProps({
+  title: {
+    type: String,
+    default: 'Cron表达式生成器',
+  },
+})
 
 const MyCron = defineAsyncComponent(() => import('./index.vue'))
 const emits = defineEmits(['fill'])
