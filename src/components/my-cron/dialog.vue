@@ -22,7 +22,7 @@
 
   <el-drawer v-model="state.showDialog" :title="title" direction="rtl" destroy-on-close size="620">
     <div class="my-fill h100" style="padding: 20px">
-      <MyCron ref="crontabRef" :expression="expression"></MyCron>
+      <MyCron ref="crontabRef" :expression="expression" :hide-component="['year']"></MyCron>
     </div>
     <template #footer>
       <div style="flex: auto; padding: 20px !important">

@@ -21,7 +21,7 @@
               <template #label>
                 <div class="my-flex-y-center">
                   任务参数<el-tooltip effect="dark" placement="top" hide-after="0">
-                    <template #content>可以设置Json数据格式</template>
+                    <template #content>设置Json数据</template>
                     <SvgIcon name="ele-InfoFilled" class="ml5" />
                   </el-tooltip>
                 </div>
@@ -34,7 +34,7 @@
               <template #label>
                 <div class="my-flex-y-center">
                   报警邮件<el-tooltip effect="dark" placement="top" hide-after="0">
-                    <template #content>多个邮件地址则逗号分隔</template>
+                    <template #content>多个邮件地址用逗号分隔</template>
                     <SvgIcon name="ele-InfoFilled" class="ml5" />
                   </el-tooltip>
                 </div>
